@@ -37,21 +37,10 @@
 
   
 
-
-
-
     
-
-
     <!-- Menu for desktop -->
     <ul class="hidden menu sm:menu-horizontal gap-2">
 
-
-
-
-        <LoginCheck>
-            
-        </LoginCheck>
         
         
         
