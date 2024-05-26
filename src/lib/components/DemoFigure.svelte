@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { user, schoolData } from "$lib/firebase";
-
     class Class {
         name: string;
         students: string[];
@@ -39,36 +37,36 @@
     }
 
     let classA = new Class("Class A", [
-    "John Doe",
-    "Jane Smith",
-    "Michael Johnson",
-    "Sara Davis",
-    "David Wilson",
-    "Emily Brown",
-    "Daniel Taylor",
-    "Olivia Martinez",
-    "Matthew Anderson",
-    "Ava Thomas",
-    "William Garcia",
-    "Sophia Robinson",
-    "James Clark",
-    "Isabella Lewis",
-    "Joseph Lee",
-    "Charlotte Walker",
-    "David Hernandez",
-    "Abigail Hall",
-    "Andrew Young",
-    "Elizabeth Allen",
-    "Joshua King",
-    "Grace Hill",
-    "Daniel Scott",
-    "Emily Green",
-    "Samuel Baker",
-    "Madison Adams",
-    "Christopher Turner",
-    "Chloe Mitchell",
-    "Andrew Rodriguez",
-    "Victoria Turner"
+    "John",
+    "Jane",
+    "Michael",
+    "Sara",
+    "David",
+    "Emily",
+    "Daniel",
+    "Olivia",
+    "Matthew",
+    "Ava",
+    "William",
+    "Sophia",
+    "James",
+    "Isabella",
+    "Joseph",
+    "Charlotte",
+    "David",
+    "Abigail",
+    "Andrew",
+    "Elizabeth",
+    "Joshua",
+    "Grace",
+    "Daniel",
+    "Emily",
+    "Samuel",
+    "Madison",
+    "Christopher",
+    "Chloe",
+    "Andrew",
+    "Victoria"
     ]);
 
     let room2 = new Room("Room 2", [
@@ -79,10 +77,6 @@
         [new Seat(true), new Seat(true), new Seat(true), new Seat(true), new Seat(false), new Seat(true), new Seat(true), new Seat(true), new Seat(true)],
         [new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false)],
         [new Seat(true), new Seat(true), new Seat(true), new Seat(true), new Seat(false), new Seat(true), new Seat(true), new Seat(true), new Seat(true)],
-        [new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false)],
-        [new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false)],
-        [new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false)],
-        [new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false), new Seat(false)]
     ]);
 
     let room1 = new Room("Room 1", [
@@ -103,12 +97,9 @@
     rooms = [room1, room2];
     classes = [classA];
 
-    let exampleRoom = new Room("Choose room", []);
-    let exampleClass = new Class("Choose class", []);
-
-    let currentRoom = exampleRoom;
-    let currentClass = exampleClass;
-    let activeStudents:any = exampleClass.students.map(
+    let currentRoom = room1;
+    let currentClass = classA;
+    let activeStudents:any = currentClass.students.map(
         (student) => new Student(student),
     );
     let allStudents: Student[] = [];
@@ -146,33 +137,7 @@
        
     }
 
-    $: if ($schoolData && $user) {
-        classes = $schoolData?.classes ?? [];
-        rooms = [];
-        $schoolData.rooms.forEach((room: any) => {
-            let array = JSON.parse(room.layout);
-            let booleanArray: any[] = [];
-
-            for (let i = 0; i < array.length; i++) {
-                booleanArray[i] = [];
-                for (let j = 0; j < array[i].length; j++) {
-                    booleanArray[i][j] = Boolean(array[i][j]);
-                }
-            }
-
-            for (var k = 0; k < booleanArray.length; k++) {}
-
-            let seats: Seat[][] = [];
-            for (let i = 0; i < booleanArray.length; i++) {
-                seats[i] = [];
-                for (let j = 0; j < booleanArray[i].length; j++) {
-                    seats[i][j] = new Seat(booleanArray[i][j]);
-                }
-            }
-            rooms = [...rooms, new Room(room.name, seats)];
-        });
-    }
-
+    
     //#region Presense
 
     function handlePresense(student: Student) {
@@ -226,9 +191,12 @@
 
 <div class="flex justify-center">
     <div class="dropdown dropdown-hover">
-        <div role="button" class="btn m-1 btn-wide btn-neutral">
-            {currentRoom.name}
-        </div>
+        <div class="tooltip tooltip-open" data-tip="Select room">
+            <div role="button" class="btn m-1 btn-wide btn-neutral btn-sm">
+                {currentRoom.name}
+            </div>    
+          </div>
+        
         <ul
             class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
         >
@@ -245,13 +213,14 @@
     <div class="dropdown dropdown-hover">
         
         
-
+        <div class="tooltip tooltip-open tooltip-accent" data-tip="Randomize">
         <button
-            class="btn m-1 btn-wide btn-neutral"
+            class="btn m-1 btn-wide btn-neutral btn-sm"
             on:click={() => selectClass(currentClass)}
         >
+        
             {currentClass.name}
-            <button class="btn btn-sm btn-accent">
+            <button class="btn btn-xs btn-accent">
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.484 9.166 15 7h5m0 0-3-3m3 3-3 3M4 17h4l1.577-2.253M4 7h4l7 10h5m0 0-3 3m3-3-3-3"/>
                   </svg>
@@ -259,6 +228,7 @@
           
               
         </button>
+    </div>
 
         <ul
             class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
@@ -272,7 +242,8 @@
     </div>
 
     <div class="dropdown dropdown-hover">
-        <button class="btn m-1 btn-wide btn-neutral"> Students </button>
+        <div class="tooltip tooltip-open" data-tip="Check presense">
+        <button class="btn m-1 btn-wide btn-neutral btn-sm"> Students </button></div>
         {#if currentClass.name !== "Choose class"}
 
         <ul
@@ -323,23 +294,21 @@
 </div>
 
 
-<div class="divider font-bold">Front of classroom</div>
 
-
-<div>
+<div class=" ml-60 mt-6">
     {#each currentRoom.layout as row, i}
         <div class="flex">
             {#each row as box, j}
                 {#if box.isAvailable}
                     <button
-                        class="btn btn-neutral h-16 text-2xl"
-                        style="width: 150px;"
+                        class="btn btn-neutral text-xs btn-sm"
+                        style="width: 100px;"
                         >{currentRoom.layout[i][j].student.name}</button
                     >
                 {:else}
                     <div
-                        class="btn btn-disabled h-16 text-2xl"
-                        style="width: 150px;"
+                        class="btn btn-disabled text-2xl btn-sm"
+                        style="width: 100px;"
                     ></div>
                 {/if}
             {/each}

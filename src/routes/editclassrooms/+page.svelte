@@ -387,7 +387,7 @@
 </div>
 
 <div class="divider text-lg font-bold">
-	This side is the front of the classroom
+	Front of classroom
 </div>
 
 <div class="">

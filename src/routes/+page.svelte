@@ -1,17 +1,11 @@
 <script lang="ts">
-    
-    import CheckSvg from "$lib/components/CheckSvg.svelte";
-
-
-
+    import DemoFigure from "$lib/components/DemoFigure.svelte";
 
     let messages = ["classroom dynamics", "focus", "collaboration", "learning"];
     let message = "";
     let currentText = "";
 
     
-
-
     class Question{
 
         question: string;
@@ -29,11 +23,9 @@
 //new Question("", ""),
     let questions = [
         new Question("Who is this for?", "Teachers who wants to randomly assign students to seats or groups"),
-        new Question("How does it work?"),
         new Question("Can I customize the layout for each classroom?", "Yes, you can!"),
-        new Question("Does it cost?", "No, it's free! :)"),
+        new Question("How does it work?"),
     ];
-
 
 
 
@@ -90,9 +82,12 @@
         
     </a>
 
-<!-- <CheckSvg></CheckSvg> -->
 
+    <div class="mt-80">
 
+<DemoFigure/>
+
+</div>
 
 
 </div>
@@ -111,16 +106,16 @@
 
             
         </div>
-        <div class="text-3xl mt-3">every time you want to randomize your students?</div>
+        <div class="text-3xl mt-3">every time you want to randomize the seating?</div>
 
 
 
-        <div class="text-4xl gap-2 mt-20"><span class=" bg-cyan-600 text-white rounded px-2 py-1"
+        <div class="text-5xl gap-2 mt-20"><span class=" bg-cyan-600 text-white rounded px-2 py-1"
             >The solution:</span> Randomize 
 
             
         </div>
-        <div class="text-3xl mt-3">students automatically</div>
+        <div class="text-3xl mt-3">automatically with Student Randomizer</div>
 
     
         
@@ -155,7 +150,12 @@
                 <p>{question.answer}</p>
                 {#if question.question === "How does it work?"}
                     <a class="btn btn-secondary btn-sm" href="/randomizeroom">Take a look!</a>
+
+                {:else if question.question === "Can I customize the layout for each classroom?"}
+                    <a class="btn btn-secondary btn-sm" href="/editclassrooms">Take a look!</a>
+                    
                 {/if}
+            
             </div>
 
 
@@ -179,25 +179,16 @@
 
 
 
-<div class="w-screen bg-base-300 h-screen mt-96 flex justify-center">
-
-
-<a href="/signup" class="btn btn-accent btn-wide btn-circle mt-20">
-    Sign up
-</a>
-
-
-</div>
 
 
 
 
-<footer class="footer p-10 bg-base-200 footer-center text-base-content">
+<footer class="footer p-10 bg-base-200 footer-center text-base-content mt-80">
     <aside>
 
         <img src="/logo-8.png" alt="Logo" class="w-12">
       <p>Student Randomizer<br></p>
-      <p>Made by: <a href="https://github.com/alfredkjellen" class="link link-primary">Alfred Kjellén </a><br></p>
+      <p>Made by: <a href="https://github.com/alfredkjellen/studentrandomizer" class="link link-primary">Alfred Kjellén </a><br></p>
     </aside> 
    
   </footer>

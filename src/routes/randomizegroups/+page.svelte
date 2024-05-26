@@ -263,7 +263,7 @@
                 <li>
                     <button
                         on:click={() => handlePresense(student)}
-                        class="flex justify-end"
+                        class="flex justify-end btn btn-sm"
                         >{student.name}
                         <input
                             type="checkbox"
