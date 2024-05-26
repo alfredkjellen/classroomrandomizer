@@ -9,7 +9,7 @@ import { doc } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyALBUd-G2QgBkx2Ec8H0tOk7S7Msd7Yfjc",
+  apiKey: "",
   authDomain: "fir-test-9ca8b.firebaseapp.com",
   projectId: "fir-test-9ca8b",
   storageBucket: "fir-test-9ca8b.appspot.com",
