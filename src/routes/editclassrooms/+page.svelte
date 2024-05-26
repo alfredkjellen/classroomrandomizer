@@ -1,0 +1,406 @@
+<script lang="ts">
+	import { onMount } from "svelte";
+	import { db, user, userData, schoolData } from "$lib/firebase";
+	import { doc, getDoc, updateDoc } from "firebase/firestore"; // TOOD use writeBatch aswell
+
+	class Room {
+		name: string;
+		layout: boolean[][];
+
+		constructor(name: string, layout: boolean[][]) {
+			this.name = name;
+			this.layout = layout;
+		}
+	}
+
+	let classroomName = "";
+	let layout: boolean[][] = [];
+
+	for (let i = 0; i < 18; i++) {
+		let row: boolean[] = [];
+		for (let j = 0; j < 18; j++) {
+			row.push(false);
+		}
+		layout.push(row);
+	}
+
+	//#region MouseEvents
+	let mouseDown = false;
+	window.addEventListener("mousedown", () => (mouseDown = true));
+	window.addEventListener("mouseup", () => (mouseDown = false));
+
+	function handleMousePress(i: any, j: any) {
+		if (mouseDown) {
+			layout[i][j] = !layout[i][j];
+		}
+	}
+
+	function handleMouseDown(i: any, j: any) {
+		mouseDown = true;
+		layout[i][j] = !layout[i][j];
+	}
+
+	//#endregion
+
+	//#region Classroom functions
+	async function addClassroom() {
+		if ($user) {
+			adding = true;
+
+			const schoolRef = doc(db, "schools", $userData!.school);
+			const schoolSnap = await getDoc(schoolRef);
+
+			if (schoolSnap.exists()) {
+				const schoolData = schoolSnap.data();
+
+				let newLayout = adjustLayout(layout);
+
+				const newRoom = {
+					name: classroomName,
+					layout: JSON.stringify(newLayout),
+				};
+
+				let updatedRooms = schoolData.rooms || [];
+
+
+
+				if(isEditing)
+				{
+					updatedRooms = updatedRooms.filter((room: any) => room.name !== originalName);
+				}
+
+				updatedRooms.push(newRoom);
+
+				await updateDoc(schoolRef, { rooms: updatedRooms });
+
+
+
+
+
+				cancelEdit();
+			} 
+			else {
+				alert("School data not found in database.");
+			}
+
+
+			adding = false;
+		}
+	}
+
+	function clearAllBoxes() {
+		layout = layout.map((row) => row.map((box) => false));
+	}
+
+	$: amountOfSeats = layout.flat().filter((box) => box).length;
+
+	function adjustLayout(layout: boolean[][]) {
+		const rows = layout.length;
+		const cols = layout[0].length;
+		const adjustedLayout: boolean[][] = [];
+
+		for (let i = 0; i < rows; i++) {
+			adjustedLayout.push(Array(cols).fill(false));
+		}
+
+		// Adjust layout to top left corner
+		let minY = 100;
+		let minX = 100;
+
+		for (let y = 0; y < rows; y++) {
+			for (let x = 0; x < cols; x++) {
+				if (layout[y][x]) {
+					if (y < minY) {
+						minY = y;
+					}
+					if (x < minX) {
+						minX = x;
+					}
+				}
+			}
+		}
+
+		for (let y = 0; y < rows; y++) {
+			for (let x = 0; x < cols; x++) {
+				if (layout[y][x]) {
+					adjustedLayout[y - minY][x - minX] = true;
+				}
+			}
+		}
+
+		return adjustedLayout;
+	}
+
+	//#endregion
+
+	//#region Animation
+	const animations = [
+		[2, 2],
+		[6, 4],
+		[10, 6],
+		[2, 6],
+		[6, 4],
+		[10, 2],
+	];
+
+	const checkBoxTime = 30;
+	const endAnimationTime = 300;
+	const animationIntervalTime = 300;
+	const startTime = 400;
+
+	function startBoxAnimation(column: number, row: number) {
+		let index = column;
+		const interval = setInterval(() => {
+			const i = row;
+			const j = index % layout[0].length;
+			layout[i][j] = true;
+			index++;
+			if (index >= column + 4) {
+				clearInterval(interval);
+				setTimeout(() => {
+					endBoxAnimation(column, row);
+				}, endAnimationTime);
+			}
+		}, checkBoxTime);
+	}
+
+	function endBoxAnimation(column: number, row: number) {
+		let index = column;
+		const interval = setInterval(() => {
+			const i = row;
+			const j = index % layout[0].length;
+			layout[i][j] = false;
+			index++;
+			if (index >= column + 4) {
+				clearInterval(interval);
+			}
+		}, checkBoxTime);
+	}
+
+	onMount(() => {
+		setTimeout(() => {}, startTime);
+
+		animations.forEach((animation, index) => {
+			setTimeout(
+				() => {
+					startBoxAnimation(animation[0], animation[1]);
+				},
+				animationIntervalTime * (index + 1),
+			);
+		});
+	});
+
+	//#endregion
+
+	//#region Validation
+	const regex = /^(?=[a-zA-Z0-9._]{1,25}$)(?!.*[_.]{2})[^_.].*[^_.]$/; //TODO
+	let debounceTimer: NodeJS.Timeout;
+
+	let loading = false;
+	let isAvailable = false;
+	let adding = false;
+
+	$: isValid = regex.test(classroomName);
+	$: isTouched = classroomName.length > 0;
+	$: isTaken = isValid && !isAvailable && !loading;
+	$: isReady = isAvailable && isValid;
+
+	async function checkAvailability() {
+		isAvailable = false;
+		clearTimeout(debounceTimer);
+		let exists = false;
+		loading = true;
+
+		debounceTimer = setTimeout(async () => {
+			const schoolRef = doc(db, "schools", $userData!.school);
+			const schoolSnap = await getDoc(schoolRef);
+
+			if (schoolSnap.exists()) {
+				
+				const schoolRooms = schoolSnap.data().rooms || [];
+
+				exists = schoolRooms.some(
+					(room: Room) => room.name === classroomName,
+				);
+			}
+
+			isAvailable = !exists;
+			loading = false;
+		}, 400);
+	}
+
+	//#endregion
+
+
+	//#region editRooms
+
+	let isEditing = false;
+	let rooms: any[] = [];
+	let originalName = "";
+	$: if($schoolData) {
+		rooms = $schoolData?.rooms || [];
+	}
+
+	const editRoom = (room: any) => {
+		if(!adding)
+		{
+			isEditing = true;
+			originalName = room.name;
+			classroomName = room.name;
+			layout = JSON.parse(room.layout);
+		}
+	}
+
+	function cancelEdit () {
+		isEditing = false;
+		classroomName = "";
+		originalName = "";
+		clearAllBoxes();
+	}
+
+
+
+	//#endregion
+
+
+</script>
+
+
+
+
+
+
+
+
+
+<div class="flex justify-center gap-4">
+
+
+
+
+
+
+	<div class="flex justify-stretch p-6 gap-4 rounded-box bg-base-200 w-3/7 mt-5">
+
+
+
+
+	
+
+
+
+
+
+
+	<div class=" dropdown dropdown-hover mt-9">
+		<div role="button" class="btn btn-neutral btn-wide">Rooms</div>
+		<ul class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-64">
+	
+			{#each rooms as room}
+				<li>
+					<button on:click={() => editRoom(room)}>{room.name}</button>
+				</li>
+			{/each}
+			
+		</ul>
+	  </div>
+
+
+
+
+
+
+			<label class="form-control">
+				<div class="label">
+					<span class="label-text">Enter classroom name or id</span>
+				</div>
+				<input
+					class="input input-bordered"
+					bind:value={classroomName}
+					on:input={checkAvailability}
+					class:input-error={!isValid && isTouched && !loading}
+					class:input-warning={isTaken && !loading && !isEditing}
+					class:input-success={isReady}
+				/>
+				<div class="label">
+					{#if !isValid && isTouched && !loading}
+						<p class="text-error text-sm">
+							3-25 characters, no spaces, only letters and numbers
+						</p>
+					{/if}
+					{#if isTaken && !isEditing}
+						<p class="text-warning text-sm">
+							{classroomName} already exists
+						</p>
+						<button class="btn btn-xs btn-accent" on:click={() => editRoom(rooms.find(room => room.name === classroomName))}>Edit {classroomName}</button>
+
+					{:else if isEditing}
+					<p class="text-primary text-sm">
+						Editing {originalName}
+					</p>
+					
+					<button class="btn btn-primary btn-xs" on:click={cancelEdit}> Go back</button>
+
+					{/if}
+				</div>
+			</label>
+
+			{#if !isEditing}
+			<button
+				class={`btn ${isReady && amountOfSeats ? "btn-primary" : "btn-disabled"} btn-wide mt-9`}
+				on:click={addClassroom}>
+				{#if adding}
+					<span class="loading loading-ring loading-lg"></span>
+				{:else}
+					Add classroom
+				{/if}
+			</button>
+
+			{:else}
+
+			<button
+				class={`btn ${isValid && amountOfSeats ? "btn-accent" : "btn-disabled"} btn-wide mt-9`}
+				on:click={addClassroom}>
+				{#if adding}
+					<span class="loading loading-ring loading-lg"></span>
+				{:else}
+					Save
+				{/if}
+			</button>
+
+
+
+			{/if}
+
+
+		</div>
+
+</div>
+
+<div class="flex justify-end p-3 gap-3">
+	<div class="badge badge-neutral mt-1.5">
+		{amountOfSeats} seats selected
+	</div>
+	<button class="btn btn-sm btn-warning" on:click={clearAllBoxes}
+		>Clear boxes</button
+	>
+</div>
+
+<div class="divider text-lg font-bold">
+	This side is the front of the classroom
+</div>
+
+<div class="">
+	{#each layout as row, i}
+		<div class="flex">
+			{#each row as box, j}
+				<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+				<button
+					on:mouseover={() => handleMousePress(i, j)}
+					on:mousedown={() => handleMouseDown(i, j)}
+					class={`btn ${layout[i][j] ? "btn-primary" : "btn-neutral"} w-20`}
+				/>
+			{/each}
+		</div>
+	{/each}
+</div>
