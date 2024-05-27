@@ -32,6 +32,7 @@
     class Student {
         name: string;
         isPresent: boolean = true;
+        isClicked: boolean = false;
 
         constructor(name: string = "") {
             this.name = name;
@@ -127,21 +128,46 @@
 
     //#region Presense
 
+
+    function handleClick(student: Student, i:number , j:number)
+    {
+        student.isClicked = !student.isClicked;
+
+    //currentRoom.layout[i][j].student = student;
+
+    currentRoom.layout = currentRoom.layout;
+
+    }
+
+
+
+
     function handlePresense(student: Student) {
         student.isPresent = !student.isPresent;
-        allStudents = [...allStudents];
 
-        if (student.isPresent) {
+        student.isClicked = false;
+        currentRoom.layout = currentRoom.layout;
+
+        allStudents = allStudents.map((s) => {
+        if (s.name === student.name) {
+            return student;
+        }
+        return s;
+    });
+
+        if(student.isPresent){
             activeStudents.push(student);
-        } else {
-            activeStudents = activeStudents.filter(
-                (s: Student) => s.name !== student.name,
-            );
+        }
+        else{
+            activeStudents = activeStudents.filter((s: Student) => s.name !== student.name);
         }
 
         activeStudents = [...activeStudents];
         updateStudents();
     }
+
+
+
 
     function updateStudents() {
         let studentList = activeStudents.slice();
@@ -308,16 +334,39 @@
     {/if}
 </div>
 
+
+
 <div>
     {#each currentRoom.layout as row, i}
         <div class="flex">
             {#each row as box, j}
                 {#if box.isAvailable}
+                    
+                
+                <div class="indicator">
+                    <div class="indicator-item indicator-top">
+                        {#if currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== ""}
+                        <button
+                        on:click={() => handlePresense(currentRoom.layout[i][j].student)}
+                         class="btn btn-sm btn-circle btn-warning">✕</button>
+                        {/if}
+                      </div> 
+
                     <button
+                        on:click={() => handleClick(currentRoom.layout[i][j].student, i, j)}
                         class="btn btn-neutral h-16 text-2xl"
                         style="width: 150px;"
-                        >{currentRoom.layout[i][j].student.name}</button
                     >
+                        {currentRoom.layout[i][j].student.name}
+                       
+                    </button>
+
+                 
+
+
+                </div>
+
+                    
                 {:else}
                     <div
                         class="btn btn-disabled h-16 text-2xl"

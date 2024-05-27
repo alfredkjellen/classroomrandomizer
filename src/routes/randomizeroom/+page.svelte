@@ -1,5 +1,6 @@
 <script lang="ts">
     import { user, schoolData } from "$lib/firebase";
+    import Layout from "../+layout.svelte";
 
     class Class {
         name: string;
@@ -32,6 +33,7 @@
     class Student {
         name: string;
         isPresent: boolean = true;
+        isClicked: boolean = false;
 
         constructor(name: string = "") {
             this.name = name;
@@ -175,9 +177,32 @@
 
     //#region Presense
 
+
+    function handleClick(student: Student, i:number , j:number)
+    {
+        student.isClicked = !student.isClicked;
+
+    //currentRoom.layout[i][j].student = student;
+
+    currentRoom.layout = currentRoom.layout;
+
+    }
+
+
+
+
     function handlePresense(student: Student) {
         student.isPresent = !student.isPresent;
-        allStudents = [...allStudents];
+
+        student.isClicked = false;
+        currentRoom.layout = currentRoom.layout;
+
+        allStudents = allStudents.map((s) => {
+        if (s.name === student.name) {
+            return student;
+        }
+        return s;
+    });
 
         if(student.isPresent){
             activeStudents.push(student);
@@ -331,11 +356,32 @@
         <div class="flex">
             {#each row as box, j}
                 {#if box.isAvailable}
+                    
+                
+                <div class="indicator">
+                    <div class="indicator-item indicator-top">
+                        {#if currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== ""}
+                        <button
+                        on:click={() => handlePresense(currentRoom.layout[i][j].student)}
+                         class="btn btn-sm btn-circle btn-warning">✕</button>
+                        {/if}
+                      </div> 
+
                     <button
+                        on:click={() => handleClick(currentRoom.layout[i][j].student, i, j)}
                         class="btn btn-neutral h-16 text-2xl"
                         style="width: 150px;"
-                        >{currentRoom.layout[i][j].student.name}</button
                     >
+                        {currentRoom.layout[i][j].student.name}
+                       
+                    </button>
+
+                 
+
+
+                </div>
+
+                    
                 {:else}
                     <div
                         class="btn btn-disabled h-16 text-2xl"
