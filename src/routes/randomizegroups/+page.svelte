@@ -126,20 +126,35 @@
         classes = $schoolData?.classes ?? [];
     }
 
+
+
+    
+//#region Clicked status
+function resetClickedStatus() {
+  currentRoom.layout.forEach(row => {
+    row.forEach(seat => {
+      seat.student.isClicked = false;
+    });
+  });
+  currentRoom.layout = currentRoom.layout; // Trigger reactivity
+}
+
+window.addEventListener('click', resetClickedStatus);
+
+function handleClick(student: Student, event: MouseEvent) {
+  event.stopPropagation(); // Prevent event from propagating to the window
+
+  let isClicked = student.isClicked;
+
+  currentRoom.layout.map((row) => row.map((box) => box.student.isClicked = false));
+
+  student.isClicked = !isClicked;
+  currentRoom.layout = currentRoom.layout;
+}
+
+
+//#endregion
     //#region Presense
-
-
-    function handleClick(student: Student, i:number , j:number)
-    {
-        student.isClicked = !student.isClicked;
-
-    //currentRoom.layout[i][j].student = student;
-
-    currentRoom.layout = currentRoom.layout;
-
-    }
-
-
 
 
     function handlePresense(student: Student) {
@@ -353,7 +368,7 @@
                       </div> 
 
                     <button
-                        on:click={() => handleClick(currentRoom.layout[i][j].student, i, j)}
+                    on:click={(event) => handleClick(currentRoom.layout[i][j].student, event)}
                         class="btn btn-neutral h-16 text-2xl"
                         style="width: 150px;"
                     >
