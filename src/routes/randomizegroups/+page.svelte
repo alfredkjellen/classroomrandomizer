@@ -168,35 +168,45 @@
     //#region Groups
 
 
-    $:{
-        if(groupSize < 1){
+    function checkGroupSize(){
+
+
+        if (groupSize < 1)
+        {
             groupSize = undefined;
         }
-
-        if(groupSize > currentClass.students.length)
+        else if(groupSize > currentClass.students.length)
         {
             groupSize = currentClass.students.length;
         }
+    }
 
+
+    $:{
+        checkGroupSize();
     }
 
     let groupSize: any = 4;
     let colAmounts:any = {1: 5, 2: 3, 3: 2, 4: 2, 5: 1, 6: 1, 7: 1, 8: 1, 9: 1, 10: 1}; 
-    let loading = false;
 
     function updateLayout() {
-        if (groupSize > 0 && currentClass.students.length > 0 && groupSize !== undefined && !loading) {
-            loading = true;
+        if (groupSize > 0 && currentClass.students.length > 0 && groupSize !== undefined) {
             let positions = currentClass.students.length;
             let i = 0;
 
+            checkGroupSize();
+
+            let colAmount = colAmounts[groupSize] ?? 1;
+
+
+            // Reset all seats
             currentRoom.layout.map((row) =>
                 row.map((seat) => (seat.isAvailable = false)),
             );
 
             while (positions > 0) {
                 let a = 0;
-                for (let c = 0; c < colAmounts[groupSize]; c++) {
+                for (let c = 0; c < colAmount; c++) {
                     for (let j = 0; j < groupSize; j++) {
                         if (positions <= 0) {
                             break;
@@ -206,12 +216,11 @@
                     }
                     a += 1; // Add a gap of 1 between columns
                 }
-                i += 2;
+                i += 2; // Add a gap of 1 between rows
             }
 
             currentRoom.layout = [...currentRoom.layout];
             selectClass(currentClass);
-            loading = false;
         }
     }
 
