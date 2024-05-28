@@ -1,5 +1,40 @@
 <script lang="ts">
-    import { Student, Class, Room, Seat } from "$lib/classes.ts";
+    class Class {
+        name: string;
+        students: string[];
+        constructor(name: string, students: string[]) {
+            this.name = name;
+            this.students = students;
+        }
+    }
+
+    class Seat {
+        student: Student = new Student("");
+        isAvailable: boolean;
+
+        constructor(isAvailable: boolean) {
+            this.isAvailable = isAvailable;
+        }
+    }
+
+    class Room {
+        name: string;
+        layout: Seat[][] = [];
+
+        constructor(name: string, layout: Seat[][]) {
+            this.name = name;
+            this.layout = layout;
+        }
+    }
+
+    class Student {
+        name: string;
+        isPresent: boolean = true;
+
+        constructor(name: string = "") {
+            this.name = name;
+        }
+    }
 
     let classA = new Class("Class A", [
     "John",
@@ -101,87 +136,6 @@
 
        
     }
-
-
-
-    let clickedStudent1:any = undefined;
-let clickedStudent2: any = undefined;
-
-
-$: moveable = (clickedStudent1 !== undefined && clickedStudent2 === undefined) || (clickedStudent2 !== undefined && clickedStudent1 === undefined); 
-
-function resetClickedStatus() {
-  currentRoom.layout.forEach(row => {
-    row.forEach(seat => {
-      seat.student.isClicked = false;
-    });
-  });
-
-    clickedStudent1 = undefined;
-    clickedStudent2 = undefined;
-  currentRoom.layout = currentRoom.layout; // Trigger reactivity
-}
-
-window.addEventListener('click', resetClickedStatus);
-
-function handleClick(student: Student, event: MouseEvent) {
-  event.stopPropagation(); // Prevent event from propagating to the window
-
-  let isClicked = student.isClicked;
-
-  student.isClicked = !isClicked;
-  currentRoom.layout = currentRoom.layout;
-
-
-
-    if (clickedStudent1 === undefined && student.name !== "") {
-        clickedStudent1 = student;
-    } else if (clickedStudent2 === undefined && clickedStudent1 !== undefined) {
-        clickedStudent2 = student;
-        moveStudents(clickedStudent1, clickedStudent2);
-        clickedStudent1.isClicked = false;
-        clickedStudent2.isClicked = false;
-        clickedStudent1 = undefined;
-        clickedStudent2 = undefined;
-        
-    }
-}
-
-
-
-function moveStudents(student1: Student, student2:Student)
-{
-    currentRoom.layout = currentRoom.layout.map((row) => row.map((box) => {
-       
-       
-       
-       
-       
-        if(box.student === student1)
-        {
-            box.student = student2;
-        }
-        else if(box.student === student2)
-        {
-            box.student = student1;
-        }
-        return box;
-    }));
-
-
-}
-
-
-
-
-
-//#endregion
-
-
-
-
-
-
 
     
     //#region Presense
