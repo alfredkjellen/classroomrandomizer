@@ -1,45 +1,7 @@
 <script lang="ts">
     import { user, schoolData } from "$lib/firebase";
-    import { faCaretSquareDown } from "@fortawesome/free-solid-svg-icons";
-    import Layout from "../+layout.svelte";
+    import { Student, Class, Room, Seat } from "$lib/classes.ts";
 
-    class Class {
-        name: string;
-        students: string[];
-        constructor(name: string, students: string[]) {
-            this.name = name;
-            this.students = students;
-        }
-    }
-
-    class Seat {
-        student: Student = new Student("");
-        isAvailable: boolean;
-
-        constructor(isAvailable: boolean) {
-            this.isAvailable = isAvailable;
-        }
-    }
-
-    class Room {
-        name: string;
-        layout: Seat[][] = [];
-
-        constructor(name: string, layout: Seat[][]) {
-            this.name = name;
-            this.layout = layout;
-        }
-    }
-
-    class Student {
-        name: string;
-        isPresent: boolean = true;
-        isClicked: boolean = false;
-
-        constructor(name: string = "") {
-            this.name = name;
-        }
-    }
 
     let classA = new Class("Class A", [
     "John Doe",
@@ -175,15 +137,21 @@
             rooms = [...rooms, new Room(room.name, seats)];
         });
     }
+    let clickedStudent1:any = undefined;
+let clickedStudent2: any = undefined;
 
-    
-//#region Clicked status
-    function resetClickedStatus() {
+
+
+
+function resetClickedStatus() {
   currentRoom.layout.forEach(row => {
     row.forEach(seat => {
       seat.student.isClicked = false;
     });
   });
+
+    clickedStudent1 = undefined;
+    clickedStudent2 = undefined;
   currentRoom.layout = currentRoom.layout; // Trigger reactivity
 }
 
@@ -194,14 +162,54 @@ function handleClick(student: Student, event: MouseEvent) {
 
   let isClicked = student.isClicked;
 
-  currentRoom.layout.map((row) => row.map((box) => box.student.isClicked = false));
-
   student.isClicked = !isClicked;
   currentRoom.layout = currentRoom.layout;
+
+
+
+    if (clickedStudent1 === undefined && student.name !== "") {
+        clickedStudent1 = student;
+    } else if (clickedStudent2 === undefined && clickedStudent1 !== undefined) {
+        clickedStudent2 = student;
+        moveStudents(clickedStudent1, clickedStudent2);
+        clickedStudent1.isClicked = false;
+        clickedStudent2.isClicked = false;
+        clickedStudent1 = undefined;
+        clickedStudent2 = undefined;
+        
+    }
 }
 
 
+
+function moveStudents(student1: Student, student2:Student)
+{
+    currentRoom.layout = currentRoom.layout.map((row) => row.map((box) => {
+       
+       
+       
+       
+       
+        if(box.student === student1)
+        {
+            box.student = student2;
+        }
+        else if(box.student === student2)
+        {
+            box.student = student1;
+        }
+        return box;
+    }));
+
+
+}
+
+
+
+
+
 //#endregion
+
 
 //#region Presense
 
@@ -378,14 +386,16 @@ function handleClick(student: Student, event: MouseEvent) {
                         {#if currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== ""}
                         <button
                         on:click={() => handlePresense(currentRoom.layout[i][j].student)}
-                         class="btn btn-sm btn-circle btn-warning">✕</button>
+                         class="btn btn-sm btn-circle btn-warning ">✕</button>
                         {/if}
                       </div> 
 
                     <button
                     on:click={(event) => handleClick(currentRoom.layout[i][j].student, event)}
-                        class="btn btn-neutral h-16 text-2xl"
+                    class={`btn btn-neutral h-16 text-2xl hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? 'border-primary text-primary' : ''}`}
                         style="width: 150px;"
+
+
                     >
                         {currentRoom.layout[i][j].student.name}
                        

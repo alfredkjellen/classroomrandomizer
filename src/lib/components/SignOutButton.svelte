@@ -2,7 +2,6 @@
     import { auth } from "$lib/firebase";
     import { signOut } from "firebase/auth";
     import { goto } from '$app/navigation';
-    import AuthCheck from "$lib/components/AuthCheck.svelte";
 
     
     
