@@ -136,6 +136,8 @@
             rooms = [...rooms, new Room(room.name, seats)];
         });
     }
+
+    
     let clickedStudent1:any = undefined;
 let clickedStudent2: any = undefined;
 

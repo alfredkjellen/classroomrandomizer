@@ -1,7 +1,7 @@
 <script lang="ts">
     import DemoFigure from "$lib/components/DemoFigure.svelte";
 
-    let messages = ["classroom dynamics", "focus", "collaboration", "learning"];
+    let messages = ["classroom dynamics", "collaboration","focus", "learning"];
     let message = "";
     let currentText = "";
 
