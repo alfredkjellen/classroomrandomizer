@@ -85,7 +85,7 @@
 
 
 <div class="flex justify-center mt-20 gap-5">
-
+<!-- 
 Featured on
 
 {#if $themeStore === "darktheme"}
@@ -93,7 +93,7 @@ Featured on
 {:else}
 <img style="width: 200px;" src="/product-hunt-logo-horizontal-orange.png" alt="Product Hunt Logo">
 {/if}
-
+ -->
 
 <div></div>
 
