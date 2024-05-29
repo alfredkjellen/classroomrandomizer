@@ -1,5 +1,6 @@
 <script lang="ts">
     import DemoFigure from "$lib/components/DemoFigure.svelte";
+    import {themeStore} from "$lib/controller.ts";
 
     let messages = ["classroom dynamics", "collaboration","focus", "learning"];
     let message = "";
@@ -83,7 +84,26 @@
     </a>
 
 
+<div class="flex justify-center mt-20 gap-5">
+
+Featured on
+
+{#if $themeStore === "darktheme"}
+<img style="width: 200px;" src="/product-hunt-logo-horizontal-orangewhite.png" alt="Product Hunt Logo">
+{:else}
+<img style="width: 200px;" src="/product-hunt-logo-horizontal-orange.png" alt="Product Hunt Logo">
+{/if}
+
+
+<div></div>
+
+
+</div>
+
+
+
     <div class="mt-80">
+
 
 <DemoFigure/>
 

@@ -1,26 +1,20 @@
 <script lang="ts" crossorigin="anonymous">
     import "../app.css";
     import LoginButton from "$lib/components/LoginButton.svelte";
-    import { user, userData } from "$lib/firebase";
     import SignupButton from "$lib/components/SignupButton.svelte";
+    import { themeStore, svgColor, changeTheme } from "$lib/controller.ts";
 
 
-    let theme = "darktheme";
+
     
-    
-    let svgColor = "white";
 
-
-    const changeTheme = () => {
-    theme = theme === "darktheme" ? "lighttheme" : "darktheme";
-    svgColor = svgColor === "white" ? "black" : "white";
-};
+  
 
 </script>
 
 
 
-<html lang="ts" data-theme="{theme}">
+<html lang="ts" data-theme="{$themeStore}">
 
 <nav class="navbar justify-between bg-base-200 h-0.5">
     
@@ -33,17 +27,17 @@
         Student Randomizer
     </a>
 
-    <a class="btn link-hover" href="/randomizeroom"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={svgColor} viewBox="0 0 24 24">
+    <a class="btn link-hover" href="/randomizeroom"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={$svgColor} viewBox="0 0 24 24">
         <path fill-rule="evenodd" d="M4.857 3A1.857 1.857 0 0 0 3 4.857v4.286C3 10.169 3.831 11 4.857 11h4.286A1.857 1.857 0 0 0 11 9.143V4.857A1.857 1.857 0 0 0 9.143 3H4.857Zm10 0A1.857 1.857 0 0 0 13 4.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 21 9.143V4.857A1.857 1.857 0 0 0 19.143 3h-4.286Zm-10 10A1.857 1.857 0 0 0 3 14.857v4.286C3 20.169 3.831 21 4.857 21h4.286A1.857 1.857 0 0 0 11 19.143v-4.286A1.857 1.857 0 0 0 9.143 13H4.857Zm10 0A1.857 1.857 0 0 0 13 14.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 21 19.143v-4.286A1.857 1.857 0 0 0 19.143 13h-4.286Z" clip-rule="evenodd"/>
       </svg>
       Randomize classroom</a>
-    <a class="btn link-hover" href="/randomizegroups"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={svgColor} viewBox="0 0 24 24">
+    <a class="btn link-hover" href="/randomizegroups"><svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={$svgColor} viewBox="0 0 24 24">
         <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd"/>
       </svg>Randomize into groups </a>
 
     <a class="btn link-hover" href="/editclassrooms">
         
-        {#if theme === "darktheme"} 
+        {#if $themeStore === "darktheme"} 
 
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
         <path stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"/>
@@ -62,7 +56,7 @@
       Edit classroom layouts</a>
     <a class="btn link-hover" href="/editclasses">
         
-        {#if theme === "darktheme"}
+        {#if $themeStore === "darktheme"}
         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path stroke="white" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M7 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h1m4-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm7.441 1.559a1.907 1.907 0 0 1 0 2.698l-6.069 6.069L10 19l.674-3.372 6.07-6.07a1.907 1.907 0 0 1 2.697 0Z"/>
           </svg>
@@ -92,7 +86,7 @@
     <!-- Menu for desktop -->
     <ul class="hidden menu sm:menu-horizontal gap-2">
 
-        <LoginButton svgColor = {svgColor}></LoginButton>
+        <LoginButton svgColor = {$svgColor}></LoginButton>
 
         <SignupButton></SignupButton>
 
@@ -123,7 +117,7 @@
    
     
     <div class="min-h-screen">
-      <slot {svgColor}></slot>
+      <slot/>
     </div>
 
 </html>
