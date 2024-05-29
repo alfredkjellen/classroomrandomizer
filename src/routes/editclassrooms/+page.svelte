@@ -2,16 +2,9 @@
 	import { onMount } from "svelte";
 	import { db, user, userData, schoolData } from "$lib/firebase";
 	import { doc, getDoc, updateDoc } from "firebase/firestore"; // TOOD use writeBatch aswell
+    import {Room} from "$lib/classes.ts"
 
-	class Room {
-		name: string;
-		layout: boolean[][];
 
-		constructor(name: string, layout: boolean[][]) {
-			this.name = name;
-			this.layout = layout;
-		}
-	}
 
 	let classroomName = "";
 	let layout: boolean[][] = [];

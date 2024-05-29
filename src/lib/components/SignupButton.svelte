@@ -1,10 +1,12 @@
 <script lang="ts">
 import { user } from "$lib/firebase";
 
+export let size = "xs";
+
 </script>
 
 {#if !$user}
-    <a class="btn btn-accent btn-xs" href="/signup">Sign up</a>
+    <a class={`btn btn-accent btn-${size}`} href="/signup">Sign up</a>
 {/if}
 
     

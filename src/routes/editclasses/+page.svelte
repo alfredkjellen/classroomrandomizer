@@ -2,16 +2,7 @@
     import { db, user, userData, schoolData } from "$lib/firebase";
     import { doc, getDoc, writeBatch, updateDoc } from "firebase/firestore";
     import { goto } from "$app/navigation";
-
-    class Class {
-        name: string;
-        students: string[];
-
-        constructor(name: string, students: string[]) {
-            this.name = name;
-            this.students = students;
-        }
-    }
+    import {Class} from "$lib/classes.ts"
 
     let className = "";
     let studentNames = "";
