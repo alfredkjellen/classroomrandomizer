@@ -96,7 +96,7 @@ async function deleteUser() {
 
 </script>
 
-<AuthCheck userIsDeleted>
+<AuthCheck userIsDeleted={false}>
     <div class="flex justify-center mt-5 gap-10">
         <div class="flex gap-4 rounded-box bg-base-200 p-6 w-2/5">
             <div class="card-body">
