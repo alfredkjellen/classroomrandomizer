@@ -105,13 +105,13 @@
     $: userIsReady =
         isValid && isAvailable && passwordIsValid && passwordIsMatching;
 
-    async function checkPasswordAvailability() {
+    async function validatePassword() {
         loadingPassword = true;
         clearTimeout(debounceTimer);
 
         debounceTimer = setTimeout(() => {
             loadingPassword = false;
-        }, 400);
+        }, 600);
     }
 
 
@@ -241,7 +241,7 @@
                 type="password"
                 class="input input-bordered"
                 bind:value={password}
-                on:input={checkPasswordAvailability}
+                on:input={validatePassword}
                 class:input-error={!passwordIsValid &&
                     passwordIsTouched &&
                     !loadingPassword}
@@ -249,12 +249,11 @@
                     passwordIsTouched &&
                     !loadingPassword}
             />
+            <div class="label">
+            <span class="label-text"
+            >Password must be at least 8 characters long</span
+        ></div>
 
-            {#if !passwordIsValid && passwordIsTouched && !loadingPassword}
-                <p class="text-error text-sm">
-                    Password must be at least 8 characters long
-                </p>
-            {/if}
         </label>
 
         <label class="form-control">
@@ -266,7 +265,7 @@
                 type="password"
                 class="input input-bordered"
                 bind:value={confirmedPassword}
-                on:input={checkPasswordAvailability}
+                on:input={validatePassword}
                 class:input-success={passwordIsMatching &&
                     !loadingPassword &&
                     passwordIsTouched &&

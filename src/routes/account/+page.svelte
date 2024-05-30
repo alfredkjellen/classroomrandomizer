@@ -41,7 +41,7 @@ async function deleteSchool()
     }
     catch(e)
     {
-        alert("Error deleting school");
+        alert(e);
     }
 
     }
@@ -86,7 +86,7 @@ async function deleteUser() {
     }
     catch(e)
     {
-        alert("Error deleting user");
+        alert(e);
     }
 
   }

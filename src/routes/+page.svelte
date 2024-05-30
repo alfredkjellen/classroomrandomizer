@@ -84,7 +84,7 @@
         
     </a>
 
-
+<!-- 
 <div class="flex justify-center mt-20 gap-5 items-center">
 
 Featured on
@@ -96,11 +96,10 @@ Featured on
 {/if}
 
 
-<div></div>
 
 
 </div>
-
+ -->
 
 
     <div class="mt-80">

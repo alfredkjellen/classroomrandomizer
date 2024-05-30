@@ -279,13 +279,44 @@ function moveStudents(student1: Student, student2:Student)
     }
 
     //#endregion
+
+
+
+    //#region Zoom
+    let boxWidth = 150;
+    let boxHeight = 75;
+    let factor = 0.05;
+
+    function zoom(operation: string) {
+    
+
+        if(operation === "+")
+        {
+            boxWidth += boxWidth * factor;
+            boxHeight += boxHeight * factor;
+        }
+        else if(operation === "-")
+        {
+            boxWidth -= boxWidth * factor;
+            boxHeight -= boxHeight * factor;
+        }
+    }
+
+
+
+    //#endregion
+
+
+
+
+
 </script>
 
-<div class="flex justify-center">
+<div class="flex justify-center mt-1 gap-2">
     
     <div class="dropdown dropdown-hover">
         <button
-            class="btn m-1 btn-wide btn-neutral"
+            class="btn btn-wide btn-neutral"
             on:click={() => selectClass(currentClass)}
         >
             {currentClass.name}
@@ -303,7 +334,7 @@ function moveStudents(student1: Student, student2:Student)
 
 
 
-    <label class="input input-bordered flex items-center gap-2 mt-1 font-bold text-sm">
+    <label class="input input-bordered flex items-center gap-2 font-bold text-sm">
         Group size:
         <input
             bind:value={groupSize}
@@ -316,7 +347,7 @@ function moveStudents(student1: Student, student2:Student)
 
 
     <div class="dropdown dropdown-hover">
-        <button class="btn m-1 btn-wide btn-neutral"> Students </button>
+        <button class="btn btn-wide btn-neutral"> Students </button>
 
         <ul
             class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
@@ -344,7 +375,7 @@ function moveStudents(student1: Student, student2:Student)
             <div class="dropdown dropdown-hover">
                 <div
                     role="button"
-                    class="btn m-1 btn-wide btn-warning btn-active no-animation"
+                    class="btn btn-wide btn-warning btn-active no-animation"
                 >
                     Students not assigned
                 </div>
@@ -360,11 +391,26 @@ function moveStudents(student1: Student, student2:Student)
             </div>
         </div>
     {/if}
+
+
+
+
+    <div class="ml-5">
+
+        <button on:click={() => zoom("+")} class="btn btn-neutral">+</button>
+        <button on:click={() => zoom("-")} class="btn btn-neutral">-</button>
+        
+        
+        
+            </div>
+
+
+
 </div>
 
 
 
-<div>
+<div class="mt-4">
     {#each currentRoom.layout as row, i}
         <div class="flex">
             {#each row as box, j}
@@ -382,15 +428,13 @@ function moveStudents(student1: Student, student2:Student)
 
                     <button
                     on:click={(event) => handleClick(currentRoom.layout[i][j].student, event)}
-                    class={`btn btn-neutral h-16 text-2xl hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? 'border-primary text-primary' : ''}`}
-                        style="width: 150px;"
-
+                    class={`btn btn-neutral text-2xl hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? 'border-primary text-primary' : ''}`}
+                    style="width: {boxWidth}px; height: {boxHeight}px;"
 
                     >
                         {currentRoom.layout[i][j].student.name}
                        
                     </button>
-
                  
 
 
@@ -399,8 +443,8 @@ function moveStudents(student1: Student, student2:Student)
                     
                 {:else}
                     <div
-                        class="btn btn-disabled h-16 text-2xl"
-                        style="width: 150px;"
+                        class="btn btn-disabled text-2xl"
+                        style="width: {boxWidth}px; height: {boxHeight}px;"
                     ></div>
                 {/if}
             {/each}
