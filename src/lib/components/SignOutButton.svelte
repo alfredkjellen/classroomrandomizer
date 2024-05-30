@@ -15,8 +15,8 @@
 
 
 
-<button class="btn btn-secondary btn-sm" onclick="my_modal_3.showModal()">Sign out</button>
-<dialog id="my_modal_3" class="modal">
+<button class="btn btn-secondary btn-sm" onclick="my_modal_1.showModal()">Sign out</button>
+<dialog id="my_modal_1" class="modal">
   <div class="modal-box">
     <form method="dialog">
       <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>

@@ -1,5 +1,6 @@
 <script lang="ts">
     import DemoFigure from "$lib/components/DemoFigure.svelte";
+    import Footer from "$lib/components/Footer.svelte";
     import {themeStore} from "$lib/controller.ts";
 
     let messages = ["classroom dynamics", "collaboration","focus", "learning"];
@@ -84,16 +85,16 @@
     </a>
 
 
-<div class="flex justify-center mt-20 gap-5">
-<!-- 
+<div class="flex justify-center mt-20 gap-5 items-center">
+
 Featured on
 
 {#if $themeStore === "darktheme"}
-<img style="width: 200px;" src="/product-hunt-logo-horizontal-orangewhite.png" alt="Product Hunt Logo">
+<a href="https://www.producthunt.com" target="_blank"><img style="width: 200px;" src="/product-hunt-logo-horizontal-orangewhite.png" alt="Product Hunt Logo"></a>
 {:else}
 <img style="width: 200px;" src="/product-hunt-logo-horizontal-orange.png" alt="Product Hunt Logo">
 {/if}
- -->
+
 
 <div></div>
 
@@ -201,14 +202,6 @@ Featured on
 
 
 
-
-
-<footer class="footer p-10 bg-base-200 footer-center text-base-content mt-80">
-    <aside>
-
-        <img src="/logo-8.png" alt="Logo" class="w-12">
-      <p>Student Randomizer<br></p>
-      <p>Made by: <a href="https://github.com/alfredkjellen/studentrandomizer" class="link link-primary">Alfred Kjellén </a><br></p>
-    </aside> 
-   
-  </footer>
+<div class="mt-80">
+<Footer/>
+</div>
