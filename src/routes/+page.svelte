@@ -22,13 +22,12 @@
     }
 
 
-//new Question("", ""),
     let questions = [
         new Question("Who is this for?", "Teachers who wants to randomly assign students to seats or groups"),
         new Question("Can I customize the layout for each classroom?", "Yes, you can!"),
         new Question("How does it work?"),
+        new Question("Does it cost?", "No it's free!")
     ];
-
 
 
     async function changeText() {
@@ -60,12 +59,12 @@
 
 <div class="ml-20">
     <h1 class="mt-40 font-bold">
-        <div class="text-7xl">Randomize seating</div>
-        <div class="text-4xl mt-2">
+        <title class="text-7xl">Randomize seating</title>
+        <h2 class="text-4xl mt-2">
             and improve <span class=" bg-cyan-600 text-white px-2 py-1 rounded"
                 >{currentText}</span
             >
-        </div>
+        </h2>
     </h1>
 
     <div class="my-6 font-light text-lg">

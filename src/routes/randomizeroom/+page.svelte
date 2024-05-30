@@ -2,6 +2,8 @@
     import { user, schoolData } from "$lib/firebase";
     import {Student, Class, Seat, Room} from "$lib/classes.ts"
 
+    import { svgColor } from "$lib/controller";
+
     let classA = new Class("Class A", [
     "John Doe",
     "Jane Smith",
@@ -402,8 +404,15 @@ function moveStudents(student1: Student, student2:Student)
 
     <div class="ml-5">
 
-<button on:click={() => zoom("+")} class="btn btn-neutral">+</button>
-<button on:click={() => zoom("-")} class="btn btn-neutral">-</button>
+<button on:click={() => zoom("+")} class="btn btn-neutral"><svg class="w-[28px] h-[28px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={$svgColor} viewBox="0 0 24 24">
+    <path fill-rule="evenodd" d="M21.707 21.707a1 1 0 0 1-1.414 0l-3.5-3.5a1 1 0 0 1 1.414-1.414l3.5 3.5a1 1 0 0 1 0 1.414ZM2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9-3a1 1 0 1 0-2 0v2H7a1 1 0 0 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0-2h-2V7Z" clip-rule="evenodd"/>
+  </svg>
+  
+  </button>
+<button on:click={() => zoom("-")} class="btn btn-neutral"><svg class="w-[28px] h-[28px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={$svgColor} viewBox="0 0 24 24">
+    <path fill-rule="evenodd" d="M21.707 21.707a1 1 0 0 1-1.414 0l-3.5-3.5a1 1 0 0 1 1.414-1.414l3.5 3.5a1 1 0 0 1 0 1.414ZM2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm4 0a1 1 0 0 0 1 1h6a1 1 0 1 0 0-2H7a1 1 0 0 0-1 1Z" clip-rule="evenodd"/>
+  </svg>
+  </button>
 
 
 
@@ -456,12 +465,11 @@ function moveStudents(student1: Student, student2:Student)
 
                 </div>
 
-                    
+    
                 {:else}
                     <div
-                        class="text-2xl btn btn-disabled"
+                        class="text-2xl btn btn-disabled "
                         style="width: {boxWidth}px; height: {boxHeight}px;"
-
                     ></div>
                 {/if}
             {/each}
