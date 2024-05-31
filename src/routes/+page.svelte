@@ -59,12 +59,12 @@
 
 <div class="ml-20">
     <h1 class="mt-40 font-bold">
-        <title class="text-7xl">Randomize seating</title>
-        <h2 class="text-4xl mt-2">
+        <div class="text-7xl">Randomize seating</div>
+        <div class="text-4xl mt-2">
             and improve <span class=" bg-cyan-600 text-white px-2 py-1 rounded"
                 >{currentText}</span
             >
-        </h2>
+        </div>
     </h1>
 
     <div class="my-6 font-light text-lg">
