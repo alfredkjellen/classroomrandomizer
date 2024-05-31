@@ -3,37 +3,38 @@
     import { Student, Class, Seat, Room } from "$lib/classes.ts";
 
     let classA = new Class("Class A", [
-        "John",
-        "Jane",
-        "Michael",
-        "Sara",
-        "David",
-        "Emily",
-        "Daniel",
-        "Olivia",
-        "Matthew",
-        "Ava",
-        "William",
-        "Sophia",
-        "James",
-        "Isabella",
-        "Joseph",
-        "Charlotte",
-        "David",
-        "Abigail",
-        "Andrew",
-        "Elizabeth",
-        "Joshua",
-        "Grace",
-        "Daniel",
-        "Emily",
-        "Samuel",
-        "Madison",
-        "Christopher",
-        "Chloe",
-        "Andrew",
-        "Victoria",
-    ]);
+  'Abigail',
+  'Amellia',
+  'Andrew',
+  'Anthony',
+  'Ariana',
+  'Ava',
+  'Avery',
+  'Christopher',
+  'Daniel',
+  'David',
+  'Ella',
+  'Emily',
+  'Emma',
+  'Ethan',
+  'Grace',
+  'Harper',
+  'Isabella',
+  'Jacob',
+  'John',
+  'Joseph',
+  'Joshua',
+  'Madison',
+  'Matthew',
+  'Michael',
+  'Nathan',
+  'Noah',
+  'Olivia',
+  'Ryan',
+  'Sarah',
+  'Sophia'
+]);
+
 
     let room2 = new Room("Room 2", [
         [
@@ -273,41 +274,55 @@
     };
   });
 
-    function handleClick(student: Student, event: MouseEvent) {
-        event.stopPropagation(); // Prevent event from propagating to the window
+    
+function handleClick(student: Student, event: MouseEvent) {
+  event.stopPropagation(); // Prevent event from propagating to the window
 
-        let isClicked = student.isClicked;
+  let isClicked = student.isClicked;
 
-        student.isClicked = !isClicked;
-        currentRoom.layout = currentRoom.layout;
+  student.isClicked = !isClicked;
+  currentRoom.layout = currentRoom.layout;
 
-        if (clickedStudent1 === undefined && student.name !== "") {
-            clickedStudent1 = student;
-        } else if (
-            clickedStudent2 === undefined &&
-            clickedStudent1 !== undefined
-        ) {
-            clickedStudent2 = student;
-            moveStudents(clickedStudent1, clickedStudent2);
-            clickedStudent1.isClicked = false;
-            clickedStudent2.isClicked = false;
-            clickedStudent1 = undefined;
-            clickedStudent2 = undefined;
+
+
+    if (clickedStudent1 === undefined && student.name !== "") {
+        clickedStudent1 = student;
+    } else if (clickedStudent2 === undefined && clickedStudent1 !== undefined) {
+        clickedStudent2 = student;
+        moveStudents(clickedStudent1, clickedStudent2);
+
+        clickedStudent1 = undefined;
+        clickedStudent2 = undefined;
+        
+    }
+}
+
+
+
+function moveStudents(student1: Student, student2:Student)
+{
+
+    activeStudents = activeStudents.map((s: Student) => {
+        if(s.name === student1.name)
+        {
+            s = student2;
         }
-    }
+        else if(s.name === student2.name)
+        {
+            s = student1;
+        }
+        s.isClicked = false;
+        return s;
+    });
+    activeStudents = [...activeStudents];
 
-    function moveStudents(student1: Student, student2: Student) {
-        currentRoom.layout = currentRoom.layout.map((row) =>
-            row.map((box) => {
-                if (box.student === student1) {
-                    box.student = student2;
-                } else if (box.student === student2) {
-                    box.student = student1;
-                }
-                return box;
-            }),
-        );
-    }
+    updateRoom();
+}
+
+
+
+
+
 
     //#region Presense
 

@@ -26,7 +26,7 @@
         new Question("Who is this for?", "Teachers who wants to randomly assign students to seats or groups"),
         new Question("Can I customize the layout for each classroom?", "Yes, you can!"),
         new Question("How does it work?"),
-        new Question("Does it cost?", "No it's free!")
+        new Question("Does it cost?", "No, it's free!")
     ];
 
 

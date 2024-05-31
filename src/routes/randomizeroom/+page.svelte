@@ -5,36 +5,34 @@
     import { svgColor } from "$lib/controller";
 
     let classA = new Class("Class A", [
-    "John Doe",
-    "Jane Smith",
-    "Michael Johnson",
-    "Sara Davis",
-    "David Wilson",
-    "Emily Brown",
-    "Daniel Taylor",
-    "Olivia Martinez",
-    "Matthew Anderson",
-    "Ava Thomas",
-    "William Garcia",
-    "Sophia Robinson",
-    "James Clark",
-    "Isabella Lewis",
-    "Joseph Lee",
-    "Charlotte Walker",
-    "David Hernandez",
-    "Abigail Hall",
-    "Andrew Young",
-    "Elizabeth Allen",
-    "Joshua King",
-    "Grace Hill",
-    "Daniel Scott",
-    "Emily Green",
-    "Samuel Baker",
-    "Madison Adams",
-    "Christopher Turner",
-    "Chloe Mitchell",
-    "Andrew Rodriguez",
-    "Victoria Turner"
+  'Ryan Anderson',
+  'Ella Anderson',
+  'Michael Brown',
+  'Jacob Conner',
+  'Joshua Davis',
+  'Emily Davis',
+  'Nathan Garcia',
+  'Madison Garcia',
+  'Ethan Gonzalez',
+  'Amellia Gonzalez',
+  'Grace Jackson',
+  'Joseph Johnson',
+  'Isabella Johnson',
+  'Matthew Jones',
+  'Olivia Jones',
+  'David Martinez',
+  'Avery Martinez',
+  'Ava Millar',
+  'Daniel Miller',
+  'Ariana Ramirez',
+  'Noah Rodriguez',
+  'Abigail Rodriguez',
+  'Emma Smith',
+  'John Thomas',
+  'Sarah Thomas',
+  'Andrew Wilson',
+  'Sophia Williams',
+  'Christopher Williams',
     ]);
 
     let room2 = new Room("Room 2", [
@@ -175,8 +173,7 @@ function handleClick(student: Student, event: MouseEvent) {
     } else if (clickedStudent2 === undefined && clickedStudent1 !== undefined) {
         clickedStudent2 = student;
         moveStudents(clickedStudent1, clickedStudent2);
-        clickedStudent1.isClicked = false;
-        clickedStudent2.isClicked = false;
+
         clickedStudent1 = undefined;
         clickedStudent2 = undefined;
         
@@ -187,24 +184,23 @@ function handleClick(student: Student, event: MouseEvent) {
 
 function moveStudents(student1: Student, student2:Student)
 {
-    currentRoom.layout = currentRoom.layout.map((row) => row.map((box) => {
-       
-       
-       
-       
-       
-        if(box.student === student1)
-        {
-            box.student = student2;
-        }
-        else if(box.student === student2)
-        {
-            box.student = student1;
-        }
-        return box;
-    }));
 
 
+    activeStudents = activeStudents.map((s: Student) => {
+        if(s.name === student1.name)
+        {
+            s = student2;
+        }
+        else if(s.name === student2.name)
+        {
+            s = student1;
+        }
+        s.isClicked = false;
+        return s;
+    });
+    activeStudents = [...activeStudents];
+
+    updateRoom();
 }
 
 
@@ -234,7 +230,7 @@ function moveStudents(student1: Student, student2:Student)
             activeStudents.push(student);
         }
         else{
-            activeStudents = activeStudents.filter((s: Student) => s.name !== student.name);
+            activeStudents = activeStudents.filter((s: Student) => s !== student);
         }
 
         activeStudents = [...activeStudents];
@@ -274,7 +270,7 @@ function moveStudents(student1: Student, student2:Student)
 
 
     let boxWidth = 150;
-    let boxHeight = 75;
+    let boxHeight = 65;
     let factor = 0.05;
 
     function zoom(operation: string) {

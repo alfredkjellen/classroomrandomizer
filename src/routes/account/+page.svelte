@@ -59,6 +59,9 @@ async function deleteUser() {
     try {
       const auth = getAuth();
       const currentUser = auth.currentUser;
+        
+      let uid = currentUser?.uid;
+
 
       if (currentUser) {
         // Prompt the user to re-authenticate with Google Sign-In
@@ -74,14 +77,13 @@ async function deleteUser() {
       }
 
       // Delete the user's data from Firestore
-      const userDocRef = doc(db, "users", currentUser?.uid || "");
+      const userDocRef = doc(db, "users", uid || "");
       await deleteDoc(userDocRef);
 
       // Reset the input value
       inputValue = "";
-
       userIsDeleted = true;
-      
+    
 
     }
     catch(e)

@@ -5,26 +5,36 @@
 
 
     let class1 = new Class("Class1", [
-        "Student1",
-        "Student2",
-        "Student3",
-        "Student4",
-        "Student5",
-        "Student6",
-        "Student7",
-        "Student8",
-        "Student9",
-        "Student10",
-        "Student11",
-        "Student12",
-        "Student13",
-        "Student14",
-        "Student15",
-        "Student16",
-        "Student17",
-        "Student18",
-        "Student19",
-        "Student20",
+        
+  'Ryan Anderson',
+  'Ella Anderson',
+  'Michael Brown',
+  'Jacob Conner',
+  'Joshua Davis',
+  'Emily Davis',
+  'Nathan Garcia',
+  'Madison Garcia',
+  'Ethan Gonzalez',
+  'Amellia Gonzalez',
+  'Grace Jackson',
+  'Joseph Johnson',
+  'Isabella Johnson',
+  'Matthew Jones',
+  'Olivia Jones',
+  'David Martinez',
+  'Avery Martinez',
+  'Ava Millar',
+  'Daniel Miller',
+  'Ariana Ramirez',
+  'Noah Rodriguez',
+  'Abigail Rodriguez',
+  'Emma Smith',
+  'John Thomas',
+  'Sarah Thomas',
+  'Andrew Wilson',
+  'Sophia Williams',
+  'Christopher Williams',
+
     ]);
 
     let room1 = new Room("Room1", [
@@ -131,8 +141,7 @@ function handleClick(student: Student, event: MouseEvent) {
     } else if (clickedStudent2 === undefined && clickedStudent1 !== undefined) {
         clickedStudent2 = student;
         moveStudents(clickedStudent1, clickedStudent2);
-        clickedStudent1.isClicked = false;
-        clickedStudent2.isClicked = false;
+
         clickedStudent1 = undefined;
         clickedStudent2 = undefined;
         
@@ -143,25 +152,29 @@ function handleClick(student: Student, event: MouseEvent) {
 
 function moveStudents(student1: Student, student2:Student)
 {
-    currentRoom.layout = currentRoom.layout.map((row) => row.map((box) => {
-       
-       
-       
-       
-       
-        if(box.student === student1)
-        {
-            box.student = student2;
-        }
-        else if(box.student === student2)
-        {
-            box.student = student1;
-        }
-        return box;
-    }));
 
 
+    activeStudents = activeStudents.map((s: Student) => {
+        if(s.name === student1.name)
+        {
+            s = student2;
+        }
+        else if(s.name === student2.name)
+        {
+            s = student1;
+        }
+        s.isClicked = false;
+        return s;
+    });
+    activeStudents = [...activeStudents];
+
+    updateStudents();
 }
+
+
+
+
+
 
 
 
@@ -392,8 +405,6 @@ function moveStudents(student1: Student, student2:Student)
             </div>
         </div>
     {/if}
-
-
 
 
     <div class="ml-5">
