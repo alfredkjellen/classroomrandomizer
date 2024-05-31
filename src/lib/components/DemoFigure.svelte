@@ -35,7 +35,6 @@
   'Sophia'
 ]);
 
-
     let room2 = new Room("Room 2", [
         [
             new Seat(true),
@@ -298,7 +297,6 @@ function handleClick(student: Student, event: MouseEvent) {
 }
 
 
-
 function moveStudents(student1: Student, student2:Student)
 {
 
@@ -328,20 +326,26 @@ function moveStudents(student1: Student, student2:Student)
 
     function handlePresense(student: Student) {
         student.isPresent = !student.isPresent;
-        allStudents = [...allStudents];
+        student.isClicked = false;
+        currentRoom.layout = currentRoom.layout;
 
-        if (student.isPresent) {
+        allStudents = allStudents.map((s) => {
+        if (s.name === student.name) {
+            return student;
+        }
+        return s;
+    });
+
+        if(student.isPresent){
             activeStudents.push(student);
-        } else {
-            activeStudents = activeStudents.filter(
-                (s: Student) => s.name !== student.name,
-            );
+        }
+        else{
+            activeStudents = activeStudents.filter((s: Student) => s.name !== student.name);
         }
 
         activeStudents = [...activeStudents];
         updateRoom();
     }
-
     function updateRoom() {
         let studentList = activeStudents.slice();
 
@@ -456,27 +460,7 @@ function moveStudents(student1: Student, student2:Student)
         {/if}
     </div>
 
-    {#if studentsNotAssigned.length > 0 && currentRoom.name !== "Choose room"}
-        <div>
-            <div class="dropdown dropdown-hover">
-                <div
-                    role="button"
-                    class="btn m-1 btn-wide btn-warning btn-active no-animation"
-                >
-                    Students not assigned
-                </div>
-                <ul
-                    class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
-                >
-                    {#each studentsNotAssigned as student}
-                        <li>
-                            <button>{student.name}</button>
-                        </li>
-                    {/each}
-                </ul>
-            </div>
-        </div>
-    {/if}
+   
 </div>
 
 <div class=" ml-72 mt-6">
@@ -498,7 +482,7 @@ function moveStudents(student1: Student, student2:Student)
                     <button
                     on:click={(event) => handleClick(currentRoom.layout[i][j].student, event)}
                     class={`btn btn-neutral text-xs btn-sm hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? 'border-primary text-primary' : ''}`}
-                        style="width: 100px;"
+                        style="width: 98px;"
 
 
                     >
@@ -515,7 +499,7 @@ function moveStudents(student1: Student, student2:Student)
                 {:else}
                     <div
                         class="btn btn-disabled btn-sm"
-                        style="width: 100px;"
+                        style="width: 98px;"
                     ></div>
                 {/if}
             {/each}

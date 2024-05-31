@@ -230,7 +230,7 @@ function moveStudents(student1: Student, student2:Student)
             activeStudents.push(student);
         }
         else{
-            activeStudents = activeStudents.filter((s: Student) => s !== student);
+            activeStudents = activeStudents.filter((s: Student) => s.name !== student.name);
         }
 
         activeStudents = [...activeStudents];

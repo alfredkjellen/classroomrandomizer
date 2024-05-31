@@ -6,15 +6,10 @@
     import { auth, user, userData, schoolData, db } from "$lib/firebase";
     import { doc, writeBatch, getDoc, deleteDoc, deleteField } from "firebase/firestore";
     import { getAuth, deleteUser as deleteAuthUser, GoogleAuthProvider, reauthenticateWithCredential } from "firebase/auth";
-    import { goto } from "$app/navigation";
-    import SignupButton from "$lib/components/SignupButton.svelte";
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
 
     let inputValue = "";
     let userIsDeleted = false;
-
-
-
 
 
 
@@ -36,6 +31,9 @@ async function deleteSchool()
         const batch = writeBatch(db);
 
         batch.delete(doc(db, "schools", $schoolData!.name));
+        batch.update(doc(db, "users", $user!.uid), {
+            school: deleteField()
+        });
 
         await batch.commit();
     }
@@ -51,16 +49,16 @@ async function deleteSchool()
 }
 
 
-
+let uid:any = "";
 
 async function deleteUser() {
-   {
+   
 
     try {
       const auth = getAuth();
       const currentUser = auth.currentUser;
         
-      let uid = currentUser?.uid;
+       uid = currentUser?.uid;
 
 
       if (currentUser) {
@@ -74,15 +72,20 @@ async function deleteUser() {
 
         // Delete the user's authentication account
         await deleteAuthUser(currentUser);
-      }
 
-      // Delete the user's data from Firestore
-      const userDocRef = doc(db, "users", uid || "");
+        // Delete the user's data from Firestore
+      const userDocRef = doc(db, "users", currentUser.uid || "");
       await deleteDoc(userDocRef);
 
       // Reset the input value
       inputValue = "";
       userIsDeleted = true;
+
+
+
+
+      }
+
     
 
     }
@@ -90,8 +93,6 @@ async function deleteUser() {
     {
         alert(e);
     }
-
-  }
 
 }
 

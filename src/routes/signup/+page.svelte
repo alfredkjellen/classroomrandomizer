@@ -166,7 +166,7 @@
         >
 
         {:else}
-        <div class="btn btn-accent no-animation btn-active">
+        <div style="cursor: default;" class="btn btn-accent no-animation btn-active">
             <svg
                 class="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -183,6 +183,7 @@
                 />
             </svg>
             {email}</div>
+
         
 
 
