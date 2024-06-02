@@ -13,6 +13,7 @@ export class Seat {
     student: Student = new Student("");
     isAvailable: boolean;
 
+
     constructor(isAvailable: boolean) {
         this.isAvailable = isAvailable;
     }

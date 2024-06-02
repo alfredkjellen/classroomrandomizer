@@ -16,6 +16,10 @@
 
 <html lang="ts" data-theme="{$themeStore}">
 
+
+
+
+
 <nav class="navbar justify-between bg-base-200 h-0.5">
     
     <ul class="hidden menu sm:menu-horizontal gap-2">

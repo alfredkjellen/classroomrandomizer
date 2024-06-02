@@ -144,6 +144,7 @@ let clickedStudent2: any = undefined;
 
 
 
+
 function resetClickedStatus() {
   currentRoom.layout.forEach(row => {
     row.forEach(seat => {
@@ -153,13 +154,34 @@ function resetClickedStatus() {
 
     clickedStudent1 = undefined;
     clickedStudent2 = undefined;
+
+
   currentRoom.layout = currentRoom.layout; // Trigger reactivity
 }
 
 window.addEventListener('click', resetClickedStatus);
 
-function handleClick(student: Student, event: MouseEvent) {
+let i1:any = undefined;
+let j1:any = undefined;
+let i2:any = undefined;
+let j2:any = undefined;
+
+
+function handleClick(student: Student, event: MouseEvent, i : number, j: number) {
   event.stopPropagation(); // Prevent event from propagating to the window
+
+
+
+    if(i1 === undefined && j1 === undefined)
+    {
+        i1 = i;
+        j1 = j;
+    }
+    else if(i2 === undefined && j2 === undefined)
+    {
+        i2 = i;
+        j2 = j;
+    }
 
   let isClicked = student.isClicked;
 
@@ -172,19 +194,59 @@ function handleClick(student: Student, event: MouseEvent) {
         clickedStudent1 = student;
     } else if (clickedStudent2 === undefined && clickedStudent1 !== undefined) {
         clickedStudent2 = student;
-        moveStudents(clickedStudent1, clickedStudent2);
+
+        if(clickedStudent2.name === "")
+        {
+        moveStudents(clickedStudent1, clickedStudent2, i1, j1, i2, j2);
+        }
+        else{
+            moveStudents(clickedStudent1, clickedStudent2);
+        }
+
 
         clickedStudent1 = undefined;
         clickedStudent2 = undefined;
-        
+        i1 = undefined;
+        j1 = undefined;
+        i2 = undefined;
+        j2 = undefined;
+
     }
 }
 
 
-
-function moveStudents(student1: Student, student2:Student)
+function moveStudents(student1: Student, student2:Student, i1?: any, j1?: any, i2?: any, j2?: any)
 {
 
+    if(student2.name === "")
+    {
+        currentRoom.layout[i2][j2].student = student1;
+        currentRoom.layout[i2][j2].student.isClicked = false;
+        currentRoom.layout[i2][j2].student = {...currentRoom.layout[i2][j2].student};
+
+        currentRoom.layout[i1][j1].student = new Student("");
+        currentRoom.layout[i1][j1].student.isClicked = false;
+        currentRoom.layout[i1][j1].student = {...currentRoom.layout[i1][j1].student};
+
+        activeStudents = [];
+
+        for(let i =0; i < currentRoom.layout.length; i++)
+        {
+            for(let j = 0; j < currentRoom.layout[i].length; j++)
+            {
+
+                if(currentRoom.layout[i][j].isAvailable)
+                {
+                activeStudents.push(currentRoom.layout[i][j].student);
+                activeStudents = [...activeStudents];
+                }
+            }
+        }
+
+    }
+
+
+    else{
 
     activeStudents = activeStudents.map((s: Student) => {
         if(s.name === student1.name)
@@ -198,6 +260,9 @@ function moveStudents(student1: Student, student2:Student)
         s.isClicked = false;
         return s;
     });
+
+}
+
     activeStudents = [...activeStudents];
 
     updateRoom();
@@ -207,15 +272,11 @@ function moveStudents(student1: Student, student2:Student)
 
 
 
-//#endregion
 
-
-//#region Presense
-
+    //#region Presense
 
     function handlePresense(student: Student) {
         student.isPresent = !student.isPresent;
-
         student.isClicked = false;
         currentRoom.layout = currentRoom.layout;
 
@@ -238,22 +299,35 @@ function moveStudents(student1: Student, student2:Student)
     }
 
 
+
+
+
+
+
     function updateRoom(){
 
-        let studentList = activeStudents.slice();
+
+        let studentList = activeStudents.slice();        
 
         for(let i = 0; i < currentRoom.layout.length; i++){
             for(let j = 0; j < currentRoom.layout[i].length; j++){
                 if(currentRoom.layout[i][j].isAvailable && studentList.length > 0)
                 {
+                
+
+                
                     currentRoom.layout[i][j].student = studentList.shift();
                     currentRoom.layout[i][j].student = {...currentRoom.layout[i][j].student};
                 }
-                else{
+                else if(currentRoom.layout[i][j].isAvailable){
+
                     currentRoom.layout[i][j].student = new Student("");
+
                 }
             }
         }
+
+        activeStudents = [...activeStudents];
         
     }
 
@@ -267,14 +341,11 @@ function moveStudents(student1: Student, student2:Student)
 
 
     //#region Zoom
-
-
     let boxWidth = 150;
     let boxHeight = 65;
     let factor = 0.05;
 
     function zoom(operation: string) {
-    
         if(operation === "+")
         {
             boxWidth += boxWidth * factor;
@@ -290,9 +361,6 @@ function moveStudents(student1: Student, student2:Student)
 
 
     //#endregion
-
-
-
 
 
 </script>
@@ -316,9 +384,7 @@ function moveStudents(student1: Student, student2:Student)
     </div>
 
     <div class="dropdown dropdown-hover">
-        
-        
-
+    
         <button
             class="btn btn-wide btn-neutral"
             on:click={() => selectClass(currentClass)}
@@ -350,8 +416,7 @@ function moveStudents(student1: Student, student2:Student)
 
         <ul
             class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
-        >
-            
+        >   
             <div class=" menu-title flex justify-end">Present</div>
             
             {#each allStudents as student}
@@ -396,8 +461,6 @@ function moveStudents(student1: Student, student2:Student)
 
 
 
-
-
     <div class="ml-5">
 
 <button on:click={() => zoom("+")} class="btn btn-neutral"><svg class="w-[28px] h-[28px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={$svgColor} viewBox="0 0 24 24">
@@ -416,13 +479,6 @@ function moveStudents(student1: Student, student2:Student)
 
 
 
-
-
-
-
-
-
-
 </div>
 
 
@@ -435,7 +491,6 @@ function moveStudents(student1: Student, student2:Student)
             {#each row as box, j}
                 {#if box.isAvailable}
                     
-                
                 <div class="indicator">
                     <div class="indicator-item indicator-top">
                         {#if currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== ""}
@@ -446,7 +501,7 @@ function moveStudents(student1: Student, student2:Student)
                       </div> 
 
                     <button
-                    on:click={(event) => handleClick(currentRoom.layout[i][j].student, event)}
+                    on:click={(event) => handleClick(currentRoom.layout[i][j].student, event, i, j)}
                     class={`btn btn-neutral text-2xl hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? 'border-primary text-primary' : ''}`}
                         style="width: {boxWidth}px; height: {boxHeight}px;"
 
@@ -461,6 +516,7 @@ function moveStudents(student1: Student, student2:Student)
 
                 </div>
 
+    
     
                 {:else}
                     <div

@@ -114,33 +114,19 @@ Featured on
 </div>
 
 
-<div class="w-screen bg-base-300 h-screen mt-96 flex justify-center">
-
+<div class="w-screen bg-base-300 mt-96 flex justify-center" style="height: 75vh;">
     <div class="font-bold">
-
-
-
-        <div class="text-5xl gap-2 mt-40">Tired of <span class=" bg-error text-white rounded px-2 py-1"
-            >copying</span> the class list 
-
-            
+        <div class="text-5xl gap-2 mt-40">
+            Tired of <span class="bg-error text-white rounded px-2 py-1">copying</span> the class list
         </div>
         <div class="text-3xl mt-3">every time you want to randomize the seating?</div>
-
-
-
-        <div class="text-5xl gap-2 mt-20"><span class=" bg-cyan-600 text-white rounded px-2 py-1"
-            >The solution:</span> Randomize 
-
-            
+        <div class="text-5xl gap-2 mt-20">
+            <span class="bg-cyan-600 text-white rounded px-2 py-1">The solution:</span> Randomize
         </div>
         <div class="text-3xl mt-3">automatically with Student Randomizer</div>
-
-    
-        
-
     </div>
 </div>
+
 
 
 
