@@ -230,10 +230,9 @@
         }
         return array;
     }
-
     function selectRoom(room: Room) {
         currentRoom = room;
-        selectClass(currentClass);
+
     }
 
     function selectClass(c: Class) {
@@ -242,16 +241,10 @@
         allStudents = c.students.slice().map((student) => new Student(student));
 
         randomizedStudents = shuffleArray(allStudents.slice());
-
-        activeStudents = randomizedStudents.slice();
-        activeStudents = [...activeStudents];
-
         updateRoom();
     }
 
-    let clickedStudent1: any = undefined;
-    let clickedStudent2: any = undefined;
-
+    
     function resetClickedStatus() {
         currentRoom.layout.forEach((row) => {
             row.forEach((seat) => {
@@ -261,178 +254,141 @@
 
         clickedStudent1 = undefined;
         clickedStudent2 = undefined;
-        currentRoom.layout = currentRoom.layout; // Trigger reactivity
     }
 
-    onMount(() => {
-    window.addEventListener('click', resetClickedStatus);
+    window.addEventListener("click", resetClickedStatus);
 
-    return () => {
-      window.removeEventListener('click', resetClickedStatus);
-    };
-  });
+    let clickedStudent1: any = undefined;
+    let clickedStudent2: any = undefined;
+    let i1: any = 0;
+    let j1: any = 0;
+    let i2: any = 0;
+    let j2: any = 0;
 
-    
-let i1:any = undefined;
-let j1:any = undefined;
-let i2:any = undefined;
-let j2:any = undefined;
+    function handleClick(
+        student: Student,
+        event: MouseEvent,
+        i: number,
+        j: number,
+    ) {
+        event.stopPropagation();
+        student.isClicked = !student.isClicked;
+        currentRoom.layout[i][j].student = { ...student };
 
-
-function handleClick(student: Student, event: MouseEvent, i : number, j: number) {
-  event.stopPropagation(); // Prevent event from propagating to the window
-
-
-
-    if(i1 === undefined && j1 === undefined)
-    {
-        i1 = i;
-        j1 = j;
-    }
-    else if(i2 === undefined && j2 === undefined)
-    {
-        i2 = i;
-        j2 = j;
-    }
-
-  let isClicked = student.isClicked;
-
-  student.isClicked = !isClicked;
-  currentRoom.layout = currentRoom.layout;
-
-
-    if (clickedStudent1 === undefined && student.name !== "") {
-        clickedStudent1 = student;
-    } else if (clickedStudent2 === undefined && clickedStudent1 !== undefined) {
-        clickedStudent2 = student;
-
-        if(clickedStudent2.name === "")
-        {
-        moveStudents(clickedStudent1, clickedStudent2, i1, j1, i2, j2);
+        if (student.isClicked) {
+            if (clickedStudent1 === undefined) {
+                clickedStudent1 = student;
+                i1 = i;
+                j1 = j;
+            } else if (clickedStudent2 === undefined) {
+                clickedStudent2 = student;
+                i2 = i;
+                j2 = j;
+                moveStudents(clickedStudent1, clickedStudent2);
+                resetClickedStatus();
+            }
         }
-        else{
-            moveStudents(clickedStudent1, clickedStudent2);
-        }
+    }
 
+    function moveStudents(student1: any, student2: any) {
+        let temp = currentRoom.layout[i1][j1].student;
+        currentRoom.layout[i1][j1].student = currentRoom.layout[i2][j2].student;
+        currentRoom.layout[i2][j2].student = temp;
 
+        //renderRoom();
         clickedStudent1 = undefined;
         clickedStudent2 = undefined;
-        i1 = undefined;
-        j1 = undefined;
-        i2 = undefined;
-        j2 = undefined;
-
     }
-}
 
+    function updateRoom() {
+        let studentList: any = randomizedStudents.slice();
 
-
-function moveStudents(student1: Student, student2:Student, i1?: any, j1?: any, i2?: any, j2?: any)
-{
-
-    if(student2.name === "")
-    {
-        currentRoom.layout[i2][j2].student = student1;
-        currentRoom.layout[i2][j2].student.isClicked = false;
-        currentRoom.layout[i2][j2].student = {...currentRoom.layout[i2][j2].student};
-
-        currentRoom.layout[i1][j1].student = new Student("");
-        currentRoom.layout[i1][j1].student.isClicked = false;
-        currentRoom.layout[i1][j1].student = {...currentRoom.layout[i1][j1].student};
-
-        activeStudents = [];
-
-        for(let i =0; i < currentRoom.layout.length; i++)
-        {
-            for(let j = 0; j < currentRoom.layout[i].length; j++)
-            {
-
-                if(currentRoom.layout[i][j].isAvailable)
-                {
-                activeStudents.push(currentRoom.layout[i][j].student);
-                activeStudents = [...activeStudents];
+        for (let i = 0; i < currentRoom.layout.length; i++) {
+            for (let j = 0; j < currentRoom.layout[i].length; j++) {
+                if (
+                    currentRoom.layout[i][j].isAvailable &&
+                    studentList.length > 0
+                ) {
+                    currentRoom.layout[i][j].student = studentList.shift()!;
+                } else if (currentRoom.layout[i][j].isAvailable) {
+                    currentRoom.layout[i][j].student = new Student("");
                 }
             }
         }
-
     }
-
-    else{
-
-    activeStudents = activeStudents.map((s: Student) => {
-        if(s.name === student1.name)
-        {
-            s = student2;
-        }
-        else if(s.name === student2.name)
-        {
-            s = student1;
-        }
-        s.isClicked = false;
-        return s;
-    });
-
-}
-
-    activeStudents = [...activeStudents];
-
-    updateRoom();
-}
-
-
-
-
-
-    //#region Presense
 
     function handlePresense(student: Student) {
-        student.isPresent = !student.isPresent;
         student.isClicked = false;
-        currentRoom.layout = currentRoom.layout;
+        if (student.isPresent) {
 
-        allStudents = allStudents.map((s) => {
-        if (s.name === student.name) {
-            return student;
-        }
-        return s;
-    });
-
-        if(student.isPresent){
-            activeStudents.push(student);
-        }
-        else{
-            activeStudents = activeStudents.filter((s: Student) => s.name !== student.name);
-        }
-
-        activeStudents = [...activeStudents];
-        updateRoom();
-    }
-   
-
-    function updateRoom(){
+            //remove student from room
+            for (let i = 0; i < currentRoom.layout.length; i++) {
+                for (let j = 0; j < currentRoom.layout[i].length; j++) {
+                    if (
+                        currentRoom.layout[i][j].student.name === student.name
+                    ) {
+                        currentRoom.layout[i][j].student = new Student("");
+                        allStudents = allStudents.map((s) => {
+                            if (s.name === student.name) {
+                                s.isPresent = false;
+                            }
+                            return s;
+                        });
 
 
-        let studentList = activeStudents.slice();        
-
-        for(let i = 0; i < currentRoom.layout.length; i++){
-            for(let j = 0; j < currentRoom.layout[i].length; j++){
-                if(currentRoom.layout[i][j].isAvailable && studentList.length > 0)
-                {
-                
-                
-                    currentRoom.layout[i][j].student = studentList.shift();
-                    currentRoom.layout[i][j].student = {...currentRoom.layout[i][j].student};
-                }
-                else if(currentRoom.layout[i][j].isAvailable){
-
-                    currentRoom.layout[i][j].student = new Student("");
-
+                    }
                 }
             }
-        }
 
-        activeStudents = [...activeStudents];
-        
+            //fill the gap of the student
+
+            let studentList:any = [];
+            for (let i = 0; i < currentRoom.layout.length; i++) {
+                for (let j = 0; j < currentRoom.layout[i].length; j++) {
+                    if (
+                        currentRoom.layout[i][j].isAvailable &&
+                        currentRoom.layout[i][j].student.name !== ""
+                    ) {
+                        studentList.push(currentRoom.layout[i][j].student);
+                    }
+                }
+            }
+
+            for (let i = 0; i < currentRoom.layout.length; i++) {
+                for (let j = 0; j < currentRoom.layout[i].length; j++) {
+                    if (
+                        currentRoom.layout[i][j].isAvailable && studentList.length > 0
+                    ) {
+                        currentRoom.layout[i][j].student = studentList.shift();
+                    }
+                    else{
+                        currentRoom.layout[i][j].student = new Student("");
+                    }
+                }
+            }
+
+
+
+
+        } else {
+            //add student to room
+
+            let found = false;
+            for (let i = 0; i < currentRoom.layout.length; i++) {
+                for (let j = 0; j < currentRoom.layout[i].length; j++) {
+                    if (
+                        currentRoom.layout[i][j].isAvailable &&
+                        currentRoom.layout[i][j].student.name === "" && !found
+                    ) {
+                        currentRoom.layout[i][j].student = student;
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            
+        }
     }
 
 

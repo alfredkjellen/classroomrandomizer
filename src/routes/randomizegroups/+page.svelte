@@ -84,6 +84,7 @@
         return array;
     }
 
+
     function selectClass(c: Class) {
         currentClass = c;
 
@@ -100,6 +101,9 @@
     $: if ($schoolData && $user) {
         classes = $schoolData?.classes ?? [];
     }
+
+
+
 
 
 
@@ -170,6 +174,8 @@ function moveStudents(student1: Student, student2:Student)
 
     updateStudents();
 }
+
+
 
 
 
@@ -296,6 +302,9 @@ function moveStudents(student1: Student, student2:Student)
 
 
 
+
+
+
     //#region Zoom
     let boxWidth = 150;
     let boxHeight = 75;
@@ -322,6 +331,13 @@ function moveStudents(student1: Student, student2:Student)
 
 
 
+    function update(c:Class)
+    {
+        selectClass(c);
+        updateLayout();
+    }
+
+
 
 
 </script>
@@ -331,7 +347,7 @@ function moveStudents(student1: Student, student2:Student)
     <div class="dropdown dropdown-hover">
         <button
             class="btn btn-wide btn-neutral"
-            on:click={() => selectClass(currentClass)}
+            on:click={() => update(currentClass)}
         >
             {currentClass.name}
         </button>
@@ -340,7 +356,7 @@ function moveStudents(student1: Student, student2:Student)
         >
             {#each classes as c}
                 <li>
-                    <button on:click={() => selectClass(c)}>{c.name}</button>
+                    <button on:click={() => update(c)}>{c.name}</button>
                 </li>
             {/each}
         </ul>

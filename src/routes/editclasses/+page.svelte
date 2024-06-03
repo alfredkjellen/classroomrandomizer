@@ -99,8 +99,10 @@
             let result = "";
 
             if (names.length > 1) {
-                let firstName = names.shift();
-                names.push(firstName);
+
+                let lastName = names.pop();
+                names.unshift(lastName);
+                
                 result = names.join(" ");
             } else {
                 result = names[0];

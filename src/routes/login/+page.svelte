@@ -34,22 +34,20 @@
         if (schoolExists) {
             if ($schoolData?.name === schoolName) {
                 
-                //alert("Already logged in");
-                //goto("/roomrandomizer");
             } else {
                 if (await checkPassword()) {
                     await confirmUser();
                     
-                    //alert("Password correct");
-                    goto("/roomrandomizer");
+
+                    goto("/randomizeroom");
                 }
             }
         }
         else {
-            //alert(schoolExists);
+
         }
     }
-    //TODO CHECK IF USER ALREADY EXISTS
+
     async function confirmUser() {
         
         try {
@@ -73,7 +71,6 @@
         const docSnap = await getDoc(ref);
 
         schoolExists = docSnap.exists();
-        alert(schoolName);
     
     }
 
