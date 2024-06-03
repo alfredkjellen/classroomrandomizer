@@ -2,7 +2,32 @@
     import { user, schoolData } from "$lib/firebase";
     import { Student, Class, Seat, Room } from "$lib/classes.ts";
 
+    import { onMount } from "svelte";
+    import { browser } from "$app/environment";
+
+let mounted = false;
+
+onMount(() => {
+    if (browser) {
+        window.addEventListener("click", resetClickedStatus);
+        mounted = true;
+    }
+
+    return () => {
+        if (mounted && browser) {
+            window.removeEventListener("click", resetClickedStatus);
+        }
+    };
+});
+
     import { svgColor } from "$lib/controller";
+
+
+    onMount(() => {
+        window.addEventListener("click", resetClickedStatus);
+    });
+
+
 
     let classA = new Class("Class A", [
         "Ryan Anderson",
@@ -327,9 +352,12 @@
 
         clickedStudent1 = undefined;
         clickedStudent2 = undefined;
+
+        renderRoom();
+
     }
 
-    window.addEventListener("click", resetClickedStatus);
+    
 
     let clickedStudent1: any = undefined;
     let clickedStudent2: any = undefined;
@@ -349,11 +377,11 @@
         currentRoom.layout[i][j].student = { ...student };
 
         if (student.isClicked) {
-            if (clickedStudent1 === undefined) {
+            if (clickedStudent1 === undefined && student.name !== "") {
                 clickedStudent1 = student;
                 i1 = i;
                 j1 = j;
-            } else if (clickedStudent2 === undefined) {
+            } else if (clickedStudent2 === undefined && clickedStudent1 !== undefined) {
                 clickedStudent2 = student;
                 i2 = i;
                 j2 = j;
@@ -367,10 +395,6 @@
         let temp = currentRoom.layout[i1][j1].student;
         currentRoom.layout[i1][j1].student = currentRoom.layout[i2][j2].student;
         currentRoom.layout[i2][j2].student = temp;
-
-        //renderRoom();
-        clickedStudent1 = undefined;
-        clickedStudent2 = undefined;
     }
 
     function renderRoom() {
