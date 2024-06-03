@@ -259,7 +259,15 @@
         clickedStudent2 = undefined;
     }
 
-    window.addEventListener("click", resetClickedStatus);
+
+    onMount(() => {
+        window.addEventListener("click", resetClickedStatus);
+        
+    });
+
+
+
+    
 
     let clickedStudent1: any = undefined;
     let clickedStudent2: any = undefined;
