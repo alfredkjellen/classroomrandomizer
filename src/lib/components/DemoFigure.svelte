@@ -232,6 +232,9 @@
     }
     function selectRoom(room: Room) {
         currentRoom = room;
+        if(currentClass.name !== "Choose class"){
+            selectClass(currentClass);
+        }
 
     }
 

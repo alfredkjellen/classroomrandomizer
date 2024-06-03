@@ -277,7 +277,9 @@
 
     function selectRoom(room: Room) {
         currentRoom = room;
-        //selectClass(currentClass);
+        if(currentClass.name !== "Choose class"){
+            selectClass(currentClass);
+        }
     }
 
     function selectClass(c: Class) {
