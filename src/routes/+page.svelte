@@ -57,6 +57,9 @@
 
 
 
+
+
+
 <div class="ml-20">
     <h1 class="mt-40 font-bold">
         <div class="text-7xl">Randomize seating</div>
