@@ -7,7 +7,7 @@
 
 <html lang="ts" data-theme={$themeStore}>
   <nav class="navbar justify-between bg-base-200 h-0.5">
-    <ul class="hidden menu sm:menu-horizontal gap-2">
+    <ul class="hidden menu sm:menu-horizontal">
       <a class="btn btn-ghost text-lg" href="/">
         <img src="/logo-8.png" alt="Logo" class="w-11" />
         Student Randomizer
@@ -74,7 +74,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            fill="currentColor"
+            fill={$svgColor}
             viewBox="0 0 24 24"
           >
             <path
@@ -100,7 +100,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            fill="none"
+            fill={$svgColor}
             viewBox="0 0 24 24"
           >
             <path
@@ -118,7 +118,7 @@
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
-            fill="currentColor"
+            fill={$svgColor}
             viewBox="0 0 24 24"
           >
             <path

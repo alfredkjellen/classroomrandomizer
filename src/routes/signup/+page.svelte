@@ -1,10 +1,11 @@
 <script lang="ts">
     import { auth, userData } from "$lib/firebase";
     import { db, user } from "$lib/firebase";
-    import { doc, getDoc, writeBatch } from "firebase/firestore";
+    import { doc, getDoc, writeBatch, query } from "firebase/firestore";
     import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
     import { goto } from "$app/navigation";
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
+    import { page } from "$app/stores";
 
     async function signInWithGoogle() {
         const provider = new GoogleAuthProvider();
@@ -44,11 +45,10 @@
             try {
                 // Ensure schoolName is valid
                 if (schoolName && schoolName.trim() !== "") {
-                    const ref = doc(db, "schools", schoolName.trim());
 
+                    const ref = doc(db, "schools", schoolName.trim());
                     // Fetch the document
                     const docSnap = await getDoc(ref);
-
                     // Check if the document exists
                     isAvailable = !docSnap.exists();
                 }
@@ -113,43 +113,6 @@
             loadingPassword = false;
         }, 600);
     }
-
-
-    class School {
-        name: string;
-        classes: Class[];
-        rooms: Room[];
-        password: string;
-
-        constructor(username: string, classes: Class[], rooms: Room[], password: string) {
-            this.name = username;
-            this.classes = classes;
-            this.rooms = rooms;
-            this.password = password;
-        }
-    }
-
-    class Class {
-        name: string;
-        students: string[];
-        constructor(name: string, students: string[]) {
-            this.name = name;
-            this.students = students;
-        }
-    }
-
-    class Room {
-        name: string;
-        layout: boolean[][];
-
-        constructor(name: string, layout: boolean[][]) {
-            this.name = name;
-            this.layout = layout;
-        }
-    }
-
-
-    
 
 </script>
 
