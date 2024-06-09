@@ -4,7 +4,7 @@
       WebsiteName,
       WebsiteBaseUrl,
       WebsiteDescription,
-    } from "/Users/alfred.kjellen/Desktop/VisualStudioCodeProjekt/classroomrandomizer/src/config.ts"
+    } from "$lib/config.ts"
   
     import { themeStore } from "$lib/controller.ts"
     import Footer from "$lib/components/Footer.svelte"
