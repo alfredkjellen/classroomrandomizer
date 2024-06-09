@@ -162,6 +162,47 @@
         >
       </label>
     </ul>
+
+
+    <div class="dropdown sm:hidden">
+      <!-- svelte-ignore a11y-label-has-associated-control -->
+      <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+      <label tabindex="0" class="btn btn-ghost btn-circle">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          ><path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h7"
+          /></svg
+        >
+      </label>
+      <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+      <ul
+        tabindex="0"
+        class="menu menu-lg dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 font-bold gap-2"
+      >
+        <li><a href="/randomizeroom">Randomize classroom</a></li>
+        <li><a href="/randomizegroups">Randomize groups</a></li>
+        <li><a href="/editclassrooms">Edit classrooms</a></li>
+        <li><a href="/editclasses">Edit classes</a></li>
+
+        <LoginButton size="xl" svgColor={$svgColor}></LoginButton>
+
+        <SignupButton size="xl"></SignupButton>
+      </ul>
+    </div>
+
+    
+
+
+
+
   </nav>
 
   <div class="min-h-screen">

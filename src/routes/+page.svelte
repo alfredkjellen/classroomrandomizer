@@ -8,6 +8,7 @@
   
     import { themeStore } from "$lib/controller.ts"
     import Footer from "$lib/components/Footer.svelte"
+    import SignupButton from "$lib/components/SignupButton.svelte";
   
     const ldJson = {
       "@context": "https://schema.org",
@@ -241,7 +242,7 @@
           Student randomizer
         </div>
         <div
-          class="text-2xl md:text-5xl font-bold px-2"
+          class="text-3xl md:text-5xl font-bold px-2"
           style="line-height: 1.2;"
         >
           The simplest way to randomize seating
@@ -251,6 +252,10 @@
           A tool for teachers to randomly assign students to seats in customized
           classrooms
         </div>
+
+
+
+        <button class="mt-10 btn btn-accent btn-circle btn-wide">Sign up</button>
   
         <div class="flex justify-center mt-20 items-center text-sm">
           Featured on
