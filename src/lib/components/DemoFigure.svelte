@@ -408,18 +408,15 @@
     //#endregion
 
 
-
     //#region screen width
-
-
-
     let screenWidth = 1440;
     $:if(browser) {
        screenWidth = window.innerWidth;
     }
     let lgBtnFactor = 0.3;
     let lgBtnSize = 259;
-
+    let smBtnSize = 98;
+    let smBtnFactor = 0.10;
 
     function handleResize() {
       if(browser) {
@@ -427,10 +424,7 @@
       }
 
     }
-    
-
-
-
+  
 //#endregion
     
 
@@ -554,15 +548,14 @@
                   on:click={(event) =>
                     handleClick(currentRoom.layout[i][j].student, event, i, j)}
                   class={`btn btn-neutral text-xs btn-sm hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? "border-primary text-primary" : ""}`}
-                  style={`width: ${screenWidth < 768 ? `${screenWidth * 0.12}px` : "98px"};`}
+                  style={`width: ${screenWidth < 768 ? `${screenWidth * smBtnFactor}px` : `${smBtnSize}px`};`}
                 >
-
-                
+              
                   {currentRoom.layout[i][j].student.name}
                 </button>
               </div>
             {:else}
-              <div class="btn btn-disabled btn-sm" style={`width: ${screenWidth < 768 ? `${screenWidth * 0.12}px` : "98px"};`}></div>
+              <div class="btn btn-disabled btn-sm" style={`width: ${screenWidth < 768 ? `${screenWidth * smBtnFactor}px` : `${smBtnSize}px`};`}></div>
             {/if}
           {/each}
         </div>
