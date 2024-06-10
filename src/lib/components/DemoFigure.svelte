@@ -408,12 +408,39 @@
     }
   
     //#endregion
+
+
+
+    //#region screen width
+    let screenWidth = window.innerWidth;
+    let lgBtnFactor = 0.3;
+    let lgBtnSize = 259;
+
+    function handleResize() {
+      screenWidth = window.innerWidth
+    }
+
+    onMount(() => {
+      window.addEventListener("resize", handleResize)
+      return () => {
+      window.removeEventListener("resize", handleResize)
+      }
+    })
+
+//#endregion
+    
+
+
+
   </script>
   
   <div class="flex justify-center">
     <div class="dropdown dropdown-hover">
       <div class="tooltip tooltip-open" data-tip="Select room">
-        <div role="button" class="btn m-1 btn-wide btn-neutral btn-sm">
+        <div role="button" class="btn m-1 btn-wide btn-neutral btn-sm"
+        
+        
+        style={`width: ${screenWidth < 768 ? `${screenWidth * lgBtnFactor}px` : `${lgBtnSize}px;`}`}>
           {currentRoom.name}
         </div>
       </div>
@@ -433,7 +460,11 @@
       <div class="tooltip tooltip-open tooltip-accent" data-tip="Randomize">
         <button
           class="btn m-1 btn-wide btn-neutral btn-sm"
+
+          style={`width: ${screenWidth < 768 ? `${screenWidth * lgBtnFactor}px` : `${lgBtnSize}px;`}`}
+
           on:click={() => selectClass(currentClass)}
+          
         >
           {currentClass.name}
           <button class="btn btn-xs btn-accent">
@@ -471,7 +502,7 @@
   
     <div class="dropdown dropdown-hover">
       <div class="tooltip tooltip-open" data-tip="Check presense">
-        <button class="btn m-1 btn-wide btn-neutral btn-sm"> Students </button>
+        <button class="btn m-1 btn-wide btn-neutral btn-sm <div class="         style={`width: ${screenWidth < 768 ? `${screenWidth * lgBtnFactor}px` : `${lgBtnSize}px;`}`}> Students </button>
       </div>
       {#if currentClass.name !== "Choose class"}
         <ul
@@ -519,13 +550,15 @@
                   on:click={(event) =>
                     handleClick(currentRoom.layout[i][j].student, event, i, j)}
                   class={`btn btn-neutral text-xs btn-sm hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? "border-primary text-primary" : ""}`}
-                  style="width: 98px;"
+                  style={`width: ${screenWidth < 768 ? `${screenWidth * 0.12}px` : "98px"};`}
                 >
+
+                
                   {currentRoom.layout[i][j].student.name}
                 </button>
               </div>
             {:else}
-              <div class="btn btn-disabled btn-sm" style="width: 98px;"></div>
+              <div class="btn btn-disabled btn-sm" style={`width: ${screenWidth < 768 ? `${screenWidth * 0.12}px` : "98px"};`}></div>
             {/if}
           {/each}
         </div>
