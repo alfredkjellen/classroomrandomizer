@@ -5,22 +5,22 @@
   
     let mounted = false
   
+
     onMount(() => {
       if (browser) {
         window.addEventListener("click", resetClickedStatus)
+    window.addEventListener("resize", handleResize)
         mounted = true
       }
   
       return () => {
         if (mounted && browser) {
           window.removeEventListener("click", resetClickedStatus)
+          window.removeEventListener("resize", handleResize)
         }
       }
     })
   
-    onMount(() => {
-      window.addEventListener("click", resetClickedStatus)
-    })
   
     function renderRoom() {
       currentRoom.layout = currentRoom.layout.map((row) =>
@@ -287,9 +287,7 @@
       renderRoom()
     }
   
-    onMount(() => {
-      window.addEventListener("click", resetClickedStatus)
-    })
+
   
     let clickedStudent1: any = undefined
     let clickedStudent2: any = undefined
@@ -412,20 +410,26 @@
 
 
     //#region screen width
-    let screenWidth = window.innerWidth;
+
+
+
+    let screenWidth = 1440;
+    $:if(browser) {
+       screenWidth = window.innerWidth;
+    }
     let lgBtnFactor = 0.3;
     let lgBtnSize = 259;
 
-    function handleResize() {
-      screenWidth = window.innerWidth
-    }
 
-    onMount(() => {
-      window.addEventListener("resize", handleResize)
-      return () => {
-      window.removeEventListener("resize", handleResize)
+    function handleResize() {
+      if(browser) {
+        screenWidth = window.innerWidth
       }
-    })
+
+    }
+    
+
+
 
 //#endregion
     
