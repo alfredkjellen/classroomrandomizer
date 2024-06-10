@@ -81,7 +81,7 @@
 
 
 
-        <button class="mt-10 btn btn-accent btn-circle btn-wide">Sign up</button>
+        <a href="/signup" class="mt-10 btn btn-accent btn-circle btn-wide">Sign up</a>
   
         <!-- <div class="flex justify-center mt-20 items-center text-sm">
           Featured on

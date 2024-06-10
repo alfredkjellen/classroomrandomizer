@@ -8,6 +8,7 @@
     <nav>
       <span class="footer-title opacity-80">Explore</span>
       <a class="link link-hover mb-1" href="/">Overview</a>
+      <a class="link link-hover mb-1" href="/privacy">Privacy</a>
       <a class="link link-hover my-1" href="/contact">Contact</a>
     </nav>
     <aside>
