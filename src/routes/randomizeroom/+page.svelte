@@ -15,7 +15,7 @@ onMount(() => {
 
     return () => {
         if (mounted && browser) {
-            window.removeEventListener("click", resetClickedStatus);
+            window.removeEventListener("click", resetClickedStatus);            
         }
     };
 });
@@ -518,26 +518,35 @@ onMount(() => {
 
     //#endregion
 
-    //#region random name
+    
+
+
+
+
+    function handleRoomSelection(event:any) {
+  const selectedRoomName = event.target.value;
+  const selectedRoom = rooms.find(room => room.name === selectedRoomName);
+  selectRoom(selectedRoom!);
+}
+
+
+
+
+
 </script>
 
 <div class="flex justify-center mt-1 gap-2">
-    <div class="dropdown">
-        <div tabindex="0" role="button" class="btn btn-wide btn-neutral">
-            {currentRoom.name}
-        </div>
-        <ul
-            class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
-        >
-            {#each rooms as room}
-                <li>
-                    <button on:click={() => selectRoom(room)}
-                        >{room.name}</button
-                    >
-                </li>
-            {/each}
-        </ul>
-    </div>
+    <select class="select select-bordered w-full max-w-xs" on:change={handleRoomSelection}>
+        <option disabled selected>Choose room</option>
+        {#each rooms as room}
+          <option value={room.name}>{room.name}</option>
+        {/each}
+      </select>
+
+
+
+
+
 
     <div class="dropdown">
         <button tabindex="0"
@@ -580,7 +589,7 @@ onMount(() => {
     <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-wide btn-neutral">Students</div>
         {#if currentClass.name !== "Choose class"}
-            <ul tabindex="0"
+            <ul
                 class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
             >
                 <div class=" menu-title flex justify-end">Present</div>
