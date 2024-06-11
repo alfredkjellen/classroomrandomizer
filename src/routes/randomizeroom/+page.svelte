@@ -531,11 +531,21 @@ onMount(() => {
 
 
 
+function handleClassSelection(event:any) {
+  const selectedClassName = event.target.value;
+  const selectedClass = classes.find(c=> c.name === selectedClassName);
+  selectClass(selectedClass!);
+}
+
+
+
+
+
 
 
 </script>
 
-<div class="flex justify-center mt-1 gap-2">
+<div class="flex justify-center mt-1 gap-2 items-center">
     <select class="select select-bordered w-full max-w-xs" on:change={handleRoomSelection}>
         <option disabled selected>Choose room</option>
         {#each rooms as room}
@@ -543,19 +553,18 @@ onMount(() => {
         {/each}
       </select>
 
+      <select class="select select-bordered w-full max-w-xs" on:change={handleClassSelection}>
+        <option disabled selected>Choose class</option>
+        {#each classes as c}
+          <option value={c.name}>{c.name}</option>
+        {/each}
+      </select>
 
-
-
-
-
-    <div class="dropdown">
-        <button tabindex="0"
-            class="btn btn-wide btn-neutral"
-            on:click={() => selectClass(currentClass)}
-        >
-            {currentClass.name}
-            <button class="btn btn-sm btn-accent">
-                <svg
+      <button class="btn btn-sm btn-accent"
+    
+            
+            on:click={() => selectClass(currentClass)}>
+                Randomize<svg
                     class="w-6 h-6 text-gray-800 dark:text-white"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
@@ -573,21 +582,12 @@ onMount(() => {
                     />
                 </svg>
             </button>
-        </button>
 
-        <ul
-            class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
-        >
-            {#each classes as c}
-                <li>
-                    <button on:click={() => selectClass(c)}>{c.name}</button>
-                </li>
-            {/each}
-        </ul>
-    </div>
 
-    <div class="dropdown">
-        <div tabindex="0" role="button" class="btn btn-wide btn-neutral">Students</div>
+    
+
+    <div class="dropdown dropdown-hover">
+        <div  role="button" class="btn btn-wide btn-neutral">Students</div>
         {#if currentClass.name !== "Choose class"}
             <ul
                 class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
