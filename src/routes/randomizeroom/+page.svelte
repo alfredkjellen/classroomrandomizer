@@ -522,7 +522,7 @@ onMount(() => {
 </script>
 
 <div class="flex justify-center mt-1 gap-2">
-    <div class="dropdown dropdown-hover">
+    <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-wide btn-neutral">
             {currentRoom.name}
         </div>
@@ -539,7 +539,7 @@ onMount(() => {
         </ul>
     </div>
 
-    <div class="dropdown dropdown-hover">
+    <div class="dropdown">
         <button tabindex="0"
             class="btn btn-wide btn-neutral"
             on:click={() => selectClass(currentClass)}
