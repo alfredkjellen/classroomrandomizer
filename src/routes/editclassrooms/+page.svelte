@@ -40,7 +40,7 @@
 		if ($user) {
 			adding = true;
 
-			const schoolRef = doc(db, "schools", $userData!.school);
+			const schoolRef = doc(db, "schools", $userData!.school, "schooldata", "data");
 			const schoolSnap = await getDoc(schoolRef);
 
 			if (schoolSnap.exists()) {

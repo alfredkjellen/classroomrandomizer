@@ -180,8 +180,10 @@
                     <a class="btn btn-secondary btn-sm" href="/randomizeroom"
                       >Take a look!</a
                     >
-                  {:else if question.question === "Can I customize the layout for each classroom?"}
-                    <a class="btn btn-secondary btn-sm" href="/editclassrooms"
+                  
+                  
+                    {:else if question.question === "Can I customize the layout for each classroom?"}
+                  <a class="btn btn-secondary btn-sm" href="/editclassrooms"
                       >Take a look!</a
                     >
                   {/if}

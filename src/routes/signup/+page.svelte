@@ -78,7 +78,12 @@
                 school: schoolName,
             });
             batch.set(doc(db, "schools", schoolName), {
-                name: schoolName, password: password,
+                name: schoolName,
+            });
+
+            batch.set(doc(db, "schools", schoolName, "schooldata", "data"),
+            {
+                name: schoolName,password: password,
             });
 
             await batch.commit();

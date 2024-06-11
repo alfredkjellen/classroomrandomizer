@@ -62,7 +62,7 @@
 		if ($user) {
 			adding = true;
             
-			const schoolRef = doc(db, "schools", $userData!.school);
+			const schoolRef = doc(db, "schools", $userData!.school, "schooldata", "data");
 			const schoolSnap = await getDoc(schoolRef);
 
 			if (schoolSnap.exists()) {
@@ -115,7 +115,11 @@
 
         studentNames = switchedStudents.join("\n");
     }
+
+
 </script>
+
+
 
 <div class="flex justify-center mt-5 gap-5 items-stretch">
 

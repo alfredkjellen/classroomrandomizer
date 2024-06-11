@@ -123,9 +123,19 @@ interface School{
 }
 
 
+// export const schoolData: Readable<School | null> = derived(userData, ($userData, set) => { 
+//   if ($userData) {
+//     return docStore<School>(`schools/${$userData.school}`).subscribe(set);
+//   } else {
+//     set(null); 
+//   }
+// });
+
+
+
 export const schoolData: Readable<School | null> = derived(userData, ($userData, set) => { 
   if ($userData) {
-    return docStore<School>(`schools/${$userData.school}`).subscribe(set);
+    return docStore<School>(`schools/${$userData.school}/schooldata/data`).subscribe(set);
   } else {
     set(null); 
   }
