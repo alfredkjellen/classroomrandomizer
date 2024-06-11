@@ -338,30 +338,27 @@ function moveStudents(student1: Student, student2:Student)
     }
 
 
+function handleClassSelection(event:any) {
+  const selectedClassName = event.target.value;
+  const selectedClass = classes.find(c=> c.name === selectedClassName);
+  selectClass(selectedClass!);
+}
+
+
+
+
 
 
 </script>
 
 <div class="flex justify-center mt-1 gap-2">
     
-    <div class="dropdown dropdown-hover">
-        <button
-            class="btn btn-wide btn-neutral"
-            on:click={() => update(currentClass)}
-        >
-            {currentClass.name}
-        </button>
-        <ul
-            class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
-        >
-            {#each classes as c}
-                <li>
-                    <button on:click={() => update(c)}>{c.name}</button>
-                </li>
-            {/each}
-        </ul>
-    </div>
-
+    <select class="select select-bordered w-full max-w-xs" on:change={handleClassSelection}>
+        <option disabled selected>Choose class</option>
+        {#each classes as c}
+          <option value={c.name}>{c.name}</option>
+        {/each}
+      </select>
 
 
     <label class="input input-bordered flex items-center gap-2 font-bold text-sm">

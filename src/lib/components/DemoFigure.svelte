@@ -430,78 +430,72 @@
 
 
 
+function handleRoomSelection(event:any) {
+  const selectedRoomName = event.target.value;
+  const selectedRoom = rooms.find(room => room.name === selectedRoomName);
+  selectRoom(selectedRoom!);
+}
+
+
+
+function handleClassSelection(event:any) {
+  const selectedClassName = event.target.value;
+  const selectedClass = classes.find(c=> c.name === selectedClassName);
+  selectClass(selectedClass!);
+}
+
+
+
+
+
+
   </script>
   
-  <div class="flex justify-center">
-    <div class="dropdown dropdown-hover">
-      <div class="tooltip tooltip-open" data-tip="Select room">
-        <div role="button" class="btn m-1 btn-wide btn-neutral btn-sm"
-        
-        
-        style={`width: ${screenWidth < 768 ? `${screenWidth * lgBtnFactor}px` : `${lgBtnSize}px;`}`}>
-          {currentRoom.name}
-        </div>
-      </div>
-  
-      <ul
-        class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
-      >
-        {#each rooms as room}
-          <li>
-            <button on:click={() => selectRoom(room)}>{room.name}</button>
-          </li>
-        {/each}
-      </ul>
-    </div>
-  
-    <div class="dropdown dropdown-hover">
-      <div class="tooltip tooltip-open tooltip-accent" data-tip="Randomize">
-        <button
-          class="btn m-1 btn-wide btn-neutral btn-sm"
 
-          style={`width: ${screenWidth < 768 ? `${screenWidth * lgBtnFactor}px` : `${lgBtnSize}px;`}`}
 
-          on:click={() => selectClass(currentClass)}
-          
-        >
-          {currentClass.name}
-          <button class="btn btn-xs btn-accent">
-            <svg
-              class="w-6 h-6 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M13.484 9.166 15 7h5m0 0-3-3m3 3-3 3M4 17h4l1.577-2.253M4 7h4l7 10h5m0 0-3 3m3-3-3-3"
-              />
-            </svg>
-          </button>
-        </button>
-      </div>
-  
-      <ul
-        class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
-      >
-        {#each classes as c}
-          <li>
-            <button on:click={() => selectClass(c)}>{c.name}</button>
-          </li>
-        {/each}
-      </ul>
-    </div>
+  <div class="flex justify-center"><button on:click={()=>selectClass(currentClass)} class="btn btn-xs btn-accent mb-3">
+    Randomize<svg
+      class="w-6 h-6 text-gray-800 dark:text-white"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M13.484 9.166 15 7h5m0 0-3-3m3 3-3 3M4 17h4l1.577-2.253M4 7h4l7 10h5m0 0-3 3m3-3-3-3"
+      />
+    </svg>
+  </button>
+</div>
+  <div class="flex justify-center items-center">
+
+    <select class="select select-sm select-bordered w-52 max-w-xs" on:change={handleRoomSelection}>
+      <option disabled selected>Choose room</option>
+      {#each rooms as room}
+        <option value={room.name}>{room.name}</option>
+      {/each}
+    </select>
+
+    <select class="select select-sm select-bordered w-52 max-w-xs" on:change={handleClassSelection}>
+      <option disabled selected>Choose class</option>
+      {#each classes as c}
+        <option value={c.name}>{c.name}</option>
+      {/each}
+    </select>
+
+    
+    
   
     <div class="dropdown dropdown-hover">
-      <div class="tooltip tooltip-open" data-tip="Check presense">
+      
         <button class="btn m-1 btn-wide btn-neutral btn-sm <div class="         style={`width: ${screenWidth < 768 ? `${screenWidth * lgBtnFactor}px` : `${lgBtnSize}px;`}`}> Students </button>
-      </div>
+
       {#if currentClass.name !== "Choose class"}
         <ul
           class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
