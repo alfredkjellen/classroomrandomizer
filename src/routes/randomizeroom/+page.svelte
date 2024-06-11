@@ -426,6 +426,7 @@ onMount(() => {
 
     function handlePresense(student: Student) {
         student.isClicked = false;
+        
         if (student.isPresent) {
 
             //remove student from room
@@ -522,7 +523,7 @@ onMount(() => {
 
 <div class="flex justify-center mt-1 gap-2">
     <div class="dropdown dropdown-hover">
-        <div role="button" class="btn btn-wide btn-neutral">
+        <div tabindex="0" role="button" class="btn btn-wide btn-neutral">
             {currentRoom.name}
         </div>
         <ul
@@ -539,7 +540,7 @@ onMount(() => {
     </div>
 
     <div class="dropdown dropdown-hover">
-        <button
+        <button tabindex="0"
             class="btn btn-wide btn-neutral"
             on:click={() => selectClass(currentClass)}
         >
@@ -577,24 +578,24 @@ onMount(() => {
     </div>
 
     <div class="dropdown dropdown-hover">
-        <button class="btn btn-wide btn-neutral"> Students </button>
+        <div tabindex="0" role="button" class="btn btn-wide btn-neutral">Students</div>
         {#if currentClass.name !== "Choose class"}
-            <ul
+            <ul tabindex="0"
                 class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
             >
                 <div class=" menu-title flex justify-end">Present</div>
 
                 {#each allStudents as student}
                     <li>
-                        <button
-                            on:click={() => handlePresense(student)}
-                            class="flex justify-end btn btn-sm"
+                        <div
+                            class="flex justify-end"
                             >{student.name}
                             <input
                                 type="checkbox"
                                 bind:checked={student.isPresent}
                                 class="checkbox checkbox-md"
-                            /></button
+                                on:click={()=>handlePresense(student)}
+                            /></div
                         >
                     </li>
                 {/each}
