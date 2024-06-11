@@ -577,7 +577,7 @@ onMount(() => {
         </ul>
     </div>
 
-    <div class="dropdown dropdown-hover">
+    <div class="dropdown">
         <div tabindex="0" role="button" class="btn btn-wide btn-neutral">Students</div>
         {#if currentClass.name !== "Choose class"}
             <ul tabindex="0"
