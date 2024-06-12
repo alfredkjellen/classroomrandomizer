@@ -138,7 +138,7 @@
           class="text-xl md:text-4xl gap-2 mt-20 flex justify-center items-center"
         >
           
-          <span class="bg-cyan-600 text-white rounded px-1 py-1"
+          <span class="bg-cyan-600 text-white rounded px-2 py-1"
             >Simplify</span
           >the process
         </div>
