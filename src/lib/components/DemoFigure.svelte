@@ -416,7 +416,7 @@
     let lgBtnFactor = 0.3;
     let lgBtnSize = 259;
     let smBtnSize = 98;
-    let smBtnFactor = 0.10;
+    let smBtnFactor = 0.12;
 
     function handleResize() {
       if(browser) {
