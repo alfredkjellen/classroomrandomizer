@@ -130,7 +130,7 @@
             >copying</span
           > the class list
         </div>
-        <div class="text-md md:text-2xl mt-3 flex justify-center">
+        <div class="text md:text-2xl mt-3 flex justify-center">
           every time you want to randomize your students?
         </div>
   
