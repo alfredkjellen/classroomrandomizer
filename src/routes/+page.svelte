@@ -153,7 +153,7 @@
 
     </div>
   
-      <div class="flex justify-center ml-28">
+      <div class="flex justify-center">
         <div class="mt-40">
           <div class="text-xl md:text-3xl font-bold my-5">
             Frequently asked questions
@@ -163,7 +163,6 @@
             {#each questions as question}
               <div
                 class="collapse collapse-plus bg-base-200 mt-2"
-                style="width: 75%;"
               >
                 <input
                   type="checkbox"
