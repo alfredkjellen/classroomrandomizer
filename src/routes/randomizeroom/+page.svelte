@@ -519,9 +519,7 @@ onMount(() => {
     //#endregion
 
     
-
-
-
+//#region Selection
 
     function handleRoomSelection(event:any) {
   const selectedRoomName = event.target.value;
@@ -537,7 +535,27 @@ function handleClassSelection(event:any) {
   selectClass(selectedClass!);
 }
 
+//#endregion
 
+
+//#region student presense
+
+let isOpen = false;
+
+function openStudentMenu()
+{
+    isOpen= !isOpen;
+
+} 
+
+
+
+
+
+
+
+
+//#endregion
 
 
 
@@ -586,8 +604,14 @@ function handleClassSelection(event:any) {
 
     
 
+
+
+
+           
+
+
     <div class="dropdown dropdown-hover">
-        <div  role="button" class="btn btn-wide btn-neutral">Students</div>
+        <div tabindex="0" role="button" class="btn btn-wide btn-neutral">Students</div>
         {#if currentClass.name !== "Choose class"}
             <ul
                 class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
