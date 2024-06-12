@@ -525,7 +525,7 @@ let isDropdownOpen = false;
     <div class="relative inline-block">
       <button
         id="dropdown-button"
-        class="select select-sm w-40 sm:w-52 select-bordered flex items-center justify-start"
+        class="select select-sm w-32 sm:w-52 select-bordered flex items-center justify-start"
         
         on:click={toggleDropdown}
       >
