@@ -521,40 +521,11 @@ let isDropdownOpen = false;
     </select>
 
     
-    
   
-    <!-- <div class="dropdown dropdown-hover">
-      
-        <button class="btn m-1 btn-wide btn-neutral btn-sm <div class="         style={`width: ${screenWidth < 768 ? `${screenWidth * lgBtnFactor}px` : `${lgBtnSize}px;`}`}> Students </button>
-
-      {#if currentClass.name !== "Choose class"}
-        <ul
-          class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
-        >
-          <div class=" menu-title flex justify-end">Present</div>
-  
-          {#each allStudents as student}
-            <li>
-              <button
-                on:click={() => handlePresense(student)}
-                class="flex justify-end btn btn-sm"
-                >{student.name}
-                <input
-                  type="checkbox"
-                  bind:checked={student.isPresent}
-                  class="checkbox checkbox-md"
-                /></button
-              >
-            </li>
-          {/each}
-        </ul>
-      {/if}
-    </div> -->
-
     <div class="relative inline-block">
       <button
         id="dropdown-button"
-        class="select select-sm w-52 max-w-xs select-bordered flex items-center justify-start"
+        class="select select-sm w-40 sm:w-52 select-bordered flex items-center justify-start"
         
         on:click={toggleDropdown}
       >
