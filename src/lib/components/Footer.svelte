@@ -10,6 +10,7 @@
       <a class="link link-hover my-1" href="https://insigh.to/b/student-randomizer" target="_blank">Suggest a feature</a>
       <a class="link link-hover my-1" href="/contact">Contact</a>
       <a class="link link-hover mb-1" href="/privacy">Privacy</a>
+      <a class="link link-hover mb-1" href="/aboutme">About me</a>
       
     </nav>
     <aside>

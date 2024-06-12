@@ -19,7 +19,7 @@
   <div class="card bg-base-200 shadow-xl w-full max-w-xs">
     <div class="card-body">
       <h2 class="card-title">Contact</h2>
-      <p>If you have any questions, contact</p>
+      <p>If you have any questions or have come across an issue, feel free to contact</p>
       {#if copied}
         <div
           class="tooltip tooltip-open tooltip-bottom tooltip-primary"

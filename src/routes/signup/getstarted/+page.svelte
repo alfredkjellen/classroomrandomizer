@@ -16,7 +16,14 @@ import { auth, user, userData, schoolData, db } from "$lib/firebase";
 
         
         <div class="font-bold">
+
+            <div>
+            Share the school password with the other teachers in order to enable their access. 
+        </div>
+<br>
+            <div>            
             To start:
+        </div>
             <u>
                 <li>
 
