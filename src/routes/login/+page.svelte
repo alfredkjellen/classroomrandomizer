@@ -86,7 +86,7 @@
     }
 </script>
 
-<div class="flex justify-center items-center min-h-screen">
+<div class="flex justify-center items-center mt-32">
     <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6 w-2/5">
         <h1 class="text-3xl font-bold self-center">Log in</h1>
 

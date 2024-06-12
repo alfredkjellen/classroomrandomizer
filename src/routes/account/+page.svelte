@@ -8,6 +8,8 @@
     import { getAuth, deleteUser as deleteAuthUser, GoogleAuthProvider, reauthenticateWithCredential } from "firebase/auth";
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
 
+    
+
     let inputValue = "";
     let userIsDeleted = false;
 
@@ -17,8 +19,6 @@ function resetInput()
 {
     inputValue = "";
 }
-
-
 
 
 
@@ -49,37 +49,27 @@ async function deleteSchool()
 }
 
 
-let uid:any = "";
-
 async function deleteUser() {
    
 
     try {
       const auth = getAuth();
       const currentUser = auth.currentUser;
-        
-       uid = currentUser?.uid;
-
-
+    
       if (currentUser) {
-        // Prompt the user to re-authenticate with Google Sign-In
-        const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        const credential:any = GoogleAuthProvider.credentialFromResult(result);
+        // Delete username
+        const userNameDocRef = doc(db, "usernames", $userData?.username!);
+        await deleteDoc(userNameDocRef);
+    
+        // Delete user
+        const userDocRef = doc(db, "users", currentUser.uid!);
+        await deleteDoc(userDocRef);
+        signOut(auth);
+        userIsDeleted = true;
 
-        // Re-authenticate the user
-        await reauthenticateWithCredential(currentUser, credential);
-
-        // Delete the user's authentication account
-        await deleteAuthUser(currentUser);
-
-        // Delete the user's data from Firestore
-      const userDocRef = doc(db, "users", currentUser.uid || "");
-      await deleteDoc(userDocRef);
-
-      // Reset the input value
-      inputValue = "";
-      userIsDeleted = true;
+        // Reset the input value
+        inputValue = "";
+        userIsDeleted = true;
 
 
 
@@ -99,7 +89,7 @@ async function deleteUser() {
 
 </script>
 
-<AuthCheck userIsDeleted={false}>
+<AuthCheck userIsDeleted>
     <div class="flex justify-center mt-5 gap-10">
         <div class="flex gap-4 rounded-box bg-base-200 p-6 w-2/5">
             <div class="card-body">

@@ -106,15 +106,12 @@
         <div class="mt-40 md:mt-10 text-sm md:text-lg font-thin"></div>
         <div class="mt-1 md:mt-1 text-sm md:text-lg"></div>
         <div class="mt-6 md:mt-2">
-          <!-- <div class="join">
-            <input class="input input-bordered join-item" placeholder="Email" />
-            <button class="btn join-item btn-accent">Join</button>
-          </div> -->
+         
         </div>
       </div>
     </div>
   </div>
-  <div class="min-h-[60vh] mt-40">
+  <div class="min-h-[60vh] mt-16">
     <DemoFigure></DemoFigure>
     <div class="pt-20 pb-8 px-7">
       <div class="max-w-lg mx-auto text-center">
@@ -134,27 +131,29 @@
           > the class list
         </div>
         <div class="text-md md:text-2xl mt-3 flex justify-center">
-          every time you want to randomize the seating?
+          every time you want to randomize your students?
         </div>
   
         <div
           class="text-xl md:text-4xl gap-2 mt-20 flex justify-center items-center"
         >
-          Instead, do it
+          
+          <span class="bg-cyan-600 text-white rounded px-1 py-1"
+            >Simplify</span
+          >the process
         </div>
         <div
           class="text-md md:text-2xl mt-3 flex justify-center items-center gap-1"
         >
-          <span class="bg-cyan-600 text-white rounded px-1 py-1"
-            >automatically</span
-          >
-          with Student Randomizer
+          
+        with Student Randomizer
+
         </div>
       </div>
 
     </div>
   
-      <div class="flex justify-center">
+      <div class="flex justify-center ml-28">
         <div class="mt-40">
           <div class="text-xl md:text-3xl font-bold my-5">
             Frequently asked questions

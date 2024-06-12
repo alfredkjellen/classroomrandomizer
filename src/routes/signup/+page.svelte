@@ -6,6 +6,7 @@
     import { goto } from "$app/navigation";
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
     import { page } from "$app/stores";
+    import LoginButton from "$lib/components/LoginButton.svelte";
 
     async function signInWithGoogle() {
         const provider = new GoogleAuthProvider();
@@ -81,6 +82,14 @@
                 name: schoolName,
             });
 
+            await batch.commit();
+        } catch (error) {
+            //alert(error + "1");
+        }
+
+        try {
+            const batch = writeBatch(db);
+        
             batch.set(doc(db, "schools", schoolName, "schooldata", "data"),
             {
                 name: schoolName,password: password,
@@ -88,7 +97,7 @@
 
             await batch.commit();
         } catch (error) {
-            alert(error);
+            //alert(error + "2");
         }
 
         schoolName = "";
@@ -123,7 +132,7 @@
 
 
 
-<div class="flex justify-center items-center">
+<div class="flex justify-center">
     <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6 w-2/5">
         <h1 class="text-3xl font-bold self-center">Sign up</h1>
 
@@ -256,4 +265,24 @@
 
         {/if}
     </div>
+
+
+
 </div>
+
+
+
+<div class="flex justify-center mt-10">
+
+
+<div class="text-xl font-bold">Are your school already using it?</div>
+
+
+</div>
+
+
+
+<div class="flex justify-center mt-4">
+    <a href="/login" class="btn btn-primary btn-wide">Log in</a>
+    </div>
+
