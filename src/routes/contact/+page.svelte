@@ -15,13 +15,11 @@
     });
   }
 </script>
-
 <div class="flex justify-center mt-5">
-  <div class="card bg-base-200 shadow-xl" style="width: 25%;">
+  <div class="card bg-base-200 shadow-xl w-full max-w-xs">
     <div class="card-body">
       <h2 class="card-title">Contact</h2>
       <p>If you have any questions, contact</p>
-
       {#if copied}
         <div
           class="tooltip tooltip-open tooltip-bottom tooltip-primary"
@@ -30,7 +28,8 @@
           <button
             on:click={() => copyToClipboard("alfred.kjellen@gmail.com")}
             class="text-primary flex items-center"
-            >alfred.kjellen@gmail.com
+          >
+            alfred.kjellen@gmail.com
             <svg
               class="w-6 h-6 text-gray-800 dark:text-white ml-1"
               aria-hidden="true"
@@ -57,7 +56,8 @@
         <button
           on:click={() => copyToClipboard("alfred.kjellen@gmail.com")}
           class="flex items-center hover:text-primary"
-          >alfred.kjellen@gmail.com
+        >
+          alfred.kjellen@gmail.com
           <svg
             class="w-6 h-6 text-gray-800 dark:text-white ml-1"
             aria-hidden="true"
