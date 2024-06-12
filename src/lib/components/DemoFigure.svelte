@@ -449,13 +449,44 @@ function handleClassSelection(event:any) {
 
 
 
+//#region student presense
+let isDropdownOpen = false;
+
+  function toggleDropdown() {
+    isDropdownOpen = !isDropdownOpen;
+  }
+
+  function closeDropdown(event:any) {
+    const dropdownMenu = document.getElementById("dropdown-menu")!;
+    const dropdownButton = document.getElementById("dropdown-button")!;
+
+    if (
+      !dropdownMenu.contains(event.target) &&
+      !dropdownButton.contains(event.target)
+    ) {
+      isDropdownOpen = false;
+    }
+  }
+
+
+
+
+
+
+//#endregion
+
+
+
+
+
+
   </script>
   
-
+<svelte:window on:click={closeDropdown} />
 
   <div class="flex justify-center"><button on:click={()=>selectClass(currentClass)} class="btn btn-xs btn-accent mb-3">
     Randomize<svg
-      class="w-6 h-6 text-gray-800 dark:text-white"
+      class="w-6 h-6 text-gray-800"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       width="24"
@@ -492,7 +523,7 @@ function handleClassSelection(event:any) {
     
     
   
-    <div class="dropdown dropdown-hover">
+    <!-- <div class="dropdown dropdown-hover">
       
         <button class="btn m-1 btn-wide btn-neutral btn-sm <div class="         style={`width: ${screenWidth < 768 ? `${screenWidth * lgBtnFactor}px` : `${lgBtnSize}px;`}`}> Students </button>
 
@@ -518,7 +549,44 @@ function handleClassSelection(event:any) {
           {/each}
         </ul>
       {/if}
+    </div> -->
+
+    <div class="relative inline-block">
+      <button
+        id="dropdown-button"
+        class="select select-sm w-52 max-w-xs select-bordered flex items-center justify-start"
+        
+        on:click={toggleDropdown}
+      >
+        Students
+      </button>
+      {#if isDropdownOpen}
+      <div
+        id="dropdown-menu"
+        class="absolute z-10 mt-2 w-full bg-base-200 rounded-md shadow-lg"
+      >
+        <ul class="py-1 text-sm">
+          {#each allStudents as student}
+          <li>
+            <div class="flex justify-between px-4 py-2">
+              {student.name}
+              <input
+                type="checkbox"
+                bind:checked={student.isPresent}
+                class="checkbox checkbox-md"
+                on:click={() => handlePresense(student)}
+              />
+            </div>
+          </li>
+          {/each}
+        </ul>
+      </div>
+      {/if}
     </div>
+
+
+
+
   </div>
   
   <div class="flex justify-center items-center">

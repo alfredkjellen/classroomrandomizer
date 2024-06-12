@@ -346,10 +346,41 @@ function handleClassSelection(event:any) {
 
 
 
+//#region student presense
+let isDropdownOpen = false;
+
+  function toggleDropdown() {
+    isDropdownOpen = !isDropdownOpen;
+  }
+
+  function closeDropdown(event:any) {
+    const dropdownMenu = document.getElementById("dropdown-menu")!;
+    const dropdownButton = document.getElementById("dropdown-button")!;
+
+    if (
+      !dropdownMenu.contains(event.target) &&
+      !dropdownButton.contains(event.target)
+    ) {
+      isDropdownOpen = false;
+    }
+  }
+
+
+
+
+
+
+//#endregion
+
+
+
+
 
 
 
 </script>
+
+<!-- 
 
 <div class="flex justify-center mt-1 gap-2">
     
@@ -373,51 +404,39 @@ function handleClassSelection(event:any) {
 
 
 
-    <div class="dropdown dropdown-hover">
-        <button class="btn btn-wide btn-neutral"> Students </button>
-
-        <ul
-            class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-auto"
+    <div class="relative inline-block">
+        <button
+          id="dropdown-button"
+          class="select select-bordered w-56 flex items-center justify-start"
+          on:click={toggleDropdown}
         >
-            <div class=" menu-title flex justify-end">Present</div>
+          Students
+        </button>
+        {#if isDropdownOpen}
+        <div
+          id="dropdown-menu"
+          class="absolute z-10 mt-2 w-full bg-base-200 rounded-md shadow-lg"
+        >
+          <ul class="py-1 text-sm">
             {#each allStudents as student}
-                <li>
-                    <button
-                        on:click={() => handlePresense(student)}
-                        class="flex justify-end btn btn-sm"
-                        >{student.name}
-                        <input
-                            type="checkbox"
-                            bind:checked={student.isPresent}
-                            class=" checkbox checkbox-md"
-                        /></button
-                    >
-                </li>
+            <li>
+              <div class="flex justify-between px-4 py-2">
+                {student.name}
+                <input
+                  type="checkbox"
+                  bind:checked={student.isPresent}
+                  class="checkbox checkbox-md"
+                  on:click={() => handlePresense(student)}
+                />
+              </div>
+            </li>
             {/each}
-        </ul>
-    </div>
-
-    {#if studentsNotAssigned.length > 0 && currentRoom.name !== "Choose room"}
-        <div>
-            <div class="dropdown dropdown-hover">
-                <div
-                    role="button"
-                    class="btn btn-wide btn-warning btn-active no-animation"
-                >
-                    Students not assigned
-                </div>
-                <ul
-                    class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-52"
-                >
-                    {#each studentsNotAssigned as student}
-                        <li>
-                            <button>{student.name}</button>
-                        </li>
-                    {/each}
-                </ul>
-            </div>
+          </ul>
         </div>
-    {/if}
+        {/if}
+      </div>
+
+   
 
 
     <div class="ml-5">
@@ -480,4 +499,108 @@ function handleClassSelection(event:any) {
             {/each}
         </div>
     {/each}
-</div>
+</div> -->
+
+
+<style>
+    /* Styles for larger screens */
+    .menu-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+  
+    /* Styles for smaller screens */
+    @media (max-width: 768px) {
+      .menu-container {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+  
+      .select,
+      .input {
+        width: 100%;
+        max-width: none;
+      }
+  
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+    }
+  </style>
+  
+  <div class="menu-container">
+    <select class="select select-bordered w-full max-w-xs" on:change={handleClassSelection}>
+      <option disabled selected>Choose class</option>
+      {#each classes as c}
+      <option value={c.name}>{c.name}</option>
+      {/each}
+    </select>
+  
+    <label class="input input-bordered flex items-center gap-2 font-bold text-sm">
+      Group size:
+      <input bind:value={groupSize} on:input={updateLayout} type="text" class="grow w-12" />
+    </label>
+  
+    <div class="relative inline-block">
+      <button id="dropdown-button" class="select select-bordered w-56 flex items-center justify-start" on:click={toggleDropdown}>
+        Students
+      </button>
+      {#if isDropdownOpen}
+      <div id="dropdown-menu" class="absolute z-10 mt-2 w-full bg-base-200 rounded-md shadow-lg">
+        <ul class="py-1 text-sm">
+          {#each allStudents as student}
+          <li>
+            <div class="flex justify-between px-4 py-2">
+              {student.name}
+              <input type="checkbox" bind:checked={student.isPresent} class="checkbox checkbox-md" on:click={() => handlePresense(student)} />
+            </div>
+          </li>
+          {/each}
+        </ul>
+      </div>
+      {/if}
+    </div>
+  
+    <div class="btn-container">
+      <button on:click={() => zoom("+")} class="btn btn-neutral">
+        <svg class="w-[28px] h-[28px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={$svgColor} viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M21.707 21.707a1 1 0 0 1-1.414 0l-3.5-3.5a1 1 0 0 1 1.414-1.414l3.5 3.5a1 1 0 0 1 0 1.414ZM2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm9-3a1 1 0 1 0-2 0v2H7a1 1 0 0 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0-2h-2V7Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+      <button on:click={() => zoom("-")} class="btn btn-neutral">
+        <svg class="w-[28px] h-[28px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill={$svgColor} viewBox="0 0 24 24">
+          <path fill-rule="evenodd" d="M21.707 21.707a1 1 0 0 1-1.414 0l-3.5-3.5a1 1 0 0 1 1.414-1.414l3.5 3.5a1 1 0 0 1 0 1.414ZM2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0Zm4 0a1 1 0 0 0 1 1h6a1 1 0 1 0 0-2H7a1 1 0 0 0-1 1Z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <div class="mt-4">
+    {#each currentRoom.layout as row, i}
+    <div class="flex">
+      {#each row as box, j}
+      {#if box.isAvailable}
+      <div class="indicator">
+        <div class="indicator-item indicator-top">
+          {#if currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== ""}
+          <button on:click={() => handlePresense(currentRoom.layout[i][j].student)} class="btn btn-sm btn-circle btn-warning">✕</button>
+          {/if}
+        </div>
+  
+        <button on:click={(event) => handleClick(currentRoom.layout[i][j].student, event)} class={`btn btn-neutral text-2xl hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? 'border-primary text-primary' : ''}`} style="width: {boxWidth}px; height: {boxHeight}px;">
+          {currentRoom.layout[i][j].student.name}
+        </button>
+      </div>
+      {:else}
+      <div class="btn btn-disabled text-2xl" style="width: {boxWidth}px; height: {boxHeight}px;"></div>
+      {/if}
+      {/each}
+    </div>
+    {/each}
+  </div>
