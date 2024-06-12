@@ -35,7 +35,7 @@
     let classA = new Class("Class A", [
       "Adam",
       "Alex",
-      "Andrew",
+      "Alice",
       "Anton",
       "Ava",
       "Avery",
