@@ -1,9 +1,10 @@
 <script lang="ts">
     import { user, schoolData } from "$lib/firebase";
     import { Student, Class, Seat, Room } from "$lib/classes.ts";
-
     import { onMount } from "svelte";
     import { browser } from "$app/environment";
+    import { svgColor } from "$lib/controller";
+
 
 let mounted = false;
 
@@ -20,13 +21,9 @@ onMount(() => {
     };
 });
 
-    import { svgColor } from "$lib/controller";
 
 
-    onMount(() => {
-        window.addEventListener("click", resetClickedStatus);
-    });
-
+  
 
 
     let classA = new Class("Class A", [

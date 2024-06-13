@@ -62,9 +62,23 @@
                 );
                 await deleteDoc(userNameDocRef);
 
+
+
+                 // Delete userdata
+                 const userDataDocRef = doc(
+                    db,
+                    "users",
+                    currentUser.uid!,
+                    "userdata",
+                    "data",
+                );
+                await deleteDoc(userDataDocRef);
+
                 // Delete user
                 const userDocRef = doc(db, "users", currentUser.uid!);
                 await deleteDoc(userDocRef);
+                
+
                 signOut(auth);
                 userIsDeleted = true;
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 
-    import Footer from "$lib/components/Footer.svelte";
+  import Footer from "$lib/components/Footer.svelte";
 import { svgColor, themeStore } from "$lib/controller";
 
 let copied = false;
@@ -25,17 +25,14 @@ function copyToClipboard(text: string) {
 <div class="card w-96 bg-base-200 shadow-xl">
     <div class="card-body">
       <h2 class="card-title">About me</h2>
-      <p>
+      <div>
         Hello! My name is Alfred and I'm 19 year old student from Sweden, with a general interest in programming and technology.
         <br>
         <br> 
         Recently, I began learning web development in my spare time and I've got fond of Svelte, a javascript framework for web applications.
         <br>
         <br>
-        Even though I'm still a beginner, my aim is to build useful applications that can help people in their everyday life.
-        
-        <br><br>
-        If you want to get in touch with me, feel free to send me an email to {#if copied}
+        I'm always open to learn more and if you want to get in touch with me, feel free to send me an email to {#if copied}
         <div
           
         >
@@ -99,7 +96,7 @@ function copyToClipboard(text: string) {
 
         The tech stack I've used for this project is:
 
-      </p>
+      </div>
         
 
 

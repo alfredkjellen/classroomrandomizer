@@ -1,17 +1,16 @@
 <script lang="ts">
     import { auth, user, userData, schoolData, db } from "$lib/firebase";
-    import { doc, writeBatch, getDoc, updateDoc } from "firebase/firestore";
+    import { doc, writeBatch, getDoc, updateDoc, deleteField } from "firebase/firestore";
 
     import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-    import { goto } from "$app/navigation";
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
 
 
 
     let isLoggedIn = false;
 
-    $: if($schoolData)
+    $: if($schoolData?.name)
     {
         isLoggedIn = true;
     }
@@ -41,18 +40,9 @@
     async function handleLogin() {
         await checkSchool();
         if (schoolExists) {
-            if ($schoolData?.name === schoolName) {
-                goto("/randomizeroom");
-            } else {
-                    await confirmUser();
-                    if($userData?.school === $schoolData?.name)
-                    {
-                        //goto("/randomizeroom");
-                    }
-            }
-        }
-        else {
-
+            if (!$schoolData) {
+                await confirmUser();
+            }      
         }
     }
 
@@ -66,7 +56,6 @@
                 username: email,
             });
 
-            //new
             batch.set(doc(db, "users", $user!.uid, "userdata", "data"), {
                 username: email,
                 school: schoolName,
@@ -74,11 +63,15 @@
             });
 
             await batch.commit();
+
+
         } catch (error) {
             alert(error);
         }
-
         schoolName = "";
+        password = "";
+
+        
     }
     async function checkSchool() {
         const ref = doc(db, "schools", schoolName.trim());
@@ -93,8 +86,8 @@
 </script>
 
 <div class="flex justify-center items-center mt-32">
-    <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6 w-2/5">
-        <h1 class="text-3xl font-bold self-center">Log in</h1>
+    <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6 text-center">
+        <h1 class="text-3xl font-bold self-center btn-wide">Log in</h1>
 
         {#if $user}
             <button class="btn btn-primary"

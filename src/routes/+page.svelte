@@ -6,9 +6,8 @@
       WebsiteDescription,
     } from "$lib/config.ts"
   
-    import { themeStore } from "$lib/controller.ts"
     import Footer from "$lib/components/Footer.svelte"
-    import SignupButton from "$lib/components/SignupButton.svelte";
+    
   
     const ldJson = {
       "@context": "https://schema.org",
