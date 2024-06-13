@@ -76,13 +76,24 @@ export function docStore<T>(
 }
 
 
+// export const userData: Readable<UserData | null> = derived(user, ($user, set) => { 
+//   if ($user) {
+//     return docStore<UserData>(`users/${$user.uid}`).subscribe(set);
+//   } else {
+//     set(null); 
+//   }
+// });
+
+
 export const userData: Readable<UserData | null> = derived(user, ($user, set) => { 
   if ($user) {
-    return docStore<UserData>(`users/${$user.uid}`).subscribe(set);
+    return docStore<UserData>(`users/${$user.uid}/userdata/data`).subscribe(set);
   } else {
     set(null); 
   }
 });
+
+
 
 interface UserData {
   username: string;
@@ -127,4 +138,6 @@ export const schoolData: Readable<School | null> = derived(userData, ($userData,
     set(null); 
   }
 });
+
+
 

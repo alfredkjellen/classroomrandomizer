@@ -8,6 +8,15 @@
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
 
 
+
+    let isLoggedIn = false;
+
+    $: if($schoolData)
+    {
+        isLoggedIn = true;
+    }
+
+
     $: if ($userData)
     {
         email = $userData?.username || "";
@@ -36,7 +45,10 @@
                 goto("/randomizeroom");
             } else {
                     await confirmUser();
-                    goto("/randomizeroom");
+                    if($userData?.school === $schoolData?.name)
+                    {
+                        //goto("/randomizeroom");
+                    }
             }
         }
         else {
@@ -51,6 +63,11 @@
             const batch = writeBatch(db);
             batch.set(doc(db, "usernames", String(email)), { uid: $user?.uid });
             batch.set(doc(db, "users", $user!.uid), {
+                username: email,
+            });
+
+            //new
+            batch.set(doc(db, "users", $user!.uid, "userdata", "data"), {
                 username: email,
                 school: schoolName,
                 password: password,
@@ -72,18 +89,7 @@
     
     }
 
-    // password implementation
-    async function checkPassword() {
-        const ref = doc(db, "schools", schoolName.trim());
 
-        const docSnap = await getDoc(ref);
-
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            alert(data?.password == password);
-            return password === data?.password;
-        }
-    }
 </script>
 
 <div class="flex justify-center items-center mt-32">
@@ -101,7 +107,7 @@
             >
         {/if}
 
-        {#if $user}
+        {#if $user && !isLoggedIn}
             <label class="form-control">
                 <div class="label">
                     <span class="label-text">School name</span>
@@ -125,7 +131,7 @@
                     <div class="label label-text text-warning">
                         {schoolName} doesn't exist
                     </div>
-                    Create new?<a href="/signup" class="btn btn-accent btn-xs"
+                    Create new?<a href="/signup" class="btn btn-warning btn-xs"
                         >Sign up</a
                     >
                 {/if}
@@ -133,5 +139,28 @@
 
             <button on:click={handleLogin} class="btn" class:btn-accent={isTouched} class:btn-disabled={!isTouched}>Log in</button>
         {/if}
+
+
+
+
+        {#if isLoggedIn}
+        <div class="flex justify-center">
+        
+            <div class="label font-bold gap-1">
+                Logged in to <span class="text-primary"> {$schoolData?.name}</span>
+            </div>
+        
+    </div>
+
+    <div class="flex justify-center">
+
+        <a class="btn btn-wide btn-primary btn-outline" href="/randomizeroom">Go to randomizer</a>
+    </div>
+
+    {/if}
+
+
+
+
     </div>
 </div>

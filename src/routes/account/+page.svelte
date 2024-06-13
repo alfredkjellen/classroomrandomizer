@@ -37,6 +37,8 @@
                 });
 
                 await batch.commit();
+
+                resetInput();
             } catch (e) {
                 alert(e);
             }
