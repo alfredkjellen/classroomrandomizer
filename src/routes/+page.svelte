@@ -35,11 +35,11 @@
         this.checked = checked
       }
     }
-  
+    
     const questions = [
       new Question(
         "Who is this for?",
-        "Teachers who want to randomly assign students to seats or groups",
+        "Teachers who want to randomly assign students to seats or groups.",
       ),
       new Question(
         "Can I customize the layout for each classroom?",
