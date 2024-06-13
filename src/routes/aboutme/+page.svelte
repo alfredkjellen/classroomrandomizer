@@ -1,5 +1,6 @@
 <script lang="ts">
 
+    import Footer from "$lib/components/Footer.svelte";
 import { svgColor, themeStore } from "$lib/controller";
 
 let copied = false;
@@ -111,4 +112,10 @@ function copyToClipboard(text: string) {
 
     </div>
   </div>
+</div>
+
+
+
+<div class="mt-40">
+<Footer/>
 </div>

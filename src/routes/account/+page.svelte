@@ -2,7 +2,7 @@
     import AuthCheck from "$lib/components/AuthCheck.svelte";
     import Footer from "$lib/components/Footer.svelte";
     import SignOutButton from "$lib/components/SignOutButton.svelte";
-    import { signOut, signInWithPopup } from "firebase/auth";
+    import { signOut } from "firebase/auth";
     import { auth, user, userData, schoolData, db } from "$lib/firebase";
     import {
         doc,
@@ -76,8 +76,7 @@
     }
 </script>
 
-<AuthCheck {userIsDeleted}>
-
+<AuthCheck userIsDeleted={userIsDeleted}>
 
     <div class="flex justify-center mt-5 gap-10">
         <div class="flex gap-4 rounded-box bg-base-200 p-6 w-2/5">

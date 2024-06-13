@@ -3,6 +3,22 @@
   import LoginButton from "$lib/components/LoginButton.svelte";
   import SignupButton from "$lib/components/SignupButton.svelte";
   import { themeStore, svgColor, changeTheme } from "$lib/controller.ts";
+
+
+  //check browser
+  import { onMount } from 'svelte';
+
+let isBrowserLoaded = false;
+
+onMount(() => {
+  isBrowserLoaded = true;
+});
+
+
+
+
+
+
 </script>
 
 <html lang="ts" data-theme={$themeStore}>
@@ -353,6 +369,9 @@
   </nav>
 
   <div class="min-h-screen">
+    {#if isBrowserLoaded}
     <slot />
+    {/if}
   </div>
+
 </html>
