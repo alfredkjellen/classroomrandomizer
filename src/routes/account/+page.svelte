@@ -18,9 +18,6 @@
         reauthenticateWithCredential,
     } from "firebase/auth";
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
-    import { WriteBatch } from "firebase-admin/firestore";
-
-    
 
     let inputValue = "";
     let userIsDeleted = false;
