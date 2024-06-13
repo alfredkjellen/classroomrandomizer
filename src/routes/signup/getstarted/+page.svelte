@@ -7,7 +7,7 @@ import { auth, user, userData, schoolData, db } from "$lib/firebase";
 
 
 <div class="flex justify-center items-center">
-    <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6 w-1/3">
+    <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6">
         <h2 class="text-xl font-bold self-center">You are signed in!</h2>
 
         <div class="flex justify-evenly"><p>{$userData?.username}</p> <p>{$userData?.school}</p></div>
