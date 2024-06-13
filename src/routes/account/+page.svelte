@@ -27,7 +27,7 @@
     }
 
     async function deleteSchool() {
-        if (inputValue == "Delete") {
+        if (inputValue == $schoolData!.name) {
             try {
                 const batch = writeBatch(db);
 
@@ -44,6 +44,9 @@
     }
 
     async function deleteUser() {
+        
+        if (inputValue == "Delete") {
+        
         try {
             const auth = getAuth();
             const currentUser = auth.currentUser;
@@ -70,6 +73,7 @@
         } catch (e) {
             alert(e);
         }
+    }
     }
 </script>
 
@@ -129,13 +133,22 @@
                             </div>
 
                             <div class="card-actions justify-start mt-10">
-                                <p class="label-text">Choose google account:</p>
-                                <button
-                                    on:click={deleteUser}
-                                    class="btn btn-error"
-                                >
-                                    <GoogleSvg /> Delete user</button
-                                >
+                                <p class=" label-text">
+                                    Type {"Delete"} to Delete
+                                </p>
+
+                                <div class="join">
+                                    <input
+                                        bind:value={inputValue}
+                                        class="input input-bordered join-item"
+                                        placeholder="Delete"
+                                    />
+                                    <button
+                                        on:click={deleteUser}
+                                        class="btn btn-error join-item"
+                                        >Delete</button
+                                    >
+                                </div>
                             </div>
                         </div>
                     </dialog>
@@ -183,14 +196,14 @@
 
                                 <div class="card-actions justify-start mt-10">
                                     <p class=" label-text">
-                                        Type "Delete" to confirm
+                                        Type {$schoolData.name} to confirm
                                     </p>
 
                                     <div class="join">
                                         <input
                                             bind:value={inputValue}
                                             class="input input-bordered join-item"
-                                            placeholder="Delete"
+                                            placeholder={$schoolData.name}
                                         />
                                         <button
                                             on:click={deleteSchool}
