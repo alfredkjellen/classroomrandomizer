@@ -29,7 +29,7 @@ function copyToClipboard(text: string) {
         Hello! My name is Alfred and I'm 19 year old student from Sweden, with a general interest in programming and technology.
         <br>
         <br> 
-        Recently, I began learning web development in my sparetime and I've got fond of Svelte, a javascript framework for web applications.
+        Recently, I began learning web development in my spare time and I've got fond of Svelte, a javascript framework for web applications.
         <br>
         <br>
         Even though I'm still a beginner, my aim is to build useful applications that can help people in their everyday life.
