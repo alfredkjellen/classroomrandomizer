@@ -33,14 +33,10 @@
         await checkSchool();
         if (schoolExists) {
             if ($schoolData?.name === schoolName) {
-                
+                goto("/randomizeroom");
             } else {
-                if (await checkPassword()) {
                     await confirmUser();
-                    
-
                     goto("/randomizeroom");
-                }
             }
         }
         else {
@@ -48,6 +44,7 @@
         }
     }
 
+    //TODO FIX THIS
     async function confirmUser() {
         
         try {
@@ -56,6 +53,7 @@
             batch.set(doc(db, "users", $user!.uid), {
                 username: email,
                 school: schoolName,
+                password: password,
             });
 
             await batch.commit();
@@ -74,6 +72,7 @@
     
     }
 
+    // password implementation
     async function checkPassword() {
         const ref = doc(db, "schools", schoolName.trim());
 
@@ -81,6 +80,7 @@
 
         if (docSnap.exists()) {
             const data = docSnap.data();
+            alert(data?.password == password);
             return password === data?.password;
         }
     }
