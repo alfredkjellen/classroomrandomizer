@@ -112,24 +112,11 @@ class Room {
 }
 
 
-
-//school
-
-
 interface School{
   name: string;
   classes: Class[];
   rooms: Room[];
 }
-
-
-// export const schoolData: Readable<School | null> = derived(userData, ($userData, set) => { 
-//   if ($userData) {
-//     return docStore<School>(`schools/${$userData.school}`).subscribe(set);
-//   } else {
-//     set(null); 
-//   }
-// });
 
 
 
