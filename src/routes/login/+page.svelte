@@ -1,27 +1,26 @@
 <script lang="ts">
     import { auth, user, userData, schoolData, db } from "$lib/firebase";
-    import { doc, writeBatch, getDoc, updateDoc, deleteField } from "firebase/firestore";
+    import {
+        doc,
+        writeBatch,
+        getDoc,
+        updateDoc,
+        deleteField,
+    } from "firebase/firestore";
 
     import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
 
-
-
     let isLoggedIn = false;
 
-    $: if($schoolData?.name)
-    {
+    $: if ($schoolData) {
         isLoggedIn = true;
     }
 
-
-    $: if ($userData)
-    {
+    $: if ($userData) {
         email = $userData?.username || "";
-    }
-    else
-    {
+    } else {
         email = auth.currentUser?.email || "";
     }
 
@@ -30,6 +29,12 @@
     let password = "";
     let schoolExists: any = undefined;
     $: isTouched = schoolName.length > 0 && password.length > 0;
+    let isCorrectPassword = true;
+
+    function resetStatus() {
+        isCorrectPassword = true;
+        schoolExists = undefined;
+    }
 
     async function signInWithGoogle() {
         const provider = new GoogleAuthProvider();
@@ -42,13 +47,12 @@
         if (schoolExists) {
             if (!$schoolData) {
                 await confirmUser();
-            }      
+            }
         }
     }
 
     //TODO FIX THIS
     async function confirmUser() {
-        
         try {
             const batch = writeBatch(db);
             batch.set(doc(db, "usernames", String(email)), { uid: $user?.uid });
@@ -63,26 +67,58 @@
             });
 
             await batch.commit();
-
-
         } catch (error) {
-            alert(error);
-        }
-        schoolName = "";
-        password = "";
+            const batch = writeBatch(db);
 
-        
+            batch.update(doc(db, "users", $user!.uid, "userdata", "data"), {
+                username: email,
+                school: schoolName,
+                password: password,
+            });
+
+            await batch.commit();
+
+            
+        }
+
+
+        if (await checkLogin()) {
+            schoolName = "";
+            isLoggedIn = true;
+            isCorrectPassword = true;
+        } else {
+            try {
+                isCorrectPassword = false;
+            } catch (error) {
+                //alert(error);
+            }
+        }
+
+        password = "";
     }
+
+    async function checkLogin() {
+        try {
+            const schoolRef = doc(db, "schools", schoolName, "schooldata", "data");
+            const schoolSnap = await getDoc(schoolRef);
+            const schoolData = schoolSnap.data();
+            return true;
+
+        } catch(error) {
+            return false;
+        }
+    }
+
+
+
+
     async function checkSchool() {
         const ref = doc(db, "schools", schoolName.trim());
 
         const docSnap = await getDoc(ref);
 
         schoolExists = docSnap.exists();
-    
     }
-
-
 </script>
 
 <div class="flex justify-center items-center mt-32">
@@ -90,12 +126,10 @@
         <h1 class="text-3xl font-bold self-center btn-wide">Log in</h1>
 
         {#if $user}
-            <button class="btn btn-primary"
-                ><GoogleSvg/>{email}
-            </button>
+            <button class="btn btn-primary"><GoogleSvg />{email} </button>
         {:else}
             <button class="btn btn-primary" on:click={signInWithGoogle}
-                ><GoogleSvg/>
+                ><GoogleSvg />
                 Log in with Google</button
             >
         {/if}
@@ -106,7 +140,11 @@
                     <span class="label-text">School name</span>
                 </div>
 
-                <input class="input input-bordered" bind:value={schoolName} />
+                <input
+                    class="input input-bordered"
+                    bind:value={schoolName}
+                    on:input={resetStatus}
+                />
             </label>
 
             <label class="form-control">
@@ -118,6 +156,7 @@
                     type="password"
                     class="input input-bordered"
                     bind:value={password}
+                    on:input={resetStatus}
                 />
 
                 {#if schoolExists === false}
@@ -130,30 +169,35 @@
                 {/if}
             </label>
 
-            <button on:click={handleLogin} class="btn" class:btn-accent={isTouched} class:btn-disabled={!isTouched}>Log in</button>
+            <button
+                on:click={handleLogin}
+                class="btn"
+                class:btn-accent={isTouched}
+                class:btn-disabled={!isTouched}>Log in</button
+            >
+
+            {#if !isCorrectPassword}
+                <div class="label label-text text-error">
+                    Incorrect password
+                </div>
+            {/if}
         {/if}
 
-
-
-
         {#if isLoggedIn}
-        <div class="flex justify-center">
-        
-            <div class="label font-bold gap-1">
-                Logged in to <span class="text-primary"> {$schoolData?.name}</span>
+            <div class="flex justify-center">
+                <div class="label font-bold gap-1">
+                    Logged in to <span class="text-primary">
+                        {$userData?.school}</span
+                    >
+                </div>
             </div>
-        
-    </div>
 
-    <div class="flex justify-center">
-
-        <a class="btn btn-wide btn-primary btn-outline" href="/randomizeroom">Go to randomizer</a>
-    </div>
-
-    {/if}
-
-
-
-
+            <div class="flex justify-center">
+                <a
+                    class="btn btn-wide btn-primary btn-outline"
+                    href="/randomizeroom">Go to randomizer</a
+                >
+            </div>
+        {/if}
     </div>
 </div>

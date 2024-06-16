@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, onSnapshot } from "firebase/firestore";
 import { getAuth, onAuthStateChanged} from "firebase/auth";
 import { getStorage } from "firebase/storage";
-import { derived, writable, readable, type Readable } from "svelte/store";
+import { derived, writable, type Readable } from "svelte/store";
 import type { User } from "firebase/auth";
 import { doc } from "firebase/firestore";
 

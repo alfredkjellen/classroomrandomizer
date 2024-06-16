@@ -17,7 +17,7 @@
         GoogleAuthProvider,
         reauthenticateWithCredential,
     } from "firebase/auth";
-    import GoogleSvg from "$lib/components/GoogleSvg.svelte";
+
 
     let inputValue = "";
     let userIsDeleted = false;
@@ -32,8 +32,9 @@
                 const batch = writeBatch(db);
 
                 batch.delete(doc(db, "schools", $schoolData!.name));
-                batch.update(doc(db, "users", $user!.uid), {
+                batch.update(doc(db, "users", $user!.uid, "userdata", "data"), {
                     school: deleteField(),
+                    password: deleteField(),
                 });
 
                 await batch.commit();
@@ -46,9 +47,7 @@
     }
 
     async function deleteUser() {
-        
         if (inputValue == "Delete") {
-        
         try {
             const auth = getAuth();
             const currentUser = auth.currentUser;

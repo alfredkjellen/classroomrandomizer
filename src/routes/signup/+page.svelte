@@ -1,12 +1,10 @@
 <script lang="ts">
     import { auth, userData } from "$lib/firebase";
     import { db, user } from "$lib/firebase";
-    import { doc, getDoc, writeBatch, query } from "firebase/firestore";
+    import { doc, getDoc, writeBatch } from "firebase/firestore";
     import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
     import { goto } from "$app/navigation";
     import GoogleSvg from "$lib/components/GoogleSvg.svelte";
-    import { page } from "$app/stores";
-    import LoginButton from "$lib/components/LoginButton.svelte";
 
     async function signInWithGoogle() {
         const provider = new GoogleAuthProvider();
@@ -70,21 +68,36 @@
     }
 
     async function confirmUser() {
-    
         try {
             const batch = writeBatch(db);
             batch.set(doc(db, "usernames", String(email)), { uid: $user?.uid });
             batch.set(doc(db, "users", $user!.uid), {
-                username: String(email),
-                school: schoolName,
+                username: email,
             });
-            batch.set(doc(db, "schools", schoolName), {
-                name: schoolName,
+
+            batch.set(doc(db, "users", $user!.uid, "userdata", "data"), {
+                username: email,
+                school: schoolName,
+                password: password,
             });
 
             await batch.commit();
+
+
         } catch (error) {
-            //alert(error + "1");
+            alert(error);
+        }
+
+        try{
+            const batch = writeBatch(db);
+            batch.set(doc(db, "schools", schoolName), {
+                name: schoolName,
+            });
+            await batch.commit();
+
+        }
+        catch (error) {
+            alert(error + "3");
         }
 
         try {
@@ -97,7 +110,7 @@
 
             await batch.commit();
         } catch (error) {
-            //alert(error + "2");
+            alert(error + "4");
         }
 
         schoolName = "";
@@ -134,10 +147,10 @@
 
 <div class="flex justify-center">
     <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6">
-        <h1 class="text-3xl font-bold self-center">Sign up</h1>
+        <h1 class="text-3xl font-bold self-center">Sign up new school</h1>
 
         {#if !$user}
-        <button class="btn btn-accent btn-wide" on:click={signInWithGoogle}>
+        <button class="btn btn-accent btn-wide btn-outline" on:click={signInWithGoogle}>
             <GoogleSvg/>
             Sign in with Google</button
         >
@@ -275,8 +288,7 @@
 <div class="flex justify-center mt-10">
 
 
-<div class="text-xl font-bold">Are your school already using it?</div>
-
+<div class="text-xl font-bold">If your school already uses it:</div>
 
 </div>
 
