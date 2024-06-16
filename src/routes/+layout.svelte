@@ -23,7 +23,7 @@ onMount(() => {
 
 <html lang="ts" data-theme={$themeStore}>
   <nav class="navbar justify-between bg-base-200 h-0.5">
-    <ul class="hidden menu sm:menu-horizontal">
+    <ul class="hidden menu lg:menu-horizontal">
       <a class="btn btn-ghost text-lg" href="/">
         <img src="/logo-8.png" alt="Logo" class="w-11" />
         Student Randomizer
@@ -148,11 +148,9 @@ onMount(() => {
       >
     </ul>
 
-    <ul class="hidden menu sm:menu-horizontal gap-2">
+    <ul class="hidden menu lg:menu-horizontal gap-2">
       <LoginButton svgColor={$svgColor}></LoginButton>
-
       <SignupButton></SignupButton>
-
       <label class="swap swap-rotate">
         <!-- this hidden checkbox controls the state -->
         <input type="checkbox" on:click={changeTheme} />
@@ -180,7 +178,7 @@ onMount(() => {
     </ul>
 
     
-    <div class="dropdown sm:hidden">
+    <div class="dropdown lg:hidden">
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <label tabindex="0" class="btn btn-ghost btn-circle">
@@ -328,14 +326,14 @@ onMount(() => {
     <img
     src="/logo-8.png"
     alt="Logo Student Randomizer"
-    class="w-10 sm:hidden mx-auto"
+    class="w-10 lg:hidden mx-auto"
   />
 </div>
 
 
 
   <div>
-  <label class="swap swap-rotate sm:hidden">
+  <label class="swap swap-rotate lg:hidden">
     <!-- this hidden checkbox controls the state -->
     <input type="checkbox" on:click={changeTheme} />
 
