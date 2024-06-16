@@ -285,7 +285,12 @@
 
 
 
-<div class="flex justify-center mt-10">
+<div class="flex justify-center">
+<div class="divider w-96">OR</div>
+</div>
+
+<div class="flex justify-center mt-5">
+        
 
 
 <div class="text-xl font-bold">If your school already uses it:</div>
