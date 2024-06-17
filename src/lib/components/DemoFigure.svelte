@@ -36,21 +36,21 @@
       "Adam",
       "Alex",
       "Alice",
-      "Anton",
+      "Alfred",
       "Ava",
-      "Avery",
+      "Ben",
+      "Bob",
       "Chris",
       "Clara",
       "Daniel",
       "David",
       "Edward",
-      "Ella",
       "Emily",
       "Ethan",
       "Grace",
       "Harry",
       "Isac",
-      "Jacob",
+      "Jack",
       "John",
       "Joe",
       "Josh",
@@ -63,7 +63,7 @@
       "Sarah",
       "Toby",
       "Will",
-    ])
+    ]);
   
     let room2 = new Room("Room 2", [
       [

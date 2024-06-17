@@ -4,37 +4,71 @@
     import { svgColor } from "$lib/controller";
 
 
-    let class1 = new Class("Class1", [
+  //   let classA = new Class("Class1", [
         
-  'Ryan Anderson',
-  'Ella Anderson',
-  'Michael Brown',
-  'Jacob Conner',
-  'Joshua Davis',
-  'Emily Davis',
-  'Nathan Garcia',
-  'Madison Garcia',
-  'Ethan Gonzalez',
-  'Amellia Gonzalez',
-  'Grace Jackson',
-  'Joseph Johnson',
-  'Isabella Johnson',
-  'Matthew Jones',
-  'Olivia Jones',
-  'David Martinez',
-  'Avery Martinez',
-  'Ava Millar',
-  'Daniel Miller',
-  'Ariana Ramirez',
-  'Noah Rodriguez',
-  'Abigail Rodriguez',
-  'Emma Smith',
-  'John Thomas',
-  'Sarah Thomas',
-  'Andrew Wilson',
-  'Sophia Williams',
-  'Christopher Williams',
+  // 'Ryan Anderson',
+  // 'Ella Anderson',
+  // 'Michael Brown',
+  // 'Jacob Conner',
+  // 'Joshua Davis',
+  // 'Emily Davis',
+  // 'Nathan Garcia',
+  // 'Madison Garcia',
+  // 'Ethan Gonzalez',
+  // 'Amellia Gonzalez',
+  // 'Grace Jackson',
+  // 'Joseph Johnson',
+  // 'Isabella Johnson',
+  // 'Matthew Jones',
+  // 'Olivia Jones',
+  // 'David Martinez',
+  // 'Avery Martinez',
+  // 'Ava Millar',
+  // 'Daniel Miller',
+  // 'Ariana Ramirez',
+  // 'Noah Rodriguez',
+  // 'Abigail Rodriguez',
+  // 'Emma Smith',
+  // 'John Thomas',
+  // 'Sarah Thomas',
+  // 'Andrew Wilson',
+  // 'Sophia Williams',
+  // 'Christopher Williams',
 
+  //   ]);
+
+
+  let classA = new Class("Class A", [
+      "Adam",
+      "Alex",
+      "Alice",
+      "Alfred",
+      "Ava",
+      "Ben",
+      "Bob",
+      "Chris",
+      "Clara",
+      "Daniel",
+      "David",
+      "Edward",
+      "Emily",
+      "Ethan",
+      "Grace",
+      "Harry",
+      "Isac",
+      "Jack",
+      "John",
+      "Joe",
+      "Josh",
+      "Matt",
+      "Molly",
+      "Nathan",
+      "Noah",
+      "Ryan",
+      "Sam",
+      "Sarah",
+      "Toby",
+      "Will",
     ]);
 
     let room1 = new Room("Room1", [
@@ -48,7 +82,7 @@
     ]);
 
     let classes: Class[] = [];
-    classes = [class1];
+    classes = [classA];
     let exampleClass = new Class("Choose class", []);
 
     let layout: boolean[][] = [];
