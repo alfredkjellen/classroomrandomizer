@@ -5,9 +5,6 @@
     export let userIsDeleted:boolean = false;
 
 </script>
-
-
-
     {#if $user}
     <slot/>
 

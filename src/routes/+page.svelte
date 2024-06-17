@@ -70,15 +70,13 @@
           class="text-3xl md:text-5xl font-bold px-2"
           style="line-height: 1.2;"
         >
-          The simplest way to randomize seating
+          The simplest way to randomize students
         </div>
   
         <div class="text-xl font-light mt-10">
           A tool for teachers to randomly assign students to seats in customized
           classrooms
         </div>
-
-
 
         <a href="/signup" class="mt-10 btn btn-accent btn-circle btn-wide">Sign up</a>
   
@@ -102,11 +100,7 @@
           {/if}
         </div> -->
   
-        <div class="mt-40 md:mt-10 text-sm md:text-lg font-thin"></div>
-        <div class="mt-1 md:mt-1 text-sm md:text-lg"></div>
-        <div class="mt-6 md:mt-2">
-         
-        </div>
+
       </div>
     </div>
   </div>

@@ -142,7 +142,6 @@
 
 
 
-
     <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6 w-2/5">
         
 
