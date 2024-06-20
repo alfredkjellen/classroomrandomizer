@@ -2,9 +2,7 @@
 	import { onMount } from "svelte";
 	import { db, user, userData, schoolData } from "$lib/firebase";
 	import { doc, getDoc, updateDoc } from "firebase/firestore"; // TOOD use writeBatch aswell
-    import {Room} from "$lib/classes.ts"
-
-
+	import { Room } from "$lib/classes.ts";
 
 	let classroomName = "";
 	let layout: boolean[][] = [];
@@ -40,7 +38,13 @@
 		if ($user) {
 			adding = true;
 
-			const schoolRef = doc(db, "schools", $userData!.school, "schooldata", "data");
+			const schoolRef = doc(
+				db,
+				"schools",
+				$userData!.school,
+				"schooldata",
+				"data",
+			);
 			const schoolSnap = await getDoc(schoolRef);
 
 			if (schoolSnap.exists()) {
@@ -55,27 +59,20 @@
 
 				let updatedRooms = schoolData.rooms || [];
 
-
-
-				if(isEditing)
-				{
-					updatedRooms = updatedRooms.filter((room: any) => room.name !== originalName);
+				if (isEditing) {
+					updatedRooms = updatedRooms.filter(
+						(room: any) => room.name !== originalName,
+					);
 				}
 
 				updatedRooms.push(newRoom);
 
 				await updateDoc(schoolRef, { rooms: updatedRooms });
 
-
-
-
-
 				cancelEdit();
-			} 
-			else {
+			} else {
 				alert("School data not found in database.");
 			}
-
 
 			adding = false;
 		}
@@ -205,11 +202,16 @@
 		loading = true;
 
 		debounceTimer = setTimeout(async () => {
-			const schoolRef = doc(db, "schools", $userData!.school);
+			const schoolRef = doc(
+				db,
+				"schools",
+				$userData!.school,
+				"schooldata",
+				"data",
+			);
 			const schoolSnap = await getDoc(schoolRef);
 
 			if (schoolSnap.exists()) {
-				
 				const schoolRooms = schoolSnap.data().rooms || [];
 
 				exists = schoolRooms.some(
@@ -224,19 +226,36 @@
 
 	//#endregion
 
-
 	//#region editRooms
 
 	let isEditing = false;
 	let rooms: any[] = [];
 	let originalName = "";
-	$: if($schoolData) {
+	$: if ($schoolData) {
 		rooms = $schoolData?.rooms || [];
 	}
 
-	const editRoom = (room: any) => {
-		if(!adding)
-		{
+	function editRoom(event: any) {
+		const selectedRoomName = event.target.value;
+		const selectedRoom = rooms.find(
+			(room) => room.name === selectedRoomName,
+		);
+
+		if (selectedRoom && !adding) {
+			isEditing = true;
+			originalName = selectedRoom.name;
+			classroomName = selectedRoom.name;
+			layout = JSON.parse(selectedRoom.layout);
+		}
+
+		//Fix bug
+		mouseDown = false;
+	}
+
+	function editRoomByName(r: any) {
+		let room = r;
+
+		if (!adding) {
 			isEditing = true;
 			originalName = room.name;
 			classroomName = room.name;
@@ -244,130 +263,97 @@
 		}
 	}
 
-	function cancelEdit () {
+	function cancelEdit() {
 		isEditing = false;
 		classroomName = "";
 		originalName = "";
 		clearAllBoxes();
 	}
 
-
-
 	//#endregion
-
-
 </script>
 
-
-
-
-
-
-
-
-
 <div class="flex justify-center gap-4">
-
-
-
-
-
-
-	<div class="flex justify-stretch p-6 gap-4 rounded-box bg-base-200 w-3/7 mt-5">
-
-
-
-
-	
-
-
-
-
-
-
-	<div class=" dropdown dropdown-hover mt-9">
-		<div role="button" class="btn btn-neutral btn-wide">Rooms</div>
-		<ul class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-64">
-	
+	<div
+		class="flex justify-stretch p-6 gap-4 rounded-box bg-base-200 w-3/7 mt-5"
+	>
+		<select on:change={editRoom} class="select select-bordered mt-9">
+			<option disabled selected>Choose room</option>
 			{#each rooms as room}
-				<li>
-					<button on:click={() => editRoom(room)}>{room.name}</button>
-				</li>
+				<option value={room.name}>{room.name}</option>
 			{/each}
-			
-		</ul>
-	  </div>
+		</select>
 
-
-
-
-
-
-			<label class="form-control">
-				<div class="label">
-					<span class="label-text">Enter classroom name or id</span>
-				</div>
-				<input
-					class="input input-bordered"
-					bind:value={classroomName}
-					on:input={checkAvailability}
-					class:input-error={!isValid && isTouched && !loading}
-					class:input-warning={isTaken && !loading && !isEditing}
-					class:input-success={isReady}
-				/>
-				<div class="label">
-					{#if !isValid && isTouched && !loading}
-						<p class="text-error text-sm">
-							3-25 characters, no spaces, only letters and numbers
-						</p>
-					{/if}
-					{#if isTaken && !isEditing}
-						<p class="text-warning text-sm">
-							{classroomName} already exists
-						</p>
-						<button class="btn btn-xs btn-accent" on:click={() => editRoom(rooms.find(room => room.name === classroomName))}>Edit {classroomName}</button>
-
-					{:else if isEditing}
+		<label class="form-control">
+			<div class="label">
+				<span class="label-text">Enter classroom name or id</span>
+			</div>
+			<input
+				class="input input-bordered"
+				bind:value={classroomName}
+				on:input={checkAvailability}
+				class:input-error={!isValid && isTouched && !loading}
+				class:input-warning={isTaken && !loading && !isEditing}
+				class:input-success={isReady}
+			/>
+			<div class="label">
+				{#if !isValid && isTouched && !loading}
+					<p class="text-error text-sm">
+						3-25 characters, no spaces, only letters and numbers
+					</p>
+				{/if}
+				{#if isTaken && !isEditing}
+					<p class="text-warning text-sm">
+						{classroomName} already exists
+					</p>
+					<button
+						class="btn btn-xs btn-accent"
+						on:click={() =>
+							editRoomByName(
+								rooms.find(
+									(room) => room.name === classroomName,
+								),
+							)}>Edit {classroomName}</button
+					>
+				{:else if isEditing}
 					<p class="text-primary text-sm">
 						Editing {originalName}
 					</p>
-					
-					<button class="btn btn-primary btn-xs" on:click={cancelEdit}> Go back</button>
 
-					{/if}
-				</div>
-			</label>
+					<button
+						class="btn btn-primary btn-xs"
+						on:click={cancelEdit}
+					>
+						Cancel</button
+					>
+				{/if}
+			</div>
+		</label>
 
-			{#if !isEditing}
+		{#if !isEditing}
 			<button
 				class={`btn ${isReady && amountOfSeats ? "btn-primary" : "btn-disabled"} btn-wide mt-9`}
-				on:click={addClassroom}>
+				on:click={addClassroom}
+			>
 				{#if adding}
 					<span class="loading loading-ring loading-lg"></span>
 				{:else}
 					Add classroom
 				{/if}
 			</button>
-
-			{:else}
-
+		{:else}
 			<button
 				class={`btn ${isValid && amountOfSeats ? "btn-accent" : "btn-disabled"} btn-wide mt-9`}
-				on:click={addClassroom}>
+				on:click={addClassroom}
+			>
 				{#if adding}
 					<span class="loading loading-ring loading-lg"></span>
 				{:else}
 					Save
 				{/if}
 			</button>
-
-
-
-			{/if}
-
-
-		</div>
-
+		{/if}
+	</div>
 </div>
 
 <div class="flex justify-end p-3 gap-3">
@@ -379,9 +365,7 @@
 	>
 </div>
 
-<div class="divider text-lg font-bold">
-	Front of classroom
-</div>
+<div class="divider text-lg font-bold">Front of classroom</div>
 
 <div class="">
 	{#each layout as row, i}

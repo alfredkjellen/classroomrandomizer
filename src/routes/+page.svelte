@@ -80,26 +80,7 @@
 
         <a href="/signup" class="mt-10 btn btn-accent btn-circle btn-wide">Sign up</a>
   
-        <!-- <div class="flex justify-center mt-20 items-center text-sm">
-          Featured on
-  
-          {#if $themeStore === "darktheme"}
-            <a href="https://www.producthunt.com" target="_blank"
-              ><img
-                style="width: 175px;"
-                src="product-hunt-logo-horizontal-orangewhite.png"
-                alt="Product Hunt Logo"
-              /></a
-            >
-          {:else}
-            <img
-              style="width: 175px;"
-              src="product-hunt-logo-horizontal-orange.png"
-              alt="Product Hunt Logo"
-            />
-          {/if}
-        </div> -->
-  
+      
 
       </div>
     </div>
