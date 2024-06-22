@@ -108,7 +108,6 @@
     let allStudents: Student[] = [];
     let randomizedStudents: Student[] = [];
 
-    let studentsNotAssigned: Student[] = [];
 
     function shuffleArray(array: any[]) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -291,7 +290,13 @@ function moveStudents(student1: Student, student2:Student)
 
 
     $:{
+
+
+        if(currentClass.students.length > 0)
+        {
         checkGroupSize();
+      }
+
     }
 
     let groupSize: any = 4;
@@ -346,7 +351,6 @@ function moveStudents(student1: Student, student2:Student)
 
     function zoom(operation: string) {
     
-
         if(operation === "+")
         {
             boxWidth += boxWidth * factor;
@@ -376,6 +380,9 @@ function handleClassSelection(event:any) {
   const selectedClassName = event.target.value;
   const selectedClass = classes.find(c=> c.name === selectedClassName);
   selectClass(selectedClass!);
+
+  //updating the layout
+  updateLayout();
 }
 
 
@@ -457,7 +464,7 @@ let isDropdownOpen = false;
       {/each}
     </select>
   
-    <label class="input input-bordered flex items-center gap-2 font-bold text-sm">
+    <label class="input input-bordered flex items-center gap-2 text-sm">
       Group size:
       <input bind:value={groupSize} on:input={updateLayout} type="text" class="grow w-12" />
     </label>
