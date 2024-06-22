@@ -61,12 +61,6 @@
     <div class="hero-content text-center py-12">
       <div class="max-w-xl">
         <div
-          class="text-lg md:text-lg font-bold bg-clip-text px-2 text-transparent bg-gradient-to-r from-primary to-accent mb-20"
-          style="line-height: 1.2;"
-        >
-          Student Randomizer
-        </div>
-        <div
           class="text-3xl md:text-5xl font-bold px-2"
           style="line-height: 1.2;"
         >
@@ -162,8 +156,16 @@
                 </div>
               </div>
             {/each}
+
+
+
+            
           </div>
+
+          
         </div>
+
+        
       </div>
   
       
@@ -176,6 +178,16 @@
 
 
 
+
+<div class="flex justify-center mt-20">
+
+  <div
+          class="text-xl md:text-3xl font-bold bg-clip-text px-2 text-transparent bg-gradient-to-r from-primary to-accent mb-20"
+          style="line-height: 1.2;"
+        >
+          Student Randomizer
+        </div>
+</div>
 
 
 
