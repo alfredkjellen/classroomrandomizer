@@ -419,6 +419,24 @@ let isDropdownOpen = false;
 
 
 
+function increaseGroupSize()
+{
+    groupSize += 1;
+    updateLayout();
+}
+function decreaseGroupSize()
+{
+
+    if(groupSize > 1)
+    {
+    groupSize -= 1;
+    updateLayout();
+    }
+    
+}
+
+
+
 </script>
 
 
@@ -466,8 +484,23 @@ let isDropdownOpen = false;
   
     <label class="input input-bordered flex items-center gap-2 text-sm">
       Group size:
-      <input bind:value={groupSize} on:input={updateLayout} type="text" class="grow w-12" />
-    </label>
+      <input bind:value={groupSize} on:input={updateLayout} type="text" class="grow w-7" />
+
+  
+  </label>
+
+  <div>
+    <div>
+  <button on:click={increaseGroupSize} class="btn btn-sm btn-neutral">+</button>
+</div>
+
+<div>
+  <button on:click={decreaseGroupSize} class="btn btn-sm btn-neutral">-</button>
+</div>
+</div>
+
+
+
   
     <div class="relative inline-block">
       <button id="dropdown-button" class="select select-bordered w-56 flex items-center justify-start" on:click={toggleDropdown}>

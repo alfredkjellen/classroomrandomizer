@@ -169,51 +169,7 @@ onMount(() => {
             new Seat(true),
             new Seat(true),
             new Seat(true),
-        ],
-        [
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-        ],
-        [
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-        ],
-        [
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-        ],
-        [
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-            new Seat(false),
-        ],
+        ]
     ]);
 
     let room1 = new Room("Room 1", [
@@ -336,6 +292,11 @@ onMount(() => {
         currentRoom = room;
         if(currentClass.name !== "Choose class"){
             selectClass(currentClass);
+
+
+            //Set box size 
+            //boxWidth = screen.width / currentRoom.layout[0].length;
+
         }
     }
 
@@ -531,10 +492,25 @@ onMount(() => {
         }
     }
 
-    //#region Zoom
-    let boxWidth = 150;
-    let boxHeight = 65;
+    //#region Zoom and Size
+    
+    
+
+    let boxWidth = 0;
+    let boxHeight = 0;
     let factor = 0.05;
+
+    //scale with screen
+    $: 
+    {
+      if(currentRoom.layout.length > 0){
+        boxWidth = innerWidth / currentRoom.layout[0].length;
+        boxHeight = (innerHeight - 200) / currentRoom.layout.length;
+      }
+    
+    }
+    
+  
 
     function zoom(operation: string) {
         if (currentRoom.name !== "Choose room") {
@@ -547,6 +523,12 @@ onMount(() => {
             }
         }
     }
+
+
+
+   
+
+
 
     //#endregion
 
@@ -641,14 +623,14 @@ let isDropdownOpen = false;
   <svelte:window on:click={closeDropdown} />
   
   <div class="menu-container">
-    <select class="select select-bordered" on:change={handleRoomSelection}>
+    <select class="select select-bordered select-sm" on:change={handleRoomSelection}>
       <option disabled selected>Choose room</option>
       {#each rooms as room}
       <option value={room.name}>{room.name}</option>
       {/each}
     </select>
   
-    <select class="select select-bordered" on:change={handleClassSelection}>
+    <select class="select select-bordered select-sm" on:change={handleClassSelection}>
       <option disabled selected>Choose class</option>
       {#each classes as c}
       <option value={c.name}>{c.name}</option>
@@ -656,34 +638,11 @@ let isDropdownOpen = false;
     </select>
   
     <div class="btn-container">
-      <button
-        class="btn btn-md btn-accent"
-        on:click={() => selectClass(currentClass)}
-      >
-        Randomize
-        <svg
-          class="w-6 h-6 text-gray-800"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13.484 9.166 15 7h5m0 0-3-3m3 3-3 3M4 17h4l1.577-2.253M4 7h4l7 10h5m0 0-3 3m3-3-3-3"
-          />
-        </svg>
-      </button>
-  
+      
       <div class="relative inline-block">
         <button
           id="dropdown-button"
-          class="select select-bordered w-56 flex items-center justify-start"
+          class="select select-bordered w-56 flex items-center justify-start select-sm"
           on:click={toggleDropdown}
         >
           Students
@@ -711,9 +670,35 @@ let isDropdownOpen = false;
         </div>
         {/if}
       </div>
+
+
+
+      <button
+        class="btn btn-sm btn-accent"
+        on:click={() => selectClass(currentClass)}
+      >
+        Randomize
+        <svg
+          class="w-6 h-6 text-gray-800"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13.484 9.166 15 7h5m0 0-3-3m3 3-3 3M4 17h4l1.577-2.253M4 7h4l7 10h5m0 0-3 3m3-3-3-3"
+          />
+        </svg>
+      </button>
     </div>
   
-    <div class="btn-container">
+    <!-- <div class="btn-container">
       <button on:click={() => zoom("+")} class="btn btn-neutral">
         <svg
           class="w-[28px] h-[28px] text-gray-800 dark:text-white"
@@ -748,7 +733,7 @@ let isDropdownOpen = false;
           />
         </svg>
       </button>
-    </div>
+    </div> -->
   </div>
   
   <div class="divider font-bold">Front of classroom</div>

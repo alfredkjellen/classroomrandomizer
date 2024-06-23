@@ -140,13 +140,12 @@
                 <div class="collapse-title text-xl font-medium">
                   {question.question}
                 </div>
-                <div class="collapse-content">
+                <div class="collapse-content flex justify-start gap-2 items-center">
                   <p>{question.answer}</p>
                   {#if question.question === "How does it work?"}
                     <a class="btn btn-secondary btn-sm" href="/randomizeroom"
                       >Take a look!</a
                     >
-                  
                   
                     {:else if question.question === "Can I customize the layout for each classroom?"}
                   <a class="btn btn-secondary btn-sm" href="/editclassrooms"
