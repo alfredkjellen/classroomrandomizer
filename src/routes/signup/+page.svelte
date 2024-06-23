@@ -150,7 +150,7 @@
         <h1 class="text-3xl font-bold self-center">Sign up new school</h1>
 
         {#if !$user}
-        <button class="btn btn-accent btn-wide btn-outline" on:click={signInWithGoogle}>
+        <button class="btn btn-accent btn-wide" on:click={signInWithGoogle}>
             <GoogleSvg/>
             Sign in with Google</button
         >
