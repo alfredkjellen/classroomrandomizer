@@ -3,7 +3,7 @@
 </script>
 <nav class="flex justify-center my-6">
   <ul class="steps">
-    <a href="/signup" class="step step-accent" style="pointer-events: none;">Sign up</a>
+    <a href="/signup" class="step step-primary" style="pointer-events: none;">Sign up</a>
     
     <a
       href="/signup/getstarted"

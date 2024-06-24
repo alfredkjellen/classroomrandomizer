@@ -369,7 +369,7 @@
         {:else}
           <div class="mt-10">
             <li>
-              <a on:click={closeDrawer} class="btn btn-primary btn-outline" href="/login"
+              <a on:click={closeDrawer} class="btn btn-accent btn-outline" href="/login"
                 >Log in</a
               >
             </li>

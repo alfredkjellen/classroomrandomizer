@@ -150,13 +150,13 @@
         <h1 class="text-3xl font-bold self-center">Sign up new school</h1>
 
         {#if !$user}
-        <button class="btn btn-accent btn-wide" on:click={signInWithGoogle}>
+        <button class="btn btn-primary btn-wide" on:click={signInWithGoogle}>
             <GoogleSvg/>
             Sign in with Google</button
         >
 
         {:else}
-        <div style="cursor: default;" class="btn btn-accent no-animation btn-active">
+        <div style="cursor: default;" class="btn btn-primary no-animation btn-active">
             <svg
                 class="w-6 h-6 text-gray-800 dark:text-white"
                 aria-hidden="true"
@@ -271,7 +271,7 @@
 
         <button
             class="btn"
-            class:btn-accent={userIsReady}
+            class:btn-primary={userIsReady}
             class:btn-disabled={!userIsReady}
             on:click={handleSignUp}>Sign up</button
         >
@@ -300,6 +300,6 @@
 
 
 <div class="flex justify-center mt-4">
-    <a href="/login" class="btn btn-primary btn-wide">Log in</a>
+    <a href="/login" class="btn btn-accent btn-wide">Log in</a>
     </div>
 
