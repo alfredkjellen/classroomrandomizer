@@ -10,7 +10,10 @@
       if (browser) {
         window.addEventListener("click", resetClickedStatus)
     window.addEventListener("resize", handleResize)
-        mounted = true
+
+        selectClass(currentClass);
+
+        mounted = true;
       }
   
       return () => {
@@ -244,11 +247,10 @@
     rooms = [room1, room2]
     classes = [classA]
   
-    let currentRoom = room1
-    let currentClass = classA
-    let activeStudents: any = currentClass.students.map(
-      (student) => new Student(student),
-    )
+    let currentRoom = room1;
+    let currentClass = classA;
+    
+
     let allStudents: Student[] = []
     let randomizedStudents: Student[] = []
   
@@ -331,8 +333,10 @@
     }
   
     function updateRoom() {
-      let studentList: any = randomizedStudents.slice()
+      let studentList: Student[] = randomizedStudents.slice()
   
+      studentList = studentList.filter(student => student.name !== "");
+
       for (let i = 0; i < currentRoom.layout.length; i++) {
         for (let j = 0; j < currentRoom.layout[i].length; j++) {
           if (currentRoom.layout[i][j].isAvailable && studentList.length > 0) {
@@ -389,6 +393,7 @@
         //add student to room
   
         let found = false
+        student.isPresent = true;
         for (let i = 0; i < currentRoom.layout.length; i++) {
           for (let j = 0; j < currentRoom.layout[i].length; j++) {
             if (
@@ -413,8 +418,7 @@
     $:if(browser) {
        screenWidth = window.innerWidth;
     }
-    let lgBtnFactor = 0.3;
-    let lgBtnSize = 259;
+    
     let smBtnSize = 98;
     let smBtnFactor = 0.12;
 
@@ -478,13 +482,44 @@ let isDropdownOpen = false;
 
 
 
+function randomizeClass() {
+
+let presentStudents:Student[] = [];
+
+
+for(let i = 0; i < currentRoom.layout[0].length; i++){
+
+    for(let j = 0; j < currentRoom.layout.length; j++){
+
+
+      if(currentRoom.layout[j][i].isAvailable && currentRoom.layout[j][i].student.isPresent){
+        presentStudents.push(currentRoom.layout[j][i].student);
+      }
+
+    }
+
+  }
+
+
+
+randomizedStudents = shuffleArray(presentStudents.slice());
+updateRoom();
+
+}
+
+
+
+
+
+
+
 
 
   </script>
   
 <svelte:window on:click={closeDropdown} />
 
-  <div class="flex justify-center"><button on:click={()=>selectClass(currentClass)} class="btn btn-xs btn-accent mb-3">
+  <div class="flex justify-center"><button on:click={()=>randomizeClass()} class="btn btn-xs btn-accent mb-3">
     Randomize<svg
       class="w-6 h-6 text-gray-800"
       aria-hidden="true"
@@ -507,16 +542,16 @@ let isDropdownOpen = false;
   <div class="flex justify-center items-center">
 
     <select class="select select-sm select-bordered w-52 max-w-xs" on:change={handleRoomSelection}>
-      <option disabled selected>Choose room</option>
-      {#each rooms as room}
-        <option value={room.name}>{room.name}</option>
+      <option disabled>Choose room</option>
+      {#each rooms as room, index}
+        <option value={room.name} selected={index === 0}>{room.name}</option>
       {/each}
     </select>
 
     <select class="select select-sm select-bordered w-52 max-w-xs" on:change={handleClassSelection}>
-      <option disabled selected>Choose class</option>
-      {#each classes as c}
-        <option value={c.name}>{c.name}</option>
+      <option disabled>Choose class</option>
+      {#each classes as c, index}
+        <option value={c.name} selected={index === 0}>{c.name}</option>
       {/each}
     </select>
 

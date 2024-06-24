@@ -292,11 +292,6 @@ onMount(() => {
         currentRoom = room;
         if(currentClass.name !== "Choose class"){
             selectClass(currentClass);
-
-
-            //Set box size 
-            //boxWidth = screen.width / currentRoom.layout[0].length;
-
         }
     }
 
@@ -308,6 +303,32 @@ onMount(() => {
         randomizedStudents = shuffleArray(allStudents.slice());
         updateRoom();
     }
+
+
+
+    function randomizeClass() {
+
+        let presentStudents:Student[] = [];
+        
+
+        for(let i = 0; i < currentRoom.layout[0].length; i++){
+
+            for(let j = 0; j < currentRoom.layout.length; j++){
+
+              if(currentRoom.layout[j][i].isAvailable && currentRoom.layout[j][i].student.isPresent && currentRoom.layout[j][i].student.name !== ""){
+                presentStudents.push(currentRoom.layout[j][i].student);
+              }
+
+            }
+
+          }
+
+        randomizedStudents = shuffleArray(presentStudents.slice());
+        updateRoom();
+    }
+
+
+
 
     $: if ($schoolData && $user) {
         classes = $schoolData?.classes ?? [];
@@ -401,13 +422,16 @@ onMount(() => {
     }
 
     function updateRoom() {
-        let studentList: any = randomizedStudents.slice();
+        let studentList: Student[] = randomizedStudents.slice();
 
+        studentList = studentList.filter(student => student.name !== "");
+
+        
         for (let i = 0; i < currentRoom.layout.length; i++) {
             for (let j = 0; j < currentRoom.layout[i].length; j++) {
                 if (
                     currentRoom.layout[i][j].isAvailable &&
-                    studentList.length > 0
+                    studentList.length > 0 
                 ) {
                     currentRoom.layout[i][j].student = studentList.shift()!;
                 } else if (currentRoom.layout[i][j].isAvailable) {
@@ -421,7 +445,7 @@ onMount(() => {
         student.isClicked = false;
         
         if (student.isPresent) {
-
+          
             //remove student from room
             for (let i = 0; i < currentRoom.layout.length; i++) {
                 for (let j = 0; j < currentRoom.layout[i].length; j++) {
@@ -472,9 +496,10 @@ onMount(() => {
 
 
         } else {
-            //add student to room
+            
 
             let found = false;
+            student.isPresent = true;
             for (let i = 0; i < currentRoom.layout.length; i++) {
                 for (let j = 0; j < currentRoom.layout[i].length; j++) {
                     if (
@@ -675,7 +700,7 @@ let isDropdownOpen = false;
 
       <button
         class="btn btn-sm btn-accent"
-        on:click={() => selectClass(currentClass)}
+        on:click={() => randomizeClass()}
       >
         Randomize
         <svg

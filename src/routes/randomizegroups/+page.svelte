@@ -71,15 +71,7 @@
       "Will",
     ]);
 
-    let room1 = new Room("Room1", [
-        [new Seat(true), new Seat(true), new Seat(true)],
-        [new Seat(true), new Seat(true), new Seat(true)],
-    ]);
-
-    let room2 = new Room("Room2", [
-        [new Seat(true), new Seat(false), new Seat(false)],
-        [new Seat(true), new Seat(true), new Seat(true)],
-    ]);
+    
 
     let classes: Class[] = [];
     classes = [classA];
@@ -344,10 +336,27 @@ function moveStudents(student1: Student, student2:Student)
 
 
 
-    //#region Zoom
+    //#region Zoom and Size
     let boxWidth = 150;
     let boxHeight = 75;
     let factor = 0.05;
+
+
+    // //scale with screen
+    // $: 
+    // {
+    //   if(groupSize > 0 && currentClass.students.length > 0 && groupSize !== undefined){
+        
+    //     let boxAmount = colAmounts[groupSize] * groupSize + groupSize - 1; 
+        
+    //     boxWidth = innerWidth / boxAmount;
+    //     boxHeight = (innerHeight - 200) / currentRoom.layout.length;
+    //   }
+    
+    // }
+
+
+
 
     function zoom(operation: string) {
     
@@ -475,14 +484,14 @@ function decreaseGroupSize()
 <svelte:window on:click={closeDropdown} />
 
   <div class="menu-container">
-    <select class="select select-bordered w-full max-w-xs" on:change={handleClassSelection}>
+    <select class="select select-sm select-bordered w-full max-w-xs" on:change={handleClassSelection}>
       <option disabled selected>Choose class</option>
       {#each classes as c}
       <option value={c.name}>{c.name}</option>
       {/each}
     </select>
   
-    <label class="input input-bordered flex items-center gap-2 text-sm">
+    <label class="input input-sm input-bordered flex items-center gap-2 text-sm">
       Group size:
       <input bind:value={groupSize} on:input={updateLayout} type="text" class="grow w-7" />
 
@@ -503,7 +512,7 @@ function decreaseGroupSize()
 
   
     <div class="relative inline-block">
-      <button id="dropdown-button" class="select select-bordered w-56 flex items-center justify-start" on:click={toggleDropdown}>
+      <button id="dropdown-button" class="select select-sm select-bordered w-56 flex items-center justify-start" on:click={toggleDropdown}>
         Students
       </button>
       {#if isDropdownOpen}
