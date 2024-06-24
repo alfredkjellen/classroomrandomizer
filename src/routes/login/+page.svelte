@@ -126,9 +126,9 @@
         <h1 class="text-3xl font-bold self-center btn-wide">Log in</h1>
 
         {#if $user}
-            <button class="btn btn-primary"><GoogleSvg />{email} </button>
+            <button class="btn btn-accent"><GoogleSvg />{email} </button>
         {:else}
-            <button class="btn btn-primary" on:click={signInWithGoogle}
+            <button class="btn btn-accent" on:click={signInWithGoogle}
                 ><GoogleSvg />
                 Log in with Google</button
             >
