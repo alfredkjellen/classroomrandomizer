@@ -54,7 +54,7 @@ function closeDrawer() {
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </label>
       <a class="btn btn-ghost text-lg" href="/">
-        <img src="/logo-8.png" alt="Student Randomizer Logo" class="w-11 h-11" />
+        <img src="/logo.avif" alt="Student Randomizer Logo" class="w-11 h-11" />
         Student Randomizer
       </a>
 
