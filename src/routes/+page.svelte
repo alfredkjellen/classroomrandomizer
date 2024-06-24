@@ -70,7 +70,7 @@
         classrooms
       </div>
 
-      <a href="/signup" class="mt-10 btn btn-accent btn-circle btn-wide"
+      <a href="/signup" class="mt-10 btn btn-primary btn-circle btn-wide"
         >Sign up</a
       >
     </div>

@@ -519,7 +519,7 @@ updateRoom();
   
 <svelte:window on:click={closeDropdown} />
 
-  <div class="flex justify-center"><button on:click={()=>randomizeClass()} class="btn btn-xs btn-accent mb-3">
+  <div class="flex justify-center"><button on:click={()=>randomizeClass()} class="btn btn-xs btn-primary mb-3">
     Randomize<svg
       class="w-6 h-6 text-gray-800"
       aria-hidden="true"

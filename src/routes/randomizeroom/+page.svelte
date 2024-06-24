@@ -699,7 +699,7 @@ let isDropdownOpen = false;
 
 
       <button
-        class="btn btn-sm btn-accent"
+        class="btn btn-sm btn-primary"
         on:click={() => randomizeClass()}
       >
         Randomize

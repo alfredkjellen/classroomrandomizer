@@ -369,14 +369,14 @@
         {:else}
           <div class="mt-10">
             <li>
-              <a on:click={closeDrawer} class="btn btn-primary" href="/login"
+              <a on:click={closeDrawer} class="btn btn-primary btn-outline" href="/login"
                 >Log in</a
               >
             </li>
             <li>
               <a
                 on:click={closeDrawer}
-                class="btn btn-accent mt-5"
+                class="btn btn-primary mt-5"
                 href="/signup">Sign up</a
               >
             </li>
