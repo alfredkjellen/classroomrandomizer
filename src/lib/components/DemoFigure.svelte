@@ -403,7 +403,7 @@
             ) {
               currentRoom.layout[i][j].student = student
               found = true
-              break
+              break;
             }
           }
         }
