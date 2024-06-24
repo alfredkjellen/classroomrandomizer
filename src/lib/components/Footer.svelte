@@ -25,7 +25,7 @@
       <p class="max-w-[260px]">
         <img
           alt="Student Randomizer Logo"
-          src="/logo.avif"
+          src="/logo-5.avif"
           class="w-[50px] mb-3 h-[50px]"
         />
         <span class="font-bold">Student Randomizer</span>
