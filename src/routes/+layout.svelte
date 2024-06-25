@@ -30,7 +30,46 @@
 
     <div class="drawer-content flex flex-col">
       <nav class="navbar bg-base-200 h-0.5">
-        <div class="flex-1">
+
+        <div class="flex-1 lg:hidden flex justify-between"> 
+
+          <label
+          for="my-drawer-3"
+          aria-label="open sidebar"
+          class="btn btn-square sbtn-ghost lg:hidden"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="inline-block w-6 h-6 stroke-current"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path></svg
+          >
+        </label>
+        <a class="btn btn-ghost text-lg" href="/">
+          <img
+            src="/logo-5.avif"
+            alt="Student Randomizer Logo"
+            class="w-11 h-11"/>
+          
+        </a>
+
+        <MoonSunSwap />
+
+
+
+
+
+
+        </div>
+
+
+        <div class="flex-1 hidden lg:flex">
           <label
             for="my-drawer-3"
             aria-label="open sidebar"
@@ -180,14 +219,14 @@
 
         <div class="flex-none">
           <ul
-            class="menu menu-horizontal px-1 hidden sm:flex font-bold text-sm"
+            class="menu menu-horizontal px-1 hidden lg:flex font-bold text-sm"
           >
             <li class="md:mx-1">
               <LoginButton svgColor={$svgColor}></LoginButton>
             </li>
             <li class="md:mx-1"><SignupButton></SignupButton></li>
           </ul>
-          <MoonSunSwap />
+         <p class="hidden lg:block"> <MoonSunSwap /></p>
         </div>
       </nav>
 
