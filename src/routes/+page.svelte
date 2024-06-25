@@ -173,7 +173,7 @@
     Student Randomizer
   </div>
 </div>
-
+<!-- 
 <div class="flex justify-center">
   <a
     href="https://www.producthunt.com/posts/student-randomizer?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-student&#0045;randomizer"
@@ -186,7 +186,7 @@
       height="48.5"
     /></a
   >
-</div>
+</div> -->
 
 <div class="mt-80">
   <Footer />
