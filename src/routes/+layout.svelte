@@ -34,7 +34,7 @@
           <label
             for="my-drawer-3"
             aria-label="open sidebar"
-            class="btn btn-square btn-ghost"
+            class="btn btn-square sbtn-ghost lg:hidden"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -368,6 +368,7 @@
           </li>
         {:else}
           <div class="mt-10">
+            <ul>
             <li>
               <a on:click={closeDrawer} class="btn btn-accent btn-outline" href="/login"
                 >Log in</a
@@ -380,6 +381,7 @@
                 href="/signup">Sign up</a
               >
             </li>
+          </ul>
           </div>
         {/if}
       </ul>
