@@ -34,7 +34,7 @@ function copyToClipboard(text: string) {
         <br>
         <br>
         I'm always open to learn more and if you want to get in touch with me, feel free to send me an email at
-        <Contact />
+        <Contact contact="alfred.kjellen@gmail.com" />
         <br><br>
 
         The tech stack I've used for this project is:

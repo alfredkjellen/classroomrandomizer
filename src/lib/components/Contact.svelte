@@ -1,6 +1,9 @@
 <script lang="ts">
     import { svgColor } from "$lib/controller";
-  
+    import { connectAuthEmulator } from "firebase/auth";
+
+    export let contact:string = "studentrandomizer@gmail.com";
+    
     let copied = false;
   
     let timeout = 1500;
@@ -23,11 +26,11 @@
           data-tip="Copied!"
         >
           <button
-            on:click={() => copyToClipboard("alfred.kjellen@gmail.com")}
+            on:click={() => copyToClipboard(contact)}
             class="text-primary flex items-center"
           >
 
-            alfred.kjellen@gmail.com
+            {contact}
             <svg
               class="w-6 h-6 text-gray-800 dark:text-white ml-1"
               aria-hidden="true"
@@ -52,10 +55,10 @@
         </div>
       {:else}
         <button
-          on:click={() => copyToClipboard("alfred.kjellen@gmail.com")}
+          on:click={() => copyToClipboard(contact)}
           class="flex items-center hover:text-primary"
         >
-          alfred.kjellen@gmail.com
+          {contact}
           <svg
             class="w-6 h-6 text-gray-800 dark:text-white ml-1"
             aria-hidden="true"

@@ -7,7 +7,7 @@
     <div class="card-body">
       <h2 class="card-title">Contact</h2>
       <p>If you have any questions or have come across an issue, feel free to contact</p>
-      <Contact />
+      <Contact contact="studentrandomizer@gmail.com"/>
     </div>
   </div>
 </div>
