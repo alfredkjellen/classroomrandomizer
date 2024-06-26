@@ -129,6 +129,7 @@
 
     async function deleteClass(c : any)
     {
+        
         if(c !== undefined)
         {
             const schoolRef = doc(db, "schools", $userData!.school, "schooldata", "data");
@@ -139,7 +140,7 @@
 
                 let updatedClasses = schoolData?.classes || [];
         		
-                updatedClasses = updatedClasses.filter((c: any) => c.id !== currentClass.id);
+                updatedClasses = updatedClasses.filter((class_: any) => class_.id  !== c.id);
                 
 				await updateDoc(schoolRef, { classes:updatedClasses });
                 isEditing = false;
@@ -151,10 +152,6 @@
 
 
             cancelEdit();
-
-
-
-
         }
 
     }
