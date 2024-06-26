@@ -2,10 +2,12 @@
 export class Class {
     name: string;
     students: string[];
-
-    constructor(name: string, students: string[]) {
+    id:string;
+    
+    constructor(name: string, students: string[], id:string = "") {
         this.name = name;
         this.students = students;
+        this.id = id;
     }
 }
 

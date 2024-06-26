@@ -12,6 +12,8 @@
     let originalName = "";
     let adding = false;
 
+    let currentClass: Class = new Class("", []); 
+
 
     $: if($schoolData) {
 		classes = $schoolData?.classes || [];
@@ -30,12 +32,14 @@
     //region edit classes
 
     function selectClass(c: any) {
+        
+        currentClass = c;
+
+        //
         className = c.name;
         originalName = c.name;
         studentNames = c.students.join("\n");
         isEditing = true;
-
-        
     }
 
 
@@ -43,19 +47,45 @@
         isEditing = false;
         className = "";
         studentNames = "";
+        originalName = "";
     }
 
-    //#endregion
-    async function addClass() {
+
+
+
+    async function editClass() {
         const students = studentNames
             .split("\n")
             .filter((name) => name.trim() !== "");
-        const newClass = new Class(className, students);
+
+        const newClass = new Class(className, students, currentClass.id);
         
         className = "";
         studentNames = "";
         await confirmClasses(newClass);
+        isEditing = false;
+    }
 
+
+
+    //#endregion
+
+
+
+    //#region add Classes
+    async function addClass() {
+        const students = studentNames
+            .split("\n")
+            .filter((name) => name.trim() !== "");
+
+        
+        let newId = Math.random().toString(36).slice(2);
+        const newClass = new Class(className, students, newId);
+        
+        className = "";
+        studentNames = "";
+        await confirmClasses(newClass);
+        isEditing = false;
     }
 
     async function confirmClasses(newClass: any) {
@@ -69,12 +99,14 @@
 				const schoolData = schoolSnap.data();
 
                 let updatedClasses = schoolData?.classes || [];
-        		updatedClasses = updatedClasses.filter((c: any) => c.name !== originalName);
-				
-
-				updatedClasses.push({name: newClass.name, students: newClass.students});
-
+        		
+                if(isEditing)
+                {
+                    updatedClasses = updatedClasses.filter((c: any) => c.id !== currentClass.id);
+                }
                 
+				updatedClasses.push({name: newClass.name, students: newClass.students, id: newClass.id});
+
 				await updateDoc(schoolRef, { classes:updatedClasses });
                 isEditing = false;
                 
@@ -89,6 +121,56 @@
 	}
 
     //#endregion
+
+
+
+
+    //#region delete classes
+
+    async function deleteClass(c : any)
+    {
+        if(c !== undefined)
+        {
+            const schoolRef = doc(db, "schools", $userData!.school, "schooldata", "data");
+			const schoolSnap = await getDoc(schoolRef);
+
+			if (schoolSnap.exists()) {
+				const schoolData = schoolSnap.data();
+
+                let updatedClasses = schoolData?.classes || [];
+        		
+                updatedClasses = updatedClasses.filter((c: any) => c.id !== currentClass.id);
+                
+				await updateDoc(schoolRef, { classes:updatedClasses });
+                isEditing = false;
+                
+			} 
+			else {
+				alert("School data not found in database.");
+			}
+
+
+            cancelEdit();
+
+
+
+
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+    //#endregion
+
+
+
 
     function switchNameOrder() {
         const students = studentNames
@@ -128,12 +210,18 @@
     <ul class="menu bg-base-200 w-56 rounded-box">
 
         {#each classes as c, i}
+        <div class="flex justify-between">
         <li>
-        <button on:click={() => selectClass(c)}>{c.name}
+            
+        <button class=" w-44" on:click={() => selectClass(c)} >{c.name}</button>
+       
+        </li>
+        <button on:click={() => deleteClass(c)}>
+        <svg class="w-6 h-6 hover:text-red-600 text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
+          </svg>
         </button>
-
-    </li>
-    
+        </div>
             {/each}
 
 
@@ -141,11 +229,13 @@
 
 
 
-
+      
     <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6 w-2/5">
-        
+        <button on:click={() => deleteClass(currentClass)} class={`self-end btn btn-sm ${isEditing ? "btn-error": "btn-disabled"}`}>Delete class</button>
 
         <label class="form-control">
+            
+            
             <div class="label">
                 <span class="label-text">Name of class</span>
             </div>
@@ -175,7 +265,7 @@
 
 
         {#if isEditing}
-        <button class="btn btn-accent mt-10" class:btn-disabled={!nameIsTouched} on:click={addClass}
+        <button class="btn btn-accent mt-10" class:btn-disabled={!nameIsTouched} on:click={editClass}
         >Save</button
 
     >
