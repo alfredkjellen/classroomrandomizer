@@ -5,7 +5,6 @@
     import { browser } from "$app/environment";
     import { svgColor } from "$lib/controller";
 
-
 let mounted = false;
 
 onMount(() => {

@@ -51,8 +51,6 @@
     }
 
 
-
-
     async function editClass() {
         const students = studentNames
             .split("\n")

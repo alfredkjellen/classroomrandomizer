@@ -89,11 +89,21 @@
 		const cols = layout[0].length;
 		const adjustedLayout: boolean[][] = [];
 
-		for (let i = 0; i < rows; i++) {
-			adjustedLayout.push(Array(cols).fill(false));
+		let maxY = 0;
+		let maxX = 0;
+		for (let y = 0; y < rows; y++) {
+			for (let x = 0; x < cols; x++) {
+				if (layout[y][x]) {
+					if (y > maxY) {
+						maxY = y;
+					}
+					if (x > maxX) {
+						maxX = x;
+					}
+				}
+			}
 		}
 
-		// Adjust layout to top left corner
 		let minY = 100;
 		let minX = 100;
 
@@ -108,6 +118,14 @@
 					}
 				}
 			}
+		}
+
+		let length = maxY - minY + 1;
+		let width = maxX - minX + 1;
+
+
+		for (let i = 0; i < length ; i++) {
+			adjustedLayout.push(Array(width).fill(false));
 		}
 
 		for (let y = 0; y < rows; y++) {
