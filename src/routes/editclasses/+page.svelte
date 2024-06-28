@@ -25,13 +25,27 @@
 
     //#endregion
 
-    //#region add Classes
+    //#region getId
+
+    function createId()
+    {
+        return Math.random().toString(36).slice(2);
+    }
+
+
+
+    //#endregion
 
 
 
     //region edit classes
 
     function selectClass(c: any) {
+        
+        if(c.id === "" || c.id === undefined)
+        {
+            c.id = createId();
+        }
         
         currentClass = c;
 
@@ -77,7 +91,7 @@
             .filter((name) => name.trim() !== "");
 
         
-        let newId = Math.random().toString(36).slice(2);
+        let newId = createId();
         const newClass = new Class(className, students, newId);
         
         className = "";

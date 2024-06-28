@@ -7,9 +7,12 @@
 	let classroomName = "";
 	let layout: boolean[][] = [];
 
-	for (let i = 0; i < 18; i++) {
+	let editingLength = 18;
+	let editingWidth = 18;
+
+	for (let i = 0; i < editingLength; i++) {
 		let row: boolean[] = [];
-		for (let j = 0; j < 18; j++) {
+		for (let j = 0; j < editingWidth; j++) {
 			row.push(false);
 		}
 		layout.push(row);
@@ -50,7 +53,7 @@
 			if (schoolSnap.exists()) {
 				const schoolData = schoolSnap.data();
 
-				let newLayout = adjustLayout(layout);
+				let newLayout = compressLayout(layout);
 
 				const newRoom = {
 					name: classroomName,
@@ -84,7 +87,7 @@
 
 	$: amountOfSeats = layout.flat().filter((box) => box).length;
 
-	function adjustLayout(layout: boolean[][]) {
+	function compressLayout(layout: boolean[][]) {
 		const rows = layout.length;
 		const cols = layout[0].length;
 		const adjustedLayout: boolean[][] = [];
@@ -138,6 +141,19 @@
 
 		return adjustedLayout;
 	}
+
+
+
+
+	function expandLayout(layout: boolean[][]) {
+
+	
+
+
+		
+	}
+
+
 
 	//#endregion
 
@@ -263,10 +279,18 @@
 			isEditing = true;
 			originalName = selectedRoom.name;
 			classroomName = selectedRoom.name;
-			layout = JSON.parse(selectedRoom.layout);
+			let originalLayout = JSON.parse(selectedRoom.layout);
+
+			// Adjust the layout
+			clearAllBoxes();
+			for(let i = 0; i < originalLayout.length; i++) {
+				for(let j = 0; j < originalLayout[i].length; j++) {
+					layout[i][j] = originalLayout[i][j];
+				}
+			}
+
 		}
 
-		//Fix bug
 		mouseDown = false;
 	}
 
