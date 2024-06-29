@@ -30,13 +30,12 @@ function copyToClipboard(text: string) {
         Hello! My name is Alfred and I'm 19 year old student from Sweden, with a general interest in programming and technology.
         <br>
         <br> 
-        Recently, I began learning web development in my spare time and I've become interested in Svelte, a javascript framework for web applications.
+        Recently, I began learning web development and I've become interested in Svelte, a javascript framework for web applications.
         <br>
         <br>
-        I'm always open to learn more and if you want to get in touch with me, feel free to send me an email at
+        If you want to get in touch with me, feel free to send me an email at
         <Contact contact="alfred.kjellen@gmail.com" />
         <br><br>
-
         The tech stack I've used for this project is:
 
       </div>
