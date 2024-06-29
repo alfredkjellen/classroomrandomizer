@@ -104,8 +104,8 @@
                 </div>
 
                 <div>
-                    <div class="badge badge-neutral text-sm">School:</div>
-                    {$schoolData?.name}
+                    <div class="badge badge-neutral text-sm">{$schoolData?.name}</div>
+                    
                 </div>
 
                 <div class="card-actions justify-end">

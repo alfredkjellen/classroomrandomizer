@@ -126,8 +126,7 @@
 		let length = maxY - minY + 1;
 		let width = maxX - minX + 1;
 
-
-		for (let i = 0; i < length ; i++) {
+		for (let i = 0; i < length; i++) {
 			adjustedLayout.push(Array(width).fill(false));
 		}
 
@@ -142,18 +141,7 @@
 		return adjustedLayout;
 	}
 
-
-
-
-	function expandLayout(layout: boolean[][]) {
-
-	
-
-
-		
-	}
-
-
+	function expandLayout(layout: boolean[][]) {}
 
 	//#endregion
 
@@ -283,12 +271,11 @@
 
 			// Adjust the layout
 			clearAllBoxes();
-			for(let i = 0; i < originalLayout.length; i++) {
-				for(let j = 0; j < originalLayout[i].length; j++) {
+			for (let i = 0; i < originalLayout.length; i++) {
+				for (let j = 0; j < originalLayout[i].length; j++) {
 					layout[i][j] = originalLayout[i][j];
 				}
 			}
-
 		}
 
 		mouseDown = false;
@@ -320,7 +307,7 @@
 		class="flex justify-stretch p-6 gap-4 rounded-box bg-base-200 w-3/7 mt-5"
 	>
 		<select on:change={editRoom} class="select select-bordered mt-9">
-			<option disabled selected>Choose room</option>
+			<option disabled selected={!isEditing}>Choose room</option>
 			{#each rooms as room}
 				<option value={room.name}>{room.name}</option>
 			{/each}

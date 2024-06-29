@@ -152,7 +152,7 @@
 
                 let updatedClasses = schoolData?.classes || [];
         		
-                updatedClasses = updatedClasses.filter((class_: any) => class_.id  !== c.id);
+                updatedClasses = updatedClasses.filter((class_: any) => class_.name  !== c.name);
                 
 				await updateDoc(schoolRef, { classes:updatedClasses });
                 isEditing = false;
@@ -167,11 +167,6 @@
         }
 
     }
-
-
-
-
-
 
 
 
