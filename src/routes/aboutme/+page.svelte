@@ -20,7 +20,6 @@ function copyToClipboard(text: string) {
 </script>
 
 
-
 <div class="flex justify-center mt-5">
 
 <div class="card w-96 bg-base-200 shadow-xl">

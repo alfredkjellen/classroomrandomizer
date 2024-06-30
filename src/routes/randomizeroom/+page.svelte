@@ -300,6 +300,9 @@ onMount(() => {
         allStudents = c.students.slice().map((student) => new Student(student));
 
         randomizedStudents = shuffleArray(allStudents.slice());
+
+        createShortNames(c);
+
         updateRoom();
     }
 
@@ -380,6 +383,7 @@ onMount(() => {
     let j2: any = 0;
 
     function handleClick(
+
         student: Student,
         event: MouseEvent,
         i: number,
@@ -524,18 +528,45 @@ onMount(() => {
     let boxHeight = 0;
     let factor = 0.05;
 
+    let boxFontSize = 30;
+
+    const sizesDict = {
+  10: "xs",
+  15: "sm",
+  20: "xl",
+  25: "2xl",
+  30: "2xl"
+} as const;
+
+type SizeValue = typeof sizesDict[keyof typeof sizesDict];
+
+let textSize: SizeValue = "xl";
+
+// Function to find the closest key in sizesDict
+function findClosestSize(fontSize: number): SizeValue {
+  const sizes = Object.keys(sizesDict).map(Number);
+  const closest = sizes.reduce((prev, curr) => 
+    Math.abs(curr - fontSize) < Math.abs(prev - fontSize) ? curr : prev
+  );
+  return sizesDict[closest as keyof typeof sizesDict];
+}
+
     //scale with screen
     $: 
     {
       if(currentRoom.layout.length > 0){
         boxWidth = innerWidth / currentRoom.layout[0].length;
         boxHeight = (innerHeight - 200) / currentRoom.layout.length;
+
+        boxFontSize = boxWidth / 6.5;
+
+        //get the closest one
+        textSize = findClosestSize(boxFontSize);
+        
       }
     
     }
     
-  
-
     function zoom(operation: string) {
         if (currentRoom.name !== "Choose room") {
             if (operation === "+") {
@@ -548,11 +579,7 @@ onMount(() => {
         }
     }
 
-
-
    
-
-
 
     //#endregion
 
@@ -606,6 +633,40 @@ let isDropdownOpen = false;
 
 
 
+//#region Full names
+let showFullNames = false;
+let shortNames: {[key: string]: string} = {};
+
+
+function createShortNames(c: Class) {
+  shortNames = {};
+  c.students.forEach(studentName => {
+    shortNames[studentName] = getShortName(studentName);
+  });
+}
+function getShortName(name: string): string {
+  // Trim the name and split by one or more whitespace characters
+  const nameParts = name.trim().split(/\s+/);
+  
+  if (nameParts.length === 1) {
+    return name.trim(); // Return the full name if it's just one word
+  }
+
+  const firstName = nameParts[0];
+  const lastNames = nameParts.slice(1);
+  
+  const initials = lastNames.map(lastName => lastName[0].toUpperCase()).join('.');
+
+  return `${firstName} ${initials}`;
+}
+
+
+
+//#endregion
+
+
+
+
 </script>
 
 
@@ -636,11 +697,22 @@ let isDropdownOpen = false;
         gap: 1rem;
         justify-content: center;
       }
-
-
-     
-
+    
     }
+
+
+    .scalable-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+
   </style>
   
   
@@ -660,6 +732,7 @@ let isDropdownOpen = false;
       <option value={c.name}>{c.name}</option>
       {/each}
     </select>
+
   
     <div class="btn-container">
       
@@ -720,6 +793,14 @@ let isDropdownOpen = false;
           />
         </svg>
       </button>
+
+    </div>
+
+    <div class="form-control flex gap-2">
+      <label class="label cursor-pointer">
+        <span class="label-text">Show full names</span>
+        <input type="checkbox" bind:checked={showFullNames} class="checkbox mx-2" />
+      </label>
     </div>
   
     <!-- <div class="btn-container">
@@ -782,10 +863,20 @@ let isDropdownOpen = false;
         <button
           on:click={(event) =>
             handleClick(currentRoom.layout[i][j].student, event, i, j)}
-          class={`btn btn-neutral text-2xl hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? "border-primary text-primary" : ""}`}
+          class={`btn btn-neutral text-${textSize} hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? "border-primary text-primary" : ""}`}
           style="width: {boxWidth}px; height: {boxHeight}px;"
         >
+
+        <div style="font-size: {boxFontSize}px;">
+          
+          {#if showFullNames}          
           {currentRoom.layout[i][j].student.name}
+          
+          {:else}
+          {shortNames[currentRoom.layout[i][j].student.name] || currentRoom.layout[i][j].student.name}
+          {/if}
+        </div>
+
         </button>
       </div>
       {:else}
