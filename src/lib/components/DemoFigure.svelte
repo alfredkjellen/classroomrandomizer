@@ -2,6 +2,7 @@
     import { onMount } from "svelte"
     import { Student, Class, Seat, Room } from "$lib/classes.ts"
     import { browser } from "$app/environment"
+    import {classA} from "$lib/examples.ts"
   
     let mounted = false
   
@@ -34,39 +35,6 @@
         }),
       )
     }
-  
-    let classA = new Class("Class A", [
-      "Adam",
-      "Alex",
-      "Alice",
-      "Alfred",
-      "Ava",
-      "Ben",
-      "Bob",
-      "Chris",
-      "Clara",
-      "Daniel",
-      "David",
-      "Edward",
-      "Emily",
-      "Ethan",
-      "Grace",
-      "Harry",
-      "Isac",
-      "Jack",
-      "John",
-      "Joe",
-      "Josh",
-      "Matt",
-      "Molly",
-      "Nathan",
-      "Noah",
-      "Ryan",
-      "Sam",
-      "Sarah",
-      "Toby",
-      "Will",
-    ]);
   
     let room2 = new Room("Room 2", [
       [
@@ -274,9 +242,11 @@
       allStudents = c.students.slice().map((student) => new Student(student))
   
       randomizedStudents = shuffleArray(allStudents.slice())
+
+      createShortNames(c);
       updateRoom()
     }
-  
+
     function resetClickedStatus() {
       currentRoom.layout.forEach((row) => {
         row.forEach((seat) => {
@@ -511,6 +481,51 @@ updateRoom();
 
 
 
+//#region Full names
+let showFullNames = false;
+let shortNames: {[key: string]: string} = {};
+let firstNameCount: {[key: string]: number} = {};
+
+function createShortNames(c: Class) {
+      shortNames = {};
+      firstNameCount = {};
+      
+      // Count occurrences of first names
+      c.students.forEach(studentName => {
+        const firstName = studentName.split(' ')[0];
+        firstNameCount[firstName] = (firstNameCount[firstName] || 0) + 1;
+      });
+
+      // Create short names based on first name count
+      c.students.forEach(studentName => {
+        shortNames[studentName] = getShortName(studentName);
+      });
+    }
+    function getShortName(name: string): string {
+      const nameParts = name.trim().split(/\s+/);
+      
+      if (nameParts.length === 1) {
+        return name.trim();
+      }
+
+      const firstName = nameParts[0];
+      const lastNames = nameParts.slice(1);
+      
+      // If there's more than one student with this first name, add initials
+      if (firstNameCount[firstName] > 1) {
+        const initials = lastNames.map(lastName => lastName[0].toUpperCase()).join('.');
+        return `${firstName} ${initials}`;
+      } else {
+        return firstName;
+      }
+    }
+
+
+//#endregion
+
+
+
+
 
 
 
@@ -589,10 +604,6 @@ updateRoom();
       </div>
       {/if}
     </div>
-
-
-
-
   </div>
   
   <div class="flex justify-center items-center">
@@ -619,7 +630,15 @@ updateRoom();
                   style={`width: ${screenWidth < 768 ? `${screenWidth * smBtnFactor}px` : `${smBtnSize}px`};`}
                 >
               
+                <div>
+          
+                  {#if showFullNames}          
                   {currentRoom.layout[i][j].student.name}
+                  
+                  {:else}
+                  {shortNames[currentRoom.layout[i][j].student.name] || currentRoom.layout[i][j].student.name}
+                  {/if}
+                </div>
                 </button>
               </div>
             {:else}
@@ -631,3 +650,14 @@ updateRoom();
     </div>
   </div>
   
+
+<div class="flex justify-center mt-5">
+
+  <div class="form-control flex gap-2">
+    <label class="label cursor-pointer">
+      <span class="label-text">Show full names</span>
+      <input type="checkbox" bind:checked={showFullNames} class="checkbox mx-2" />
+    </label>
+  </div>
+
+</div>

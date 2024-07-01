@@ -21,7 +21,6 @@
 
     {:else}
 
-
     <div class="flex justify-center mt-5">
         <div class="card bg-base-200 p-5 flex items-center">
           <div class="card-title">You must be signed in to view this page</div>

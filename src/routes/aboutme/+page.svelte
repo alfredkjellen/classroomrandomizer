@@ -7,16 +7,6 @@ import {themeStore } from "$lib/controller";
 let copied = false;
 
 let timeout = 1500;
-
-function copyToClipboard(text: string) {
-  navigator.clipboard.writeText(text).then(() => {
-    // Show a success message or perform any other action
-    copied = true;
-    setTimeout(() => {
-      copied = false;
-    }, timeout);
-  });
-}
 </script>
 
 

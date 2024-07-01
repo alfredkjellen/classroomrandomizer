@@ -5,6 +5,8 @@
     import { browser } from "$app/environment";
     import { svgColor } from "$lib/controller";
 
+    import {classA} from "$lib/examples.ts"
+
 let mounted = false;
 
 onMount(() => {
@@ -19,77 +21,6 @@ onMount(() => {
         }
     };
 });
-
-
-
-  
-
-
-    // let classA = new Class("Class A", [
-    //     "Ryan Anderson",
-    //     "Ella Anderson",
-    //     "Michael Brown",
-    //     "Jacob Conner",
-    //     "Joshua Davis",
-    //     "Emily Davis",
-    //     "Nathan Garcia",
-    //     "Madison Garcia",
-    //     "Ethan Gonzalez",
-    //     "Amellia Gonzalez",
-    //     "Grace Jackson",
-    //     "Joseph Johnson",
-    //     "Isabella Johnson",
-    //     "Matthew Jones",
-    //     "Olivia Jones",
-    //     "David Martinez",
-    //     "Avery Martinez",
-    //     "Ava Millar",
-    //     "Daniel Miller",
-    //     "Ariana Ramirez",
-    //     "Noah Rodriguez",
-    //     "Abigail Rodriguez",
-    //     "Emma Smith",
-    //     "John Thomas",
-    //     "Sarah Thomas",
-    //     "Andrew Wilson",
-    //     "Sophia Williams",
-    //     "Christopher Williams",
-    // ]);
-
-    let classA = new Class("Class A", [
-      "Adam",
-      "Alex",
-      "Alice",
-      "Alfred",
-      "Ava",
-      "Ben",
-      "Bob",
-      "Chris",
-      "Clara",
-      "Daniel",
-      "David",
-      "Edward",
-      "Emily",
-      "Ethan",
-      "Grace",
-      "Harry",
-      "Isac",
-      "Jack",
-      "John",
-      "Joe",
-      "Josh",
-      "Matt",
-      "Molly",
-      "Nathan",
-      "Noah",
-      "Ryan",
-      "Sam",
-      "Sarah",
-      "Toby",
-      "Will",
-    ]);
-  
-
 
     let room2 = new Room("Room 2", [
         [
@@ -636,30 +567,41 @@ let isDropdownOpen = false;
 //#region Full names
 let showFullNames = false;
 let shortNames: {[key: string]: string} = {};
-
+let firstNameCount: {[key: string]: number} = {};
 
 function createShortNames(c: Class) {
-  shortNames = {};
-  c.students.forEach(studentName => {
-    shortNames[studentName] = getShortName(studentName);
-  });
-}
-function getShortName(name: string): string {
-  // Trim the name and split by one or more whitespace characters
-  const nameParts = name.trim().split(/\s+/);
-  
-  if (nameParts.length === 1) {
-    return name.trim(); // Return the full name if it's just one word
-  }
+      shortNames = {};
+      firstNameCount = {};
+      
+      // Count occurrences of first names
+      c.students.forEach(studentName => {
+        const firstName = studentName.split(' ')[0];
+        firstNameCount[firstName] = (firstNameCount[firstName] || 0) + 1;
+      });
 
-  const firstName = nameParts[0];
-  const lastNames = nameParts.slice(1);
-  
-  const initials = lastNames.map(lastName => lastName[0].toUpperCase()).join('.');
+      // Create short names based on first name count
+      c.students.forEach(studentName => {
+        shortNames[studentName] = getShortName(studentName);
+      });
+    }
+    function getShortName(name: string): string {
+      const nameParts = name.trim().split(/\s+/);
+      
+      if (nameParts.length === 1) {
+        return name.trim();
+      }
 
-  return `${firstName} ${initials}`;
-}
-
+      const firstName = nameParts[0];
+      const lastNames = nameParts.slice(1);
+      
+      // If there's more than one student with this first name, add initials
+      if (firstNameCount[firstName] > 1) {
+        const initials = lastNames.map(lastName => lastName[0].toUpperCase()).join('.');
+        return `${firstName} ${initials}`;
+      } else {
+        return firstName;
+      }
+    }
 
 
 //#endregion
