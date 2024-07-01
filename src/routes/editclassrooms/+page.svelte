@@ -6,17 +6,8 @@
 
 	let classroomName = "";
 	let layout: boolean[][] = [];
-
-	let editingLength = 18;
 	let editingWidth = 18;
-
-	for (let i = 0; i < editingLength; i++) {
-		let row: boolean[] = [];
-		for (let j = 0; j < editingWidth; j++) {
-			row.push(false);
-		}
-		layout.push(row);
-	}
+	let editingLength = 18;
 
 	//#region MouseEvents
 	let mouseDown = false;
@@ -158,7 +149,7 @@
 	const checkBoxTime = 30;
 	const endAnimationTime = 300;
 	const animationIntervalTime = 300;
-	const startTime = 400;
+	const startTime = 2000;
 
 	function startBoxAnimation(column: number, row: number) {
 		let index = column;
@@ -190,6 +181,18 @@
 	}
 
 	onMount(() => {
+
+		editingWidth = window.innerWidth / 80;
+
+
+	for (let i = 0; i < editingLength; i++) {
+		let row: boolean[] = [];
+		for (let j = 0; j < editingWidth; j++) {
+			row.push(false);
+		}
+		layout.push(row);
+	}
+
 		setTimeout(() => {}, startTime);
 
 		animations.forEach((animation, index) => {
