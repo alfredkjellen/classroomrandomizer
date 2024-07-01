@@ -8,6 +8,7 @@
 	let layout: boolean[][] = [];
 	let editingWidth = 18;
 	let editingLength = 18;
+	let loaded  = false;
 
 	//#region MouseEvents
 	let mouseDown = false;
@@ -132,8 +133,6 @@
 		return adjustedLayout;
 	}
 
-	function expandLayout(layout: boolean[][]) {}
-
 	//#endregion
 
 	//#region Animation
@@ -147,9 +146,17 @@
 	];
 
 	const checkBoxTime = 30;
-	const endAnimationTime = 300;
-	const animationIntervalTime = 300;
-	const startTime = 2000;
+	const endAnimationTime = 500;
+	const animationIntervalTime = 500;
+	let initialDelay = 500; 
+
+
+	$: if (loaded) {
+  editingWidth = Math.floor(window.innerWidth / 80);
+  layout = Array(editingLength).fill(null).map(() => 
+    Array(editingWidth).fill(false)
+  );
+}
 
 	function startBoxAnimation(column: number, row: number) {
 		let index = column;
@@ -181,29 +188,38 @@
 	}
 
 	onMount(() => {
+  loaded = true;
 
-		editingWidth = window.innerWidth / 80;
+  // Delay only the start of animations
+  setTimeout(startAnimations, initialDelay);
+});
+
+function startAnimations() {
+  animations.forEach((animation, index) => {
+    setTimeout(
+      () => {
+        startBoxAnimation(animation[0], animation[1]);
+      },
+      animationIntervalTime * (index + 1),
+    );
+  });
+}
 
 
-	for (let i = 0; i < editingLength; i++) {
-		let row: boolean[] = [];
-		for (let j = 0; j < editingWidth; j++) {
-			row.push(false);
-		}
-		layout.push(row);
-	}
 
-		setTimeout(() => {}, startTime);
+function initializeLayout() {
+  editingWidth = Math.floor(window.innerWidth / 80);
+  
+  for (let i = 0; i < editingLength; i++) {
+    let row: boolean[] = [];
+    for (let j = 0; j < editingWidth; j++) {
+      row.push(false);
+    }
+    layout.push(row);
+  }
+}
 
-		animations.forEach((animation, index) => {
-			setTimeout(
-				() => {
-					startBoxAnimation(animation[0], animation[1]);
-				},
-				animationIntervalTime * (index + 1),
-			);
-		});
-	});
+
 
 	//#endregion
 
