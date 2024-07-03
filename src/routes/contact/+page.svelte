@@ -8,6 +8,12 @@
       <h2 class="card-title">Contact</h2>
       <p>If you have any questions or have come across an issue, feel free to contact</p>
       <Contact contact="studentrandomizer@gmail.com"/>
+      <div class="flex justify-center mt-5">
+        <img class="w-11 h-11" src="logo-8.png" alt="Student Randomizer Logo">
+      </div>
     </div>
+    
   </div>
+
+  
 </div>
