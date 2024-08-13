@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { auth, userData } from "$lib/firebase";
+    import { auth, schoolData, userData } from "$lib/firebase";
     import { db, user } from "$lib/firebase";
     import { doc, getDoc, writeBatch } from "firebase/firestore";
     import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -10,6 +10,13 @@
         const provider = new GoogleAuthProvider();
         const user = await signInWithPopup(auth, provider);
         email = auth.currentUser?.email;
+    }
+
+    let isLoggedIn = false;
+    
+    $: if($schoolData)
+    {
+        isLoggedIn = true;
     }
 
     $: if ($userData)
@@ -143,9 +150,36 @@
 
 </script>
 
-
+{#if isLoggedIn}
+<div class="flex justify-center">
+    <div class="label font-bold gap-1">
+        Logged in to <span class="text-primary">
+            {$userData?.school}</span
+        >
+    </div>
+</div>
 
 <div class="flex justify-center">
+    <a
+        class="btn btn-wide btn-primary btn-outline"
+        href="/randomizeroom">Go to randomizer</a
+    >
+</div>
+{:else}
+
+<div class="flex justify-center">
+
+    
+           
+       
+        
+
+
+
+
+
+
+
     <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6">
         <h1 class="text-3xl font-bold self-center">Sign up new school</h1>
 
@@ -303,3 +337,4 @@
     <a href="/login" class="btn btn-accent btn-wide">Log in</a>
     </div>
 
+{/if}

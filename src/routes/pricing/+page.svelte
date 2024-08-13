@@ -1,7 +1,8 @@
-<script lang="ts">
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js" lang="ts">
   import PricingModule from "./pricing_module.svelte"
   import { WebsiteName } from "$lib/config"
   import Footer from "$lib/components/Footer.svelte"
+  
 
   type PlanFeatureRow = {
     name: string
@@ -11,6 +12,7 @@
     proString?: string
     header?: boolean
   }
+
   const planFeatures: PlanFeatureRow[] = [
     {
       name: "Section 1",
@@ -47,22 +49,21 @@
     },
   ]
 </script>
-
+<!-- 
 <svelte:head>
   <title>Pricing</title>
   <meta name="description" content="Pricing - {WebsiteName}" />
 </svelte:head>
 
 <div class="min-h-[70vh] pb-8 pt-[5vh] px-4">
-  <h1 class="text-3xl font-bold text-center">Pricing</h1>
-  <h2 class="text-xl text-center mt-1 pb-3">
-    Free for now!
-  </h2>
-
+   <h1 class="text-md font-bold text-center">Pricing</h1>
+  
   <div class="w-full my-8">
-    <PricingModule callToAction="Get Started" highlightedPlanId="pro" />
+
+ <PricingModule callToAction="Get Started" highlightedPlanId="pro" /> 
     
-<!-- 
+  
+
     <svg style="display:none" version="2.0">
       <defs>
         <symbol
@@ -158,8 +159,8 @@
           {/each}
         </tbody>
       </table>
-    </div>-->
+    </div>
   </div>
 </div>
-
-<Footer></Footer>
+<div class="mt-40"></div>
+<Footer></Footer> -->

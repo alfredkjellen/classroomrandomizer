@@ -2,8 +2,10 @@
   import "../app.css";
   import LoginButton from "$lib/components/LoginButton.svelte";
   import SignupButton from "$lib/components/SignupButton.svelte";
-  import { themeStore, svgColor, changeTheme } from "$lib/controller.ts";
-  import { userData } from "$lib/firebase";
+  import { themeStore, svgColor, modalIsOpen } from "$lib/controller.ts";
+  import { userData, schoolData } from "$lib/firebase";
+  import {trialDaysRemaining, trialExpired} from "$lib/trial";
+  import {goto} from "$app/navigation";
 
   //check browser
   import { onMount } from "svelte";
@@ -11,9 +13,41 @@
 
   let isBrowserLoaded = false;
 
+  let modal:any;
+
   onMount(() => {
     isBrowserLoaded = true;
+    // Ensure the modal is properly initialized
+    if (typeof HTMLDialogElement === 'function') {
+      modal = document.getElementById('my_modal_1');
+    } else {
+      console.warn('Browser does not support <dialog>');
+    }
+    $modalIsOpen = $trialExpired;
+
+    if($modalIsOpen){
+      openModal();
+    }
   });
+
+
+  function continueAndClose()
+  {
+    $modalIsOpen = false;
+    closeModal();
+    goto("/subscription")
+  }
+
+  function openModal() {
+    if (modal && typeof modal.showModal === 'function') {
+      modal.showModal();
+    }
+  }
+  function closeModal() {
+    if (modal && typeof modal.close === 'function') {
+      modal.close();
+    }
+  }
 
   function closeDrawer() {
     const drawer = document.getElementById("my-drawer-3") as HTMLInputElement;
@@ -22,9 +56,43 @@
       drawer.checked = false;
     }
   }
+
+
+
+
+
+
 </script>
 
 <html lang="ts" data-theme={$themeStore}>
+<!-- 
+{#if !$schoolData && $userData && !$trialExpired}
+<a href="/signup/getstarted" class="toast">
+  <div class="alert w-96 font-bold border-primary">
+    Get started with Student Randomizer
+  </div>
+</a>
+{/if} -->
+
+
+
+<dialog id="my_modal_1" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Hi!</h3>
+    <p class="py-4">Your free trial has expired. If you would like to continue using Student Randomizer, please upgrade.</p>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <a on:click={continueAndClose} class="btn btn-wide">Click here to continue</a>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+
+
+
+
   <div class="drawer">
     <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
 
@@ -208,9 +276,17 @@
                 </svg>
               {/if}
               Edit classes</a
-            >
+            >            
           </ul>
         </div>
+
+
+        {#if $trialDaysRemaining}
+        <a href="/account" class="text-xs font-bold text-primary">{$trialDaysRemaining} days left of free trial</a>
+        {/if}
+
+
+
 
         <div class="flex-none">
           <ul
@@ -380,6 +456,11 @@
           >
         </li>
 
+
+        <li><span class="text-lg text-primary">4 days left of free trial</span></li>
+
+
+
         {#if $userData}
           <li>
             <a on:click={closeDrawer} href="/account">
@@ -422,3 +503,11 @@
     </div>
   </div>
 </html>
+
+
+<style>
+  .toast {
+    z-index: 9999;
+  }
+  
+</style>

@@ -2,11 +2,13 @@
   import { user, schoolData } from "$lib/firebase";
   import { Student, Class, Seat, Room } from "$lib/classes.ts";
   import { svgColor } from "$lib/controller";
-  import {classA} from "$lib/examples.ts"
+  import {exampleClasses} from "$lib/examples.ts"
 
 
-  let classes: Class[] = [];
-  classes = [classA];
+
+  let classes:Class [] = [];
+  classes = exampleClasses;
+
   let exampleClass = new Class("Choose class", []);
 
   let layout: boolean[][] = [];
@@ -31,6 +33,15 @@
   );
   let allStudents: Student[] = [];
   let randomizedStudents: Student[] = [];
+
+
+  function sortClasses(classes: Class[])
+    {
+      //sort alphabetically so that the rooms get in this order: EK1A, EK1B, EK2A, EK2B, EK3A, EK3B, NA1A, NA1B, NA2A, NA2B, NA3A, NA3B
+      classes.sort((a, b) => a.name.localeCompare(b.name));
+      return classes
+    }
+
 
   function shuffleArray(array: any[]) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -57,6 +68,11 @@
 
   $: if ($schoolData && $user) {
     classes = $schoolData?.classes ?? [];
+
+    if (classes.length > 0) {
+    
+      classes = sortClasses(classes);
+    }
   }
 
   //#region Clicked events

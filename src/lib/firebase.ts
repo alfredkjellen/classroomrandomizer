@@ -6,7 +6,7 @@ import { derived, writable, type Readable } from "svelte/store";
 import type { User } from "firebase/auth";
 import { doc } from "firebase/firestore";
 
-
+//import { FIREBASE_KEY } from "$env/static/private"
 
 const firebaseConfig = {
   apiKey: "AIzaSyALBUd-G2QgBkx2Ec8H0tOk7S7Msd7Yfjc",
@@ -76,14 +76,6 @@ export function docStore<T>(
 }
 
 
-// export const userData: Readable<UserData | null> = derived(user, ($user, set) => { 
-//   if ($user) {
-//     return docStore<UserData>(`users/${$user.uid}`).subscribe(set);
-//   } else {
-//     set(null); 
-//   }
-// });
-
 
 export const userData: Readable<UserData | null> = derived(user, ($user, set) => { 
   if ($user) {
@@ -129,6 +121,8 @@ interface School{
   name: string;
   classes: Class[];
   rooms: Room[];
+  subscribed:boolean;
+  trialEndingDate:string;
 }
 
 

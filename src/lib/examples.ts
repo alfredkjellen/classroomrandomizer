@@ -1,6 +1,14 @@
 import { Class } from  "$lib/classes"
 
-export let classA = new Class("Class A", [
+
+
+let classA = new Class("Class A", [
+
+
+
+]);
+
+let classB = new Class("Class B", [
         "Adam Blackwood",
         "Alex Carpenter",
         "Alice Donovan",
@@ -33,3 +41,11 @@ export let classA = new Class("Class A", [
         "Will Eriksen"
 
 ]);
+
+
+
+let classC = new Class("Class C", [
+
+]);
+
+export const exampleClasses = [classA, classB, classC];

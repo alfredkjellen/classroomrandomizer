@@ -14,7 +14,6 @@
          <ul class="list-disc ml-6 mb-4">
              <li>Schools will be offered a 1-month free trial.</li>
              <li>During this trial period, schools can cancel at any time without charge.</li>
-             <li>No payment information will be required to start the trial.</li>
          </ul>
  
          <h3 class="card-title mt-2 mb-2 text-lg">Paid Subscription</h3>

@@ -5,7 +5,10 @@
     import { browser } from "$app/environment";
     import { svgColor } from "$lib/controller";
 
-    import {classA} from "$lib/examples.ts"
+    import {exampleClasses} from "$lib/examples.ts"
+
+    let classes:Class [] = [];
+  classes = exampleClasses;
 
 let mounted = false;
 
@@ -195,11 +198,10 @@ onMount(() => {
         ],
     ]);
 
-    let classes: Class[] = [];
+
     let rooms: Room[] = [];
 
     rooms = [room1, room2];
-    classes = [classA];
 
     let exampleRoom = new Room("Choose room", []);
     let exampleClass = new Class("Choose class", []);
@@ -265,6 +267,12 @@ onMount(() => {
 
     $: if ($schoolData && $user) {
         classes = $schoolData?.classes ?? [];
+
+        if(classes.length > 0){ 
+          classes = sortClasses(classes);
+        }
+
+
         rooms = [];
         $schoolData.rooms.forEach((room: any) => {
             let array = JSON.parse(room.layout);
@@ -287,8 +295,28 @@ onMount(() => {
                 }
             }
             rooms = [...rooms, new Room(room.name, seats)];
+            rooms = sortRooms(rooms);
         });
     }
+
+
+
+
+    function sortClasses(classes: Class[])
+    {
+      //sort alphabetically so that the rooms get in this order: EK1A, EK1B, EK2A, EK2B, EK3A, EK3B, NA1A, NA1B, NA2A, NA2B, NA3A, NA3B
+      classes.sort((a, b) => a.name.localeCompare(b.name));
+      return classes
+    }
+
+    function sortRooms(rooms: Room[])
+    {
+      rooms.sort((a, b) => a.name.localeCompare(b.name));
+      return rooms
+    }
+
+
+
 
     function resetClickedStatus() {
         currentRoom.layout.forEach((row) => {

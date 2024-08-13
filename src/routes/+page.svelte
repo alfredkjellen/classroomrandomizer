@@ -83,8 +83,8 @@
         classrooms
       </div>
 
-      <a href="/signup" class="mt-10 btn btn-primary btn-circle btn-wide"
-        >Sign up</a
+      <a href="/pricing" class="mt-10 btn btn-primary btn-circle btn-wide"
+        >Get started</a
       >
     </div>
   </div>
@@ -137,7 +137,7 @@
             <div class="collapse collapse-plus bg-base-200 mt-2">
               <input
                 type="checkbox"
-                name="my-accordion-3"
+                name="my-accordion-l3"
                 checked={question.checked}
               />
               <div class="collapse-title text-xl font-medium">
@@ -171,23 +171,12 @@
     style="line-height: 1.2;"
   >
     Student Randomizer
-  </div>
+  </div>  
 </div>
 
-<!-- 
-<div class="flex justify-center">
-  <a
-    href="https://www.producthunt.com/posts/student-randomizer?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-student&#0045;randomizer"
-    target="_blank"
-    ><img
-      src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=464069&theme=light"
-      alt="Student&#0032;Randomizer - Randomize&#0032;seating&#0032;arrangements&#0032;easier&#0033; | Product Hunt"
-      style="width: 225px; height: 48.5px;"
-      width="225"
-      height="48.5"
-    /></a
-  >
-</div> -->
+<div class="flex justify-center"><a href="/pricing" class="btn btn-primary btn-circle btn-wide"
+  >Get started</a
+  ></div>
 
 <div class="mt-80">
   <Footer />

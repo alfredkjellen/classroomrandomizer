@@ -8,7 +8,7 @@
     <a
       href="/signup/getstarted"
       class="step"
-      class:step-accent={$page.route.id?.includes("getstarted")}
+      class:step-primary={$page.route.id?.includes("getstarted")}
       style="pointer-events: none;">
       Get Started
     </a>

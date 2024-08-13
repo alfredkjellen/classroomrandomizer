@@ -13,10 +13,10 @@
       <span class="footer-title opacity-80">Explore</span>
       <a class="link link-hover my-1" href="https://insigh.to/b/student-randomizer" target="_blank">Feedback</a>
       <a class="link link-hover my-1" href="/contact">Contact</a>
-      <a class="link link-hover mb-1" href="/terms">Terms of Service</a>
-      <a class="link link-hover mb-1" href="/privacy">Privacy Policy</a>
-      <a class="link link-hover mb-1" href="/refund">Refund Policy</a>
-      <a class="link link-hover mb-1" href="/pricing">Pricing (free for now)</a>
+
+
+      <a class="link link-hover my-1" href="/policies">Our Policies</a>
+      <!-- <a class="link link-hover my-1" href="/pricing">Pricing</a> -->
       
       
     </nav>

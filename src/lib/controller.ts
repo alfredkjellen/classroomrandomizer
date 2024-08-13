@@ -10,3 +10,5 @@ export const changeTheme = () => {
     return newTheme;
   });
 };
+
+export const modalIsOpen = writable(false);

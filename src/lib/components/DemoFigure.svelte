@@ -2,9 +2,11 @@
     import { onMount } from "svelte"
     import { Student, Class, Seat, Room } from "$lib/classes.ts"
     import { browser } from "$app/environment"
-    import {classA} from "$lib/examples.ts"
+    import {exampleClasses} from "$lib/examples.ts"
   
     let mounted = false
+
+    let classes: Class[] = exampleClasses;
   
 
     onMount(() => {
@@ -209,15 +211,14 @@
       ],
     ])
   
-    let classes: Class[] = []
+
     let rooms: Room[] = []
   
     rooms = [room1, room2]
-    classes = [classA]
+
   
     let currentRoom = room1;
-    let currentClass = classA;
-    
+    let currentClass = classes[0];
 
     let allStudents: Student[] = []
     let randomizedStudents: Student[] = []
@@ -570,8 +571,7 @@ function createShortNames(c: Class) {
       {/each}
     </select>
 
-    
-  
+
     <div class="relative inline-block">
       <button
         id="dropdown-button"
@@ -618,7 +618,7 @@ function createShortNames(c: Class) {
                     <button
                       on:click={() =>
                         handlePresense(currentRoom.layout[i][j].student)}
-                      class="btn btn-xs btn-circle btn-warning">✕</button
+                        class="btn btn-xs btn-circle btn-warning">✕</button
                     >
                   {/if}
                 </div>
@@ -627,7 +627,7 @@ function createShortNames(c: Class) {
                   on:click={(event) =>
                     handleClick(currentRoom.layout[i][j].student, event, i, j)}
                   class={`btn btn-neutral text-xs btn-sm hover:text-primary hover:border-primary border-2 ${currentRoom.layout[i][j].student.isClicked && currentRoom.layout[i][j].student.name !== "" ? "border-primary text-primary" : ""}`}
-                  style={`width: ${screenWidth < 768 ? `${screenWidth * smBtnFactor}px` : `${smBtnSize}px`};`}
+                  style={`width: ${screenWidth < 768 ? `${screenWidth * smBtnFactor}px; font-size: 10px;` : `${smBtnSize}px`};`}
                 >
               
                 <div>

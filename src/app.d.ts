@@ -10,9 +10,6 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
-
-	// Deklarera lodash/shuffle-modulen för att undvika typfel
-
 }
 
 export {};

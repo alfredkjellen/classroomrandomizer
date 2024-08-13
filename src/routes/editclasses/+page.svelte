@@ -202,38 +202,52 @@
         studentNames = switchedStudents.join("\n");
     }
 
-
-
+    let isDeleting = false;
 
 </script>
 
 
 
 <div class="flex justify-center mt-5 gap-5 items-stretch">
-
     <ul class="menu bg-base-200 w-56 rounded-box">
+
+<div class="flex self-end">
+
+    <label class="swap swap-flip text-9xl mt-1 mb-3">
+        <!-- this hidden checkbox controls the state -->
+        <input bind:checked={isDeleting} type="checkbox" />
+      
+        <div class="swap-on"><svg class="w-6 h-6 text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+            <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm5.757-1a1 1 0 1 0 0 2h8.486a1 1 0 1 0 0-2H7.757Z" clip-rule="evenodd"/>
+          </svg>
+          </div>
+        <div class="swap-off"><svg class="w-6 h-6 text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+</svg>
+
+          </div>
+      </label>
+</div>
 
         {#each classes as c, i}
         <div class="flex justify-between">
-        <li>
-            
+        <li>        
         <button class=" w-44" on:click={() => selectClass(c)} >{c.name}</button>
-       
         </li>
+        {#if isDeleting}
         <button on:click={() => deleteClass(c)}>
         <svg class="w-6 h-6 hover:text-red-600 text-red-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
             <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
           </svg>
         </button>
+        {/if}
+
+
         </div>
             {/each}
-
-
       </ul>
 
 
-
-      
     <div class="flex flex-col gap-4 rounded-box bg-base-200 p-6 w-2/5">
         <button on:click={() => deleteClass(currentClass)} class={`self-end btn btn-sm ${isEditing ? "btn-error": "btn-disabled"}`}>Delete class</button>
 

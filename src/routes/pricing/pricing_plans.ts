@@ -1,5 +1,5 @@
-export const defaultPlanId = "free"
 
+export const defaultPlanId = "free"
 export const pricingPlans = [
   // {
   //   id: "free",
@@ -12,17 +12,12 @@ export const pricingPlans = [
   // },
   {
     id: "pro",
-    name: "Pro",
+    name: "School subscription",
     description:
-      "The perfect plan for your school.",
-    price: "$0",
-    priceIntervalName: "/ year",
-    stripe_price_id: "price_1NkdZCHMjzZ8mGZnRSjUm4yA",
-    stripe_product_id: "prod_OXj1CcemGMWOlU",
+      "",
+    price:"",
+    priceIntervalName: "",
     features: [
-      "Customize layout for each classroom",
-      "Add class lists",
-      "Randomize students in classrooms and groups",
     ],
   },
   // {

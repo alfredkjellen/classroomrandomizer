@@ -6,7 +6,7 @@ export let size = "xs";
 </script>
 
 {#if !$user}
-    <a class={`btn btn-primary btn-${size}`} href="/signup">Sign up</a>
+    <a class={`btn btn-primary btn-${size}`} href="/signup">Get started</a>
 {/if}
 
     
