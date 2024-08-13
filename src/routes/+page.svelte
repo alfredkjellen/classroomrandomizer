@@ -83,10 +83,22 @@
         classrooms
       </div>
 
-      <a href="/pricing" class="mt-10 btn btn-primary btn-circle btn-wide"
-        >Get started</a
-      >
+
+      <div class="flex flex-col">
+        <div>
+        <a href="/signup" class="mt-10 btn btn-primary btn-circle btn-wide">New school</a>
+      </div>
+
+
+      <div class="divider"></div>
+      <div>
+        <a href="/signup" class="mt-10 btn btn-accent btn-outline btn-circle btn-wide">Log in</a>
+      </div>
+      </div>
+
+
     </div>
+    
   </div>
 </div>
 
@@ -174,8 +186,8 @@
   </div>  
 </div>
 
-<div class="flex justify-center"><a href="/pricing" class="btn btn-primary btn-circle btn-wide"
-  >Get started</a
+<div class="flex justify-center"><a href="/signup" class="btn btn-primary btn-circle btn-wide"
+  >New school</a
   ></div>
 
 <div class="mt-80">
