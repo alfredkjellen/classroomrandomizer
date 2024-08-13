@@ -92,7 +92,7 @@
 
       <div class="divider"></div>
       <div>
-        <a href="/signup" class="mt-10 btn btn-accent btn-outline btn-circle btn-wide">Log in</a>
+        <a href="/login" class="mt-10 btn btn-accent btn-outline btn-circle btn-wide">Log in</a>
       </div>
       </div>
 
