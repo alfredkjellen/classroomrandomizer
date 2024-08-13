@@ -139,7 +139,6 @@
                                     {$userData?.username}
                                 </p>
                             </h3>
-
                             <div class="mt-10 font-bold">
                                 Note that this action does not affect the status
                                 of the main school account:

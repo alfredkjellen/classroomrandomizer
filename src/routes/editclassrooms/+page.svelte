@@ -26,6 +26,13 @@
 		layout[i][j] = !layout[i][j];
 	}
 
+
+
+    function sortRooms(rooms: Room[])
+    {
+      rooms.sort((a, b) => a.name.localeCompare(b.name));
+      return rooms
+    }
 	//#endregion
 
 	//#region Classroom functions
@@ -189,9 +196,10 @@
 
 	onMount(() => {
   loaded = true;
-
-  // Delay only the start of animations
-  setTimeout(startAnimations, initialDelay);
+  if(!$schoolData)
+	{
+		setTimeout(startAnimations, initialDelay);
+	}
 });
 
 function startAnimations() {
@@ -274,6 +282,7 @@ function initializeLayout() {
 	let originalName = "";
 	$: if ($schoolData) {
 		rooms = $schoolData?.rooms || [];
+		rooms = sortRooms(rooms);
 	}
 
 	function editRoom(event: any) {
