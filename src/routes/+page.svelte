@@ -5,9 +5,7 @@
     WebsiteBaseUrl,
     WebsiteDescription,
   } from "$lib/config.ts";
-
   import Footer from "$lib/components/Footer.svelte";
-
   const ldJson = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -69,34 +67,28 @@
   </div>
 </div>
 
-      
-      
+    
       <div
         class="text-3xl md:text-5xl font-bold px-2"
         style="line-height: 1.2;"
       >
         The simplest way to randomize students
       </div>
-
       <div class="text-xl font-light mt-10">
         A tool for teachers to randomly assign students to seats in customized
         classrooms
       </div>
-
 
       <div class="flex flex-col">
         <div>
         <a href="/signup" class="mt-10 btn btn-primary btn-circle btn-wide">New school</a>
       </div>
 
-
       <div class="divider"></div>
       <div>
-        <a href="/login" class="mt-10 btn btn-accent btn-outline btn-circle btn-wide">Log in</a>
+        <a href="/login" class="btn btn-accent btn-outline btn-circle btn-wide">Log in</a>
       </div>
       </div>
-
-
     </div>
     
   </div>
